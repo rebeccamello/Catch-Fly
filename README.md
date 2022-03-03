@@ -1,6 +1,6 @@
-# SinlgePlayer
-![Versão](https://img.shields.io/badge/versão-0.0.0-orange)
-![Tamanho](https://img.shields.io/badge/tamanho-1,4%20MB-blue)
+# SinglePlayer
+![Version](https://img.shields.io/badge/versão-0.0.0-orange)
+![Size](https://img.shields.io/badge/tamanho-1,4%20MB-blue)
 ![Plataform](https://img.shields.io/badge/plataforma-IOS%2014.5+-lightgrey?)
 [![Swift version](https://img.shields.io/badge/swift-v5.5-blue?logo=swift)](https://swift.org/download/#releases)
 [![License](https://img.shields.io/badge/licença-GNU%20v3.0-brightgreen?)](https://github.com/rebeccamello/SinglePlayerGame/blob/main/LICENSE)
