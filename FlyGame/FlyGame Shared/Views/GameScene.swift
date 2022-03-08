@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lazy var playerNode: SKSpriteNode = {
         var bug = SKSpriteNode(imageNamed: "Mosca")
         bug.zPosition = 1
-        bug.name = "Mosca"
+        bug.name = "Fly"
         bug.setScale(0.8)
         bug.physicsBody = SKPhysicsBody(rectangleOf: bug.size)
         bug.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
@@ -112,7 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        if contact.bodyB.node?.name == "Mosca" {
+        if contact.bodyB.node?.name == "Fly" {
             collisionBetween(player: nodeA, enemy: nodeB)
         }
     }
