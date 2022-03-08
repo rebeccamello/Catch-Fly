@@ -11,7 +11,7 @@ import SpriteKit
 class PauseView: SKView {
     
     init() {
-        
+        super.init(frame: .zero)
     }
     
     required init?(coder: NSCoder) {

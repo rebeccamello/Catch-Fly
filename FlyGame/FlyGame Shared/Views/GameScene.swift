@@ -12,7 +12,6 @@ class GameScene: SKScene {
     class func newGameScene() -> GameScene {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
-        GameController.shared.setScene(scene: scene)
         return scene
     }
     
@@ -25,7 +24,7 @@ class GameScene: SKScene {
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
-        <#code#>
+        
     }
        
     override func update(_ currentTime: TimeInterval) {

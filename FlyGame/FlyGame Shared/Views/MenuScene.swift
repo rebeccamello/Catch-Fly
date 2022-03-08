@@ -13,7 +13,6 @@ class MenuScene: SKScene {
     class func newGameScene() -> MenuScene {
         let scene = MenuScene()
         scene.scaleMode = .resizeFill
-        GameController.shared.setScene(scene: scene)
         return scene
     }
     
@@ -26,7 +25,7 @@ class MenuScene: SKScene {
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
-        <#code#>
+        
     }
        
     override func update(_ currentTime: TimeInterval) {

@@ -13,7 +13,6 @@ class GameOverScene: SKScene {
     class func newGameScene() -> GameOverScene {
         let scene = GameOverScene()
         scene.scaleMode = .resizeFill
-        GameController.shared.setScene(scene: scene)
         return scene
     }
 
@@ -26,7 +25,7 @@ class GameOverScene: SKScene {
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
-        <#code#>
+        
     }
 }
 
