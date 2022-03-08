@@ -33,7 +33,7 @@ class GameSceneController {
     }
     
     func startUp() {
-        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(obstacleSpeed), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.08, target: self, selector: #selector(obstacleSpeed), userInfo: nil, repeats: true)
     }
     
     @objc func obstacleSpeed(speed: CGFloat) {

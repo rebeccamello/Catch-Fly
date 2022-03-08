@@ -14,7 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
         scenario = SKSpriteNode(imageNamed: "Cenário")
-        
+        scenario.zPosition = -1
         return scenario
     }()
     
@@ -26,6 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var playerNode: SKSpriteNode = {
         var bug = SKSpriteNode(imageNamed: "Mosca")
+        bug.zPosition = 1
         bug.name = "Mosca"
         bug.setScale(0.8)
         bug.physicsBody = SKPhysicsBody(rectangleOf: bug.size)
@@ -52,6 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var enemyNode: SKSpriteNode = {
         var enemy = SKSpriteNode(imageNamed: "Comoda")
+        enemy.zPosition = 2
         enemy.name = "Enemy"
         enemy.setScale(0.7)
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
@@ -60,11 +62,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.physicsBody!.contactTestBitMask = enemy.physicsBody!.collisionBitMask
         enemy.physicsBody?.restitution = 0.4
         return enemy
-    }()
-    
-    lazy var background: SKSpriteNode = {
-        var bg = SKSpriteNode(imageNamed: "bg")
-        return bg
     }()
     
     class func newGameScene() -> GameScene {
@@ -77,7 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeAllChildren()
         removeAllActions()
         
-//        self.addChild(scenarioImage)
+        self.addChild(scenarioImage)
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
