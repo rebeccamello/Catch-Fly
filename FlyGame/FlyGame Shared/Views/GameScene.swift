@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var currentPosition: CGFloat = 3
     
@@ -26,6 +26,7 @@ class GameScene: SKScene {
     
     lazy var playerNode: SKSpriteNode = {
         var bug = SKSpriteNode(imageNamed: "Mosca")
+        bug.name = "Mosca"
         bug.setScale(0.8)
         bug.physicsBody = SKPhysicsBody(rectangleOf: bug.size)
         bug.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
@@ -51,6 +52,7 @@ class GameScene: SKScene {
     
     lazy var enemyNode: SKSpriteNode = {
         var enemy = SKSpriteNode(imageNamed: "Comoda")
+        enemy.name = "Enemy"
         enemy.setScale(0.7)
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
         enemy.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
@@ -75,7 +77,7 @@ class GameScene: SKScene {
         removeAllChildren()
         removeAllActions()
         
-        self.addChild(scenarioImage)
+//        self.addChild(scenarioImage)
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
@@ -96,6 +98,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         self.setUpScene()
         gameLogic.startUp()
+        physicsWorld.contactDelegate = self
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -112,16 +115,15 @@ class GameScene: SKScene {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        if contact.bodyA.node?.name == "Mosca" {
+        if contact.bodyB.node?.name == "Mosca" {
             collisionBetween(player: nodeA, enemy: nodeB)
         }
     }
     
     func collisionBetween(player: SKNode, enemy: SKNode) {
-        print("encostou?")
         gameLogic.tearDown()
-//        let scene = GameOverScene.newGameScene()
-//        view?.presentScene(scene)
+        let scene = GameOverScene.newGameScene()
+        view?.presentScene(scene)
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {

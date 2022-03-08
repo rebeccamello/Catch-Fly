@@ -37,19 +37,15 @@ class GameSceneController {
     }
     
     @objc func obstacleSpeed(speed: CGFloat) {
-        print(speed)
         timeCounter += 1
         var newSpeed = count
         
         //MARK: AUMENTAR O INTERVALO DE TEMPO
         if timeCounter >= 5 {
-            print("entrou")
             timeCounter = 0
             newSpeed += 1
             count += 1
-        }
-        print("newspeed: \(newSpeed)")
-        
+        }        
         gameDelegate?.obstacleSpeed(speed: newSpeed)
     }
     
