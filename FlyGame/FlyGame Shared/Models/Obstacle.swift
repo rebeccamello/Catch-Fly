@@ -5,14 +5,14 @@
 //  Created by Nathalia do Valle Papst on 07/03/22.
 //
 
-import Foundation
-import SpriteKit
-
-class Obstacle {
-    var name: String
-    var positions: [CGPoint]
-    
-    init() {
-        
-    }
-}
+//import Foundation
+//import SpriteKit
+//
+//class Obstacle {
+//    var name: String
+//    var positions: [CGPoint]
+//    
+//    init() {
+//        
+//    }
+//}
