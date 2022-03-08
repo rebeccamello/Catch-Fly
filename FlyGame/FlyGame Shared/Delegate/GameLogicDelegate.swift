@@ -6,11 +6,18 @@
 //
 
 import Foundation
+import SpriteKit
 
-protocol GameLogicDelegate {
+protocol GameLogicDelegate: AnyObject {
     func resumeGame()
     
     func pauseGame()
     
     func gameOver()
+    
+    func movePlayer(position: Int)
+    
+    func obstacleSpeed(speed: CGFloat)
 }
+
+

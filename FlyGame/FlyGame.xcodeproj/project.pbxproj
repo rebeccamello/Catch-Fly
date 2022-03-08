@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E97A078527D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
-		E97A078627D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
+		9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
 		E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F2FE27D67B9300F965DE /* AppDelegate.swift */; };
 		E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F30027D67B9300F965DE /* GameViewController.swift */; };
 		E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F30E27D67B9300F965DE /* AppDelegate.swift */; };
@@ -271,8 +270,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E97A078527D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */,
 				E9A0F31E27D67B9300F965DE /* Assets.xcassets in Resources */,
+				9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +279,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E97A078627D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */,
 				E9A0F31F27D67B9300F965DE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
