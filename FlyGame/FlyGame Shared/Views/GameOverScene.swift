@@ -12,7 +12,7 @@ class GameOverScene: SKScene {
     
     lazy var label: SKLabelNode = {
         var label = SKLabelNode()
-         label.fontColor = .secondarySystemBackground
+         label.fontColor = .blue
          label.numberOfLines = 0
          label.fontSize = 60
          label.text = "GameOver scene"
