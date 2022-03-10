@@ -52,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }()
     
     lazy var enemyNode: SKSpriteNode = {
-        var enemy = SKSpriteNode(imageNamed: "Comoda")
+        var enemy = SKSpriteNode(imageNamed: "comodaVaso")
         enemy.zPosition = 2
         enemy.name = "Enemy"
         enemy.setScale(0.7)
@@ -101,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
-        enemyNode.position = CGPoint(x: size.width - enemyNode.size.width/2, y: enemyNode.size.height)
+        enemyNode.position = CGPoint(x: size.width - enemyNode.size.width/2, y: enemyNode.size.height/2)
     }
        
     override func update(_ currentTime: TimeInterval) {
