@@ -10,10 +10,11 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var currentPosition: CGFloat = 3
+    var obstacle: SKSpriteNode = SKSpriteNode()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
-        scenario = SKSpriteNode(imageNamed: "Cenário")
+        scenario = SKSpriteNode(imageNamed: "cenario")
         scenario.zPosition = -1
         return scenario
     }()
@@ -51,18 +52,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return bug
     }()
     
-    lazy var enemyNode: SKSpriteNode = {
-        var enemy = SKSpriteNode(imageNamed: "comodaVaso")
+//    lazy var enemyNode: SKSpriteNode = {
+//        var enemy = SKSpriteNode(imageNamed: "comodaVaso")
+//        enemy.zPosition = 2
+//        enemy.name = "Enemy"
+//        enemy.setScale(0.7)
+//        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+//        enemy.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
+//        enemy.physicsBody?.isDynamic = true // faz reconhecer a colisao
+//        enemy.physicsBody!.contactTestBitMask = enemy.physicsBody!.collisionBitMask
+//        enemy.physicsBody?.restitution = 0.4
+//        return enemy
+//    }()
+    
+    
+    
+    func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
+        let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
-        enemy.setScale(0.7)
+        enemy.size.height = self.size.height/6 * CGFloat(obstacle.weight)
+        
+        //enemy.setScale(0.7)
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
-        enemy.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
-        enemy.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        enemy.physicsBody?.affectedByGravity = false // faz enemyinuar a colisao mas sem cair
+        enemy.physicsBody?.isDynamic = true // faz reconhecer a enemysao
         enemy.physicsBody!.contactTestBitMask = enemy.physicsBody!.collisionBitMask
         enemy.physicsBody?.restitution = 0.4
+        enemy.position.y = obstacle.positions[0]
+        addChild(enemy)
         return enemy
-    }()
+    }
     
     class func newGameScene() -> GameScene {
         let scene = GameScene()
@@ -80,7 +100,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
-        self.addChild(enemyNode)
+        //self.addChild(enemyNode)
+        obstacle = createObstacle(obstacle: Obstacle(positions: [self.size.height/4], weight: 2, width: 2, assetName: "comodaVaso"))
         
         let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -101,7 +122,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
-        enemyNode.position = CGPoint(x: size.width - enemyNode.size.width/2, y: enemyNode.size.height/2)
+        //enemyNode.position = CGPoint(x: size.width - enemyNode.size.width/2, y: enemyNode.size.height/2)
+        obstacle.position = CGPoint(x: size.width - obstacle.size.width/2, y: obstacle.position.y)
     }
        
     override func update(_ currentTime: TimeInterval) {
@@ -147,7 +169,8 @@ extension GameScene: GameLogicDelegate {
     }
     
     func obstacleSpeed(speed: CGFloat) {
-        enemyNode.position.x -= speed
+        //enemyNode.position.x -= speed
+        obstacle.position.x -= speed
     }
     
     func movePlayer(position: Int) {
