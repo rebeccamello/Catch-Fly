@@ -13,11 +13,10 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
     }
     
     override func loadView() {
-        let scene = MenuScene.newGameScene()
+        let scene = GameScene.newGameScene()
         
         let skView = SKView()
         skView.presentScene(scene)

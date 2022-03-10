@@ -13,17 +13,20 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .red
+    }
+    
+    override func loadView() {
         let scene = GameScene.newGameScene()
         
-        // Present the scene
-        let skView = self.view as! SKView
+        let skView = SKView()
         skView.presentScene(scene)
         
         skView.ignoresSiblingOrder = true
-        
         skView.showsFPS = true
         skView.showsNodeCount = true
+        
+        self.view = skView
     }
 
 }

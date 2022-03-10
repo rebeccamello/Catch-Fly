@@ -10,6 +10,16 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     
+    lazy var label: SKLabelNode = {
+        var label = SKLabelNode()
+         label.fontColor = .blue
+         label.numberOfLines = 0
+         label.fontSize = 60
+         label.text = "GameOver scene"
+         
+         return label
+    }()
+    
     class func newGameScene() -> GameOverScene {
         let scene = GameOverScene()
         scene.scaleMode = .resizeFill
@@ -17,7 +27,7 @@ class GameOverScene: SKScene {
     }
 
     func setUpScene() {
-        
+        self.addChild(label)
     }
     
     override func didMove(to view: SKView) {
@@ -25,7 +35,7 @@ class GameOverScene: SKScene {
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
-        
+        label.position = CGPoint(x: size.width/2, y: size.height/2)
     }
 }
 

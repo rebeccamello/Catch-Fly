@@ -12,7 +12,7 @@ class MenuScene: SKScene {
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
-        scenario = SKSpriteNode(imageNamed: "Cenário")
+        scenario = SKSpriteNode(imageNamed: "cenario")
         
         return scenario
     }()

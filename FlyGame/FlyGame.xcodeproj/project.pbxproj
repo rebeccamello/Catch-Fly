@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E97A078527D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
-		E97A078627D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
+		9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
 		E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F2FE27D67B9300F965DE /* AppDelegate.swift */; };
 		E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F30027D67B9300F965DE /* GameViewController.swift */; };
 		E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F30E27D67B9300F965DE /* AppDelegate.swift */; };
@@ -23,8 +22,6 @@
 		E9A0F33027D685CE00F965DE /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F32E27D685CE00F965DE /* GameOverScene.swift */; };
 		E9A0F33227D6868700F965DE /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F33127D6868700F965DE /* PauseView.swift */; };
 		E9A0F33327D6868700F965DE /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F33127D6868700F965DE /* PauseView.swift */; };
-		E9A0F33527D68F4700F965DE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F33427D68F4700F965DE /* Player.swift */; };
-		E9A0F33627D68F4700F965DE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F33427D68F4700F965DE /* Player.swift */; };
 		E9A0F33827D68FE500F965DE /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F33727D68FE500F965DE /* GameData.swift */; };
 		E9A0F33927D68FE500F965DE /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F33727D68FE500F965DE /* GameData.swift */; };
 		E9A0F33B27D6905D00F965DE /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F33A27D6905D00F965DE /* Obstacle.swift */; };
@@ -60,7 +57,6 @@
 		E9A0F32B27D6804E00F965DE /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		E9A0F32E27D685CE00F965DE /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		E9A0F33127D6868700F965DE /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
-		E9A0F33427D68F4700F965DE /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		E9A0F33727D68FE500F965DE /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		E9A0F33A27D6905D00F965DE /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		E9A0F34027D6A59800F965DE /* MenuSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSceneController.swift; sourceTree = "<group>"; };
@@ -156,7 +152,6 @@
 		E9A0F32927D6801A00F965DE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E9A0F33427D68F4700F965DE /* Player.swift */,
 				E9A0F33727D68FE500F965DE /* GameData.swift */,
 				E9A0F33A27D6905D00F965DE /* Obstacle.swift */,
 			);
@@ -271,8 +266,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E97A078527D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */,
 				E9A0F31E27D67B9300F965DE /* Assets.xcassets in Resources */,
+				9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +275,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E97A078627D7D6CA00B1BA64 /* LaunchScreen.storyboard in Resources */,
 				E9A0F31F27D67B9300F965DE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,7 +294,6 @@
 				E9A0F35627D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */,
 				E9A0F33227D6868700F965DE /* PauseView.swift in Sources */,
 				E9A0F35027D6A71200F965DE /* AudioDelegate.swift in Sources */,
-				E9A0F33527D68F4700F965DE /* Player.swift in Sources */,
 				E9A0F34127D6A59800F965DE /* MenuSceneController.swift in Sources */,
 				E9A0F35927D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
 				E9A0F33827D68FE500F965DE /* GameData.swift in Sources */,
@@ -324,7 +317,6 @@
 				E9A0F35727D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */,
 				E9A0F33327D6868700F965DE /* PauseView.swift in Sources */,
 				E9A0F35127D6A71200F965DE /* AudioDelegate.swift in Sources */,
-				E9A0F33627D68F4700F965DE /* Player.swift in Sources */,
 				E9A0F34227D6A59800F965DE /* MenuSceneController.swift in Sources */,
 				E9A0F35A27D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
 				E9A0F33927D68FE500F965DE /* GameData.swift in Sources */,
@@ -457,14 +449,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				DEVELOPMENT_TEAM = R36LU3NVAA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -487,14 +479,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				DEVELOPMENT_TEAM = R36LU3NVAA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -518,7 +510,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				DEVELOPMENT_TEAM = R36LU3NVAA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -543,7 +535,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				DEVELOPMENT_TEAM = R36LU3NVAA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
