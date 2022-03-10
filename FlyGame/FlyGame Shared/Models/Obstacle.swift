@@ -9,14 +9,14 @@ import Foundation
 import SpriteKit
 
 class Obstacle {
-    var positions:[CGFloat]
+    var lanePosition: CGFloat
     var weight: Int
     var width: Int
     var assetName: String
     
-    init(positions: [CGFloat], weight: Int, width: Int, assetName: String) {
+    init(lanePosition: CGFloat, weight: Int, width: Int, assetName: String) {
         
-        self.positions = positions
+        self.lanePosition = lanePosition
         self.width = width
         self.weight = weight
         self.assetName = assetName
