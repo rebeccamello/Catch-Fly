@@ -71,13 +71,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
-        //enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        //enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.setScale(0.7)
+        enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
         enemy.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
         enemy.physicsBody?.isDynamic = true // faz reconhecer a colisão
-        //enemy.physicsBody!.contactTestBitMask = enemy.physicsBody!.collisionBitMask
+        if let colisionBitMask = enemy.physicsBody?.collisionBitMask {
+            enemy.physicsBody?.contactTestBitMask = colisionBitMask
+        }
         enemy.physicsBody?.restitution = 0.4
         enemy.position.y = obstacle.lanePosition
         addChild(enemy)
@@ -134,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        if contact.bodyB.node?.name == "Fly" {
+        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
             collisionBetween(player: nodeA, enemy: nodeB)
         }
     }
@@ -174,7 +175,6 @@ extension GameScene: GameLogicDelegate {
     }
     
     func movePlayer(position: Int) {
-        print(position)
         playerNode.position.y = CGFloat(position) * (size.height / 6)
         currentPosition = CGFloat(position)
     }
