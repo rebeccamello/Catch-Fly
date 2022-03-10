@@ -160,11 +160,9 @@ extension GameScene: GameLogicDelegate {
     }
     
     func obstacleSpeed(speed: CGFloat) {
-        //enemyNode.position.x -= speed
         for obstacle in allObstacles {
             obstacle.position.x -= speed
         }
-        
     }
     
     func movePlayer(position: Int) {
