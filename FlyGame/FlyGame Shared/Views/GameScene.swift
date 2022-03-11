@@ -33,11 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.zPosition = 1
         bug.name = "Fly"
         bug.setScale(0.8)
-        bug.physicsBody = SKPhysicsBody(rectangleOf: bug.size)
-        bug.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
-        bug.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        bug.physicsBody!.contactTestBitMask = bug.physicsBody!.collisionBitMask
-        bug.physicsBody?.restitution = 0.4
+        setPhysics(node: bug)
         
         let texture: [SKTexture] = [SKTexture(imageNamed: "mosca0.png"),
                                     SKTexture(imageNamed: "mosca1.png"),
@@ -54,25 +50,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         return bug
     }()
-    
-    func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
-        let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
-        enemy.zPosition = 2
-        enemy.name = "Enemy"
-        enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
-        enemy.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
-        enemy.physicsBody?.isDynamic = true // faz reconhecer a colisão
-        if let colisionBitMask = enemy.physicsBody?.collisionBitMask {
-            enemy.physicsBody?.contactTestBitMask = colisionBitMask
-        }
-        enemy.physicsBody?.restitution = 0.4
-        enemy.position.y = obstacle.lanePosition
-        addChild(enemy)
-        allObstacles.append(enemy)
-        return enemy
-    }
     
     class func newGameScene() -> GameScene {
         let scene = GameScene()
@@ -143,6 +120,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else { return }
         
         gameLogic.movePlayer(direction: direction, position: Int(currentPosition))
+    }
+    
+    func setPhysics(node: SKSpriteNode) {
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
+        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
+        node.physicsBody?.restitution = 0.4
+    }
+    
+    func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
+        let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
+        enemy.zPosition = 2
+        enemy.name = "Enemy"
+        enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
+        setPhysics(node: enemy)
+        enemy.position.y = obstacle.lanePosition
+        addChild(enemy)
+        allObstacles.append(enemy)
+        return enemy
     }
 }
 
