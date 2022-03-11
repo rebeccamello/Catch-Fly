@@ -14,6 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var comodaVaso: SKSpriteNode = SKSpriteNode()
     var lustre: SKSpriteNode = SKSpriteNode()
     var allObstacles: [SKSpriteNode] = []
+    var moveAndRemove = SKAction()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
@@ -67,8 +68,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
-        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/3, weight: 2, width: 2, assetName: "comodaVaso"))
-        lustre = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/6*5, weight: 1, width: 1, assetName: "lustre"))
+//        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/3, weight: 2, width: 2, assetName: "comodaVaso"))
+//        lustre = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/6*5, weight: 1, width: 1, assetName: "lustre"))
         
         let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -83,6 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.setUpScene()
         gameLogic.startUp()
+        startMovement()
         physicsWorld.contactDelegate = self
     }
     
@@ -141,6 +143,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(enemy)
         allObstacles.append(enemy)
         return enemy
+    }
+    
+    func createComoda() -> SKSpriteNode {
+        let enemy = SKSpriteNode(imageNamed: "comodaVaso")
+        enemy.zPosition = 2
+        enemy.name = "Enemy"
+        enemy.setScale(0.7)
+        setPhysics(node: enemy)
+        enemy.position.y = size.height/2
+        addChild(enemy)
+//        allObstacles.append(enemy)
+        return enemy
+    }
+    
+    func startMovement() {
+        print("entrou")
+        var node = SKSpriteNode()
+//        node = self.createComoda()
+        let spawn = SKAction.run({
+            () in
+            node = self.createComoda()
+            self.addChild(node)
+        })
+//        let spawn = SKAction.run({
+//            () in
+//            node = self.createComoda()
+//            self.addChild(node)
+//        })
+        print(node)
+        let delay = SKAction.wait(forDuration: 1.5)
+        let spawnDelay = SKAction.sequence([spawn, delay])
+        let spawnDelayForever = SKAction.repeatForever(spawnDelay)
+        self.run(spawnDelayForever)
+        
+        let distance = CGFloat(self.frame.width + node.frame.width)
+        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
+        let removeObs = SKAction.removeFromParent()
+        moveAndRemove = SKAction.sequence([moveObs, removeObs])
     }
 }
 
