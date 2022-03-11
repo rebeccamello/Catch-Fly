@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "piano 1.png",
+      "filename" : "playButton.png",
       "idiom" : "iphone",
       "scale" : "1x"
     },
@@ -14,11 +14,11 @@
       "scale" : "3x"
     },
     {
-      "filename" : "PianoX1.png",
       "idiom" : "tv",
       "scale" : "1x"
     },
     {
+      "filename" : "bt_play.png",
       "idiom" : "tv",
       "scale" : "2x"
     }

@@ -12,7 +12,7 @@ class MenuScene: SKScene {
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
-        scenario = SKSpriteNode(imageNamed: "Scenario")
+        scenario = SKSpriteNode(imageNamed: "cenario")
         return scenario
     }()
     
@@ -22,7 +22,7 @@ class MenuScene: SKScene {
     }()
     
     lazy var playButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "PlayButton")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "JogarBotao")) {
             // TODO: levar implementação para a controller
             let scene = GameScene.newGameScene()
             self.view?.presentScene(scene)
@@ -31,19 +31,19 @@ class MenuScene: SKScene {
     }()
     
     lazy var soundButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "SoundButton")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "SomBotao")) {
         }
         return bt
     }()
     
     lazy var musicButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "MusicButton")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "MusicaBotao")) {
         }
         return bt
     }()
     
     lazy var gameCenterButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "GameCenterButton")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "GameCenterBotao")) {
         }
         return bt
     }()
@@ -98,19 +98,25 @@ class MenuScene: SKScene {
         scenarioImage.zPosition = 0
         
         soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
+<<<<<<< Updated upstream
         soundButton.zPosition = 1
         
         scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
         scoreLabel.zPosition = 1
         
+=======
+        soundButton.zPosition = 2
+        scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
+        scoreLabel.zPosition = 2
+>>>>>>> Stashed changes
         scoreLabel.fontSize = self.size.height/15
         musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
-        musicButton.zPosition = 1
+        musicButton.zPosition = 2
         gameCenterButton.position = CGPoint(x: soundButton.position.x - self.size.width/9.5, y: self.size.height/3.5)
-        gameCenterButton.zPosition = 1
+        gameCenterButton.zPosition = 2
         playButton.position = CGPoint(x: self.size.width/2, y: self.size.height/1.6)
-        playButton.zPosition = 1
-        pianoImage.position = CGPoint(x: self.size.width/4, y: self.size.height/2)
+        playButton.zPosition = 2
+        pianoImage.position = CGPoint(x: self.size.width/8.5, y: self.size.height/3)
         pianoImage.zPosition = 1
     }
     

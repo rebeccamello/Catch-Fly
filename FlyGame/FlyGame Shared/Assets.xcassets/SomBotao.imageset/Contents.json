@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "piano 1.png",
+      "filename" : "SomDeJogo.png",
       "idiom" : "iphone",
       "scale" : "1x"
     },
@@ -14,7 +14,7 @@
       "scale" : "3x"
     },
     {
-      "filename" : "PianoX1.png",
+      "filename" : "SomDeJogo-1.png",
       "idiom" : "tv",
       "scale" : "1x"
     },
