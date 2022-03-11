@@ -68,7 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.physicsBody?.contactTestBitMask = colisionBitMask
         }
         enemy.physicsBody?.restitution = 0.4
-        enemy.position.y = obstacle.lanePosition
+        enemy.position.y = (self.size.height/6) * CGFloat(obstacle.lanePosition)
         addChild(enemy)
         allObstacles.append(enemy)
         return enemy
@@ -90,8 +90,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
-        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/3, weight: 2, width: 2, assetName: "comodaVaso"))
-        lustre = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/6*5, weight: 1, width: 1, assetName: "lustre"))
+        
+        let fetcher = ObstacleFetcher()
+        
+//        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVaso"))
+//        lustre = createObstacle(obstacle: Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre"))
+        comodaVaso = createObstacle(obstacle: fetcher.fetch(lane: 2, weight: 2))
+        lustre = createObstacle(obstacle: fetcher .fetch(lane: 5, weight: 1))
+        
+//        gameLogic.newChoose().forEach { obstacle in
+//            createObstacle(obstacle: obstacle)
+//        }
+        print(gameLogic.chooseObstacle())
         
         let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up

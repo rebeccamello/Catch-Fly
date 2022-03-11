@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
+		C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
+		C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F2FE27D67B9300F965DE /* AppDelegate.swift */; };
 		E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F30027D67B9300F965DE /* GameViewController.swift */; };
 		E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F30E27D67B9300F965DE /* AppDelegate.swift */; };
@@ -45,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleFetcher.swift; sourceTree = "<group>"; };
 		E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9A0F2F527D67B9100F965DE /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		E9A0F2F627D67B9300F965DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -172,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				E9A0F34B27D6A6BD00F965DE /* AudioService.swift */,
+				C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -298,6 +302,7 @@
 				E9A0F35927D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
 				E9A0F33827D68FE500F965DE /* GameData.swift in Sources */,
 				E9A0F34C27D6A6BD00F965DE /* AudioService.swift in Sources */,
+				C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				E9A0F34727D6A63700F965DE /* GameSceneController.swift in Sources */,
 				E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */,
 				E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */,
@@ -321,6 +326,7 @@
 				E9A0F35A27D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
 				E9A0F33927D68FE500F965DE /* GameData.swift in Sources */,
 				E9A0F34D27D6A6BD00F965DE /* AudioService.swift in Sources */,
+				C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				E9A0F34827D6A63700F965DE /* GameSceneController.swift in Sources */,
 				E9A0F31127D67B9300F965DE /* GameViewController.swift in Sources */,
 				E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */,
