@@ -85,6 +85,7 @@ class MenuScene: SKScene {
     private func setupNodesSize() {
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
+        
         playButton.setScale(self.size.height/410)
         musicButton.setScale(self.size.height/460.6)
         soundButton.setScale(self.size.height/460.6)
@@ -95,10 +96,13 @@ class MenuScene: SKScene {
     private func setupNodesPosition() {
         scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         scenarioImage.zPosition = 0
+        
         soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
         soundButton.zPosition = 1
+        
         scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
         scoreLabel.zPosition = 1
+        
         scoreLabel.fontSize = self.size.height/15
         musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
         musicButton.zPosition = 1
