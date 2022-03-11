@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "lustre.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "lustre2.png",
+      "filename" : "pixilart-drawingTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "lustre3.png",
+      "filename" : "pixilart-drawing.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

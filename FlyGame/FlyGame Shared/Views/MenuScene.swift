@@ -87,9 +87,9 @@ class MenuScene: SKScene {
         scenarioImage.size.height = self.size.height
         
         playButton.setScale(self.size.height/410)
-        musicButton.setScale(self.size.height/460.6)
+        musicButton.setScale(self.size.height/2300)
         soundButton.setScale(self.size.height/460.6)
-        gameCenterButton.setScale(self.size.height/460.6)
+        gameCenterButton.setScale(self.size.height/2300)
         pianoImage.setScale(self.size.height/400)
     }
     
@@ -98,17 +98,11 @@ class MenuScene: SKScene {
         scenarioImage.zPosition = 0
         
         soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
-<<<<<<< Updated upstream
         soundButton.zPosition = 1
         
         scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
         scoreLabel.zPosition = 1
-        
-=======
-        soundButton.zPosition = 2
-        scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
-        scoreLabel.zPosition = 2
->>>>>>> Stashed changes
+
         scoreLabel.fontSize = self.size.height/15
         musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
         musicButton.zPosition = 2
