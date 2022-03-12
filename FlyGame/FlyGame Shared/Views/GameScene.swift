@@ -84,13 +84,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.setUpScene()
         gameLogic.startUp()
-        startMovement()
         physicsWorld.contactDelegate = self
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        
+        startMovement()
         for obstacle in allObstacles {
             obstacle.position = CGPoint(x: size.width - obstacle.size.width/2, y: obstacle.position.y)
         }
@@ -137,42 +138,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.zPosition = 2
         enemy.name = "Enemy"
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.width/3.2 * CGFloat(obstacle.weight)
         setPhysics(node: enemy)
-        enemy.position.y = obstacle.lanePosition
+//        enemy.position.y = obstacle.lanePosition
+        enemy.position = CGPoint(x: size.width, y: size.height * obstacle.lanePosition / 6)
         addChild(enemy)
         allObstacles.append(enemy)
         return enemy
     }
     
-    func createComoda() -> SKSpriteNode {
-        let enemy = SKSpriteNode(imageNamed: "comodaVaso")
-        enemy.zPosition = 2
-        enemy.name = "Enemy"
-        enemy.setScale(0.7)
-        setPhysics(node: enemy)
-        enemy.position.y = size.height/2
-        addChild(enemy)
-//        allObstacles.append(enemy)
-        return enemy
-    }
     
     func startMovement() {
         print("entrou")
         var node = SKSpriteNode()
-//        node = self.createComoda()
-        let spawn = SKAction.run({
-            () in
-            node = self.createComoda()
-            self.addChild(node)
-        })
-//        let spawn = SKAction.run({
-//            () in
-//            node = self.createComoda()
-//            self.addChild(node)
-//        })
-        print(node)
-        let delay = SKAction.wait(forDuration: 1.5)
+        let spawn = SKAction.run {
+            node = self.createObstacle(obstacle: Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "Comoda"))
+        }
+        
+        let delay = SKAction.wait(forDuration: 4)
         let spawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(spawnDelay)
         self.run(spawnDelayForever)
