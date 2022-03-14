@@ -69,16 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(playerNode)
         
-        let fetcher = ObstacleFetcher()
         
-//        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVaso"))
-//        lustre = createObstacle(obstacle: Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre"))
-        //comodaVaso = createObstacle(obstacle: fetcher.fetch(lane: 2, weight: 2))
-        //lustre = createObstacle(obstacle: fetcher .fetch(lane: 5, weight: 1))
-        
-        gameLogic.chooseObstacle().forEach { obstacle in
-            createObstacle(obstacle: obstacle)
-        }
         print(gameLogic.chooseObstacle())
         
         let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
@@ -147,10 +138,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
+        print("weight: \(obstacle.weight)")
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.width/3.2 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
         setPhysics(node: enemy)
-//        enemy.position.y = obstacle.lanePosition
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
         allObstacles.append(enemy)
@@ -159,10 +150,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func startMovement() {
-        print("entrou")
         var node = SKSpriteNode()
         let spawn = SKAction.run {
-            node = self.createObstacle(obstacle: Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "Comoda"))
+            self.gameLogic.chooseObstacle().forEach { obstacle in
+                node = self.createObstacle(obstacle: obstacle)
+            }
         }
         
         let delay = SKAction.wait(forDuration: 4)
@@ -171,7 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.run(spawnDelayForever)
         
         let distance = CGFloat(self.frame.width + node.frame.width)
-        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
+        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
         let removeObs = SKAction.removeFromParent()
         moveAndRemove = SKAction.sequence([moveObs, removeObs])
     }
