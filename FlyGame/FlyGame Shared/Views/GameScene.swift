@@ -52,25 +52,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return bug
     }()
     
-    func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
-        let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
-        enemy.zPosition = 2
-        enemy.name = "Enemy"
-        enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
-        enemy.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
-        enemy.physicsBody?.isDynamic = true // faz reconhecer a colisão
-        if let colisionBitMask = enemy.physicsBody?.collisionBitMask {
-            enemy.physicsBody?.contactTestBitMask = colisionBitMask
-        }
-        enemy.physicsBody?.restitution = 0.4
-        enemy.position.y = (self.size.height/6) * CGFloat(obstacle.lanePosition)
-        addChild(enemy)
-        allObstacles.append(enemy)
-        return enemy
-    }
-    
     class func newGameScene() -> GameScene {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
@@ -170,7 +151,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.size.width = self.size.width/3.2 * CGFloat(obstacle.weight)
         setPhysics(node: enemy)
 //        enemy.position.y = obstacle.lanePosition
-        enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * obstacle.lanePosition / 6)
+        enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
         allObstacles.append(enemy)
         return enemy
