@@ -15,6 +15,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lustre: SKSpriteNode = SKSpriteNode()
     var allObstacles: [SKSpriteNode] = []
     var moveAndRemove = SKAction()
+    lazy var pauseButton: SKButtonNode = {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBut"), action: {
+            self.pauseMenu.isHidden.toggle()
+        })
+        return but
+    }()
+    var pauseMenu = PauseMenu()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
@@ -68,6 +75,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
+        self.addChild(pauseButton)
+        self.addChild(pauseMenu)
         
         
         print(gameLogic.chooseObstacle())
@@ -80,6 +89,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.view?.addGestureRecognizer(swipeUp)
         self.view?.addGestureRecognizer(swipeDown)
+        
+        pauseMenu.isHidden = true
     }
     
     override func didMove(to view: SKView) {
@@ -93,6 +104,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.size.height = self.size.height/5
         playerNode.size.width = self.size.height/5
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        pauseButton.position = CGPoint(x: 50, y: size.height - 50)
         
         startMovement()
         for obstacle in allObstacles {
