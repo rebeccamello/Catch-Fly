@@ -24,7 +24,7 @@ class ObstacleFetcher {
         Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "vovo"),
         Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "banquinhoVaso"),
         Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano"),
-        Obstacle(lanePosition: 4, weight: 4, width: 2, assetName: "armarioCopo")
+        Obstacle(lanePosition: 4, weight: 2, width: 2, assetName: "armarioCopo")
     ]
     
     func fetch(lane: Int) -> Obstacle {

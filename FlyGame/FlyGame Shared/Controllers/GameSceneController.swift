@@ -51,7 +51,7 @@ class GameSceneController {
         var newSpeed = count
         
         //MARK: AUMENTAR O INTERVALO DE TEMPO
-        if timeCounter >= 5 {
+        if timeCounter >= 30 {
             timeCounter = 0
             newSpeed += 0.1
             count += 1
@@ -101,6 +101,7 @@ class GameSceneController {
     }
     
     func tearDown() {
+        timeCounter = 0
         timer.invalidate()
     }
 }
