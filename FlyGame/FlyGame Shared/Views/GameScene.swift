@@ -193,17 +193,18 @@ extension GameScene: GameLogicDelegate {
 }
 
 enum Direction {
-    case up, down
+    case up
+    case down
 }
 
 extension UISwipeGestureRecognizer.Direction {
     var direction: Direction? {
         switch self {
         case .up:
-            return Direction.up
+            return .up
             
         case .down:
-            return Direction.down
+            return .down
             
         default:
             return nil

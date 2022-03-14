@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2216630227DFCDA2003D6586 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216630127DFCDA2003D6586 /* ErrorHandler.swift */; };
+		2216630327DFCDA2003D6586 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216630127DFCDA2003D6586 /* ErrorHandler.swift */; };
 		957F29A027DFB3C8006A6A24 /* GameCenterSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957F299F27DFB3C8006A6A24 /* GameCenterSevice.swift */; };
 		957F29A127DFB3C8006A6A24 /* GameCenterSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957F299F27DFB3C8006A6A24 /* GameCenterSevice.swift */; };
 		9921B89127DBC61000E3AD23 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921B89027DBC61000E3AD23 /* Player.swift */; };
@@ -51,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2216630127DFCDA2003D6586 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		957F299F27DFB3C8006A6A24 /* GameCenterSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterSevice.swift; sourceTree = "<group>"; };
 		9921B89027DBC61000E3AD23 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		9921B89427DBC66500E3AD23 /* SKButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKButtonNode.swift; sourceTree = "<group>"; };
@@ -192,6 +195,7 @@
 			children = (
 				E9A0F34B27D6A6BD00F965DE /* AudioService.swift */,
 				957F299F27DFB3C8006A6A24 /* GameCenterSevice.swift */,
+				2216630127DFCDA2003D6586 /* ErrorHandler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -323,6 +327,7 @@
 				E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */,
 				957F29A027DFB3C8006A6A24 /* GameCenterSevice.swift in Sources */,
 				E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */,
+				2216630227DFCDA2003D6586 /* ErrorHandler.swift in Sources */,
 				9921B89127DBC61000E3AD23 /* Player.swift in Sources */,
 				E9A0F33B27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);
@@ -349,6 +354,7 @@
 				E9A0F31127D67B9300F965DE /* GameViewController.swift in Sources */,
 				957F29A127DFB3C8006A6A24 /* GameCenterSevice.swift in Sources */,
 				E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */,
+				2216630327DFCDA2003D6586 /* ErrorHandler.swift in Sources */,
 				9921B89227DBC61000E3AD23 /* Player.swift in Sources */,
 				E9A0F33C27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);

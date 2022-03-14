@@ -53,7 +53,8 @@ class MenuScene: SKScene {
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = "Highscore: 2067"
+        // lbl.text = "Highscore: 2067"
+        self.setScore(with: UserDefaults.standard.integer(forKey: "score"))
         return lbl
     }()
     
@@ -109,6 +110,11 @@ class MenuScene: SKScene {
         pianoImage.position = CGPoint(x: self.size.width/4, y: self.size.height/2)
         pianoImage.zPosition = 1
     }
+    
+    public func setScore(with score: Int) -> Void {
+        self.scoreLabel.text = "Highscore: \(score)"
+    }
+    
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered

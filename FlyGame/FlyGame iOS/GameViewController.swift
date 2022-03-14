@@ -10,14 +10,36 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    
+    let scene = MenuScene.newGameScene()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let gameCenterManagar = GameCenterService(with: self)
+        
+        gameCenterManagar.autenticateUser() {result in
+            switch result {
+            case .success(_):
+                
+                gameCenterManagar.getHighScore() {result in
+                    switch result {
+                    case .success(let score):
+                        self.scene.setScore(with: score)
+                        
+                    case .failure(let error):
+                        print("Erro: \(error.description)")
+                    }
+                }
+                
+            case .failure(let error):
+                print("Erro: \(error.description)")
+            }
+        }
     }
     
     override func loadView() {
-        let scene = GameScene.newGameScene()
-        
         let skView = SKView()
         skView.presentScene(scene)
         

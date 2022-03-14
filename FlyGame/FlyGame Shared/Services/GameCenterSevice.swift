@@ -7,59 +7,99 @@
 
 import GameKit
 
-class GameCenterService: GKGameCenterViewController{
+class GameCenterService: GKGameCenterViewController {
+    
+    /* MARK: - Atributos */
+    
+    static let leaderboardID = "mainLeaderboard"
+    
     var controller: UIViewController!
     
-    init(controller: UIViewController){
+    
+    
+    /* MARK: - Construtor */
+    
+    /// Chama a controller responsável para mostrar as telas do Game Center
+    init(with controller: UIViewController) {
         super.init(nibName: nil, bundle: nil)
+        
         self.controller = controller
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
     
-    func autenticateUser() {
-        GKLocalPlayer.local.authenticateHandler = { vc, error in
-            if (vc == nil && error == nil) {
-                // self.getHighScoreFromLeadboard(label:label)
+    
+    /* MARK: - Métodos */
+    
+    /// Faz a autenticação do usuário
+    public func autenticateUser(_ completionHandler: @escaping (Result<Bool, ErrorHandler>) -> Void) -> Void {
+        GKLocalPlayer.local.authenticateHandler = {vc, error in
+            
+            // Se tiver algum erro
+            guard let _ = error else {
+                completionHandler(.failure(.authenticationError))
                 return
             }
-            guard error == nil else { return }
             
-            self.controller.present(vc!, animated: true, completion: nil)
+            if let vc = vc {
+                self.controller.present(vc, animated: true, completion: nil)
+                completionHandler(.success(true))
+                return
+            }
         }
     }
     
-    func getHighScore() {
+    
+    /// Pega o score salvo no Game Center
+    public func getHighScore(_ completionHandler: @escaping (Result<Int, ErrorHandler>) -> Void) -> Void {
         if (GKLocalPlayer.local.isAuthenticated) {
-            GKLeaderboard.loadLeaderboards(IDs: ["lbHighScore"]) { leaderboards, _ in
+            GKLeaderboard.loadLeaderboards(IDs: [GameCenterService.leaderboardID]) {leaderboards, _ in
                 leaderboards?[0].loadEntries(for: [GKLocalPlayer.local], timeScope: .allTime) {
-                    player, _, _ in
+                    player, _, error in
                     
-                    //if (player?.score == nil) {return}
-                        
-                    if (player?.score != nil && UserDefaults.standard.integer(forKey: "score") < (player?.score)!) {
+                    // Verifica se tem algum erro
+                    if let _ = error {
+                        completionHandler(.failure(.badCommunication))
+                        return
+                    }
+                    
+                    // Verifica se o player e o score existem
+                    guard let score = player?.score else {
+                        completionHandler(.failure(.scoreNotFound))
+                        return
+                    }
+                    
+                    // Atualiza o user defaults caso necessário
+                    if UserDefaults.standard.integer(forKey: "score") < score {
                         UserDefaults.standard.set(player?.score, forKey: "score")
                     }
                     
-                    // label.text = "Best".localized() + " " +  String(UserDefaults.standard.integer(forKey: "score"))
+                    completionHandler(.success(score))
                 }
             }
         }
     }
     
-    func setHighScore(score: Int) {
+    
+    /// Define o score no Game Center
+    public func submitHighScore(score: Int, _ completionHandler: @escaping (Result<Bool, ErrorHandler>) -> Void ) -> Void{
         if (GKLocalPlayer.local.isAuthenticated) {
             UserDefaults.standard.set(score, forKey: "score")
             
-            
-            GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: ["lbHighScore"]) {_ in}
+            GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [GameCenterService.leaderboardID]) {error in
+                
+                if let _ = error {
+                    completionHandler(.failure(.scoreNotSubmited))
+                }
+                completionHandler(.success(true))
+            }
         }
     }
     
-    func showGameCenterPage(_ state: GKGameCenterViewControllerState = .leaderboards) {
+    
+    /// Abre a página do game center
+    public func showGameCenterPage(_ state: GKGameCenterViewControllerState = .leaderboards) -> Void {
         if (GKLocalPlayer.local.isAuthenticated) {
             let vc = GKGameCenterViewController(state: state)
             // vc.gameCenterDelegate = self
