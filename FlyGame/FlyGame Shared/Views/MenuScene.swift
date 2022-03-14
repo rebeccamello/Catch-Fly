@@ -17,12 +17,12 @@ class MenuScene: SKScene {
     }()
     
     lazy var pianoImage: SKSpriteNode = {
-        var piano = SKSpriteNode(imageNamed: "Piano")
+        var piano = SKSpriteNode(imageNamed: "piano")
         return piano
     }()
     
     lazy var playButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "JogarBotao")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
             // TODO: levar implementação para a controller
             let scene = GameScene.newGameScene()
             self.view?.presentScene(scene)
@@ -31,19 +31,19 @@ class MenuScene: SKScene {
     }()
     
     lazy var soundButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "SomBotao")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
         }
         return bt
     }()
     
     lazy var musicButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "MusicaBotao")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
         }
         return bt
     }()
     
     lazy var gameCenterButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "GameCenterBotao")) {
+        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "gameCenterBotao")) {
         }
         return bt
     }()
