@@ -71,7 +71,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeAllChildren()
         removeAllActions()
         
-        //self.addChild(scenarioImage)
+        self.addChild(scenarioImage)
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
@@ -109,9 +109,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.setNodePosition()
         
         startMovement()
-        for obstacle in allObstacles {
-            obstacle.position = CGPoint(x: size.width - obstacle.size.width/2, y: obstacle.position.y)
-        }
         setPhysics(node: playerNode)
     }
     
@@ -168,7 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.name = "Enemy"
         print("weight: \(obstacle.weight)")
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3 * CGFloat(obstacle.width)
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
@@ -185,15 +182,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        let delay = SKAction.wait(forDuration: 2)
+        let delay = SKAction.wait(forDuration: 3)
         let spawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(spawnDelay)
         self.run(spawnDelayForever)
-//
-//        let distance = CGFloat(self.frame.width + node.frame.width)
-//        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
-//        let removeObs = SKAction.removeFromParent()
-//        moveAndRemove = SKAction.sequence([moveObs, removeObs])
+
+        let distance = CGFloat(self.frame.width + node.frame.width)
+        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
+        let removeObs = SKAction.removeFromParent()
+        moveAndRemove = SKAction.sequence([moveObs, removeObs])
+        node.removeFromParent()
     }
 }
 
