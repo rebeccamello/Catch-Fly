@@ -65,6 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return scene
     }
     
+    //MARK: - setUpScenne
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
@@ -93,12 +94,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseMenu.isHidden = true
     }
     
+    //MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
         gameLogic.startUp()
         physicsWorld.contactDelegate = self
     }
     
+    //MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
         playerNode.size.height = self.size.height/5
@@ -112,11 +115,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             obstacle.position = CGPoint(x: size.width - obstacle.size.width/2, y: obstacle.position.y)
         }
     }
+    
+    func setPhysics(node: SKSpriteNode) {
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
+        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
+        node.physicsBody?.restitution = 0.4
+    }
        
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
     
+    //MARK: - Colisão
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
@@ -141,14 +153,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLogic.movePlayer(direction: direction, position: Int(currentPosition))
     }
     
-    func setPhysics(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
-        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
-        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
-        node.physicsBody?.restitution = 0.4
-    }
-    
+    //MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
