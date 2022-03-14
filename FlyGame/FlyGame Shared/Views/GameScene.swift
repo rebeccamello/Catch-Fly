@@ -33,7 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bug = SKSpriteNode(imageNamed: "Mosca")
         bug.zPosition = 1
         bug.name = "Fly"
-        bug.setScale(0.8)
+        bug.setScale(0.7)
         setPhysics(node: bug)
         
         let texture: [SKTexture] = [SKTexture(imageNamed: "mosca0.png"),
@@ -90,6 +90,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
+        playerNode.size.height = self.size.height/5
+        playerNode.size.width = self.size.height/5
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         
         startMovement()
