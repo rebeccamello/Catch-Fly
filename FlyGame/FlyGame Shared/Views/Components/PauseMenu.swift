@@ -24,7 +24,7 @@ class PauseMenu: SKNode {
         return but
     }()
     lazy var resumeButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "resumeButton")) {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "continuarBotao")) {
             
         }
         return but

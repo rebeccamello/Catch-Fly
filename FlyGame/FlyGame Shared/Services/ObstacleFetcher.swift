@@ -10,7 +10,7 @@ import CoreGraphics
 
 class ObstacleFetcher {
     private var obstacles: [Obstacle] = [
-        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVasoGlobo"),
+        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVaso"),
         Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre"),
         Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "globo"),
         Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "cadeira"),
@@ -20,11 +20,12 @@ class ObstacleFetcher {
         Obstacle(lanePosition: 1, weight: 1, width: 2, assetName: "mesa"),
         Obstacle(lanePosition: 3, weight: 1, width: 2, assetName: "estanteLivros"),
         Obstacle(lanePosition: 3, weight: 1, width: 2, assetName: "estanteVasos"),
-        Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteXicara"),
+        Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha"),
         Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "vovo"),
         Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "banquinhoVaso"),
         Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano"),
-        Obstacle(lanePosition: 4, weight: 2, width: 2, assetName: "armarioCopo")
+        Obstacle(lanePosition: 4, weight: 2, width: 2, assetName: "armario"),
+        Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "bancoVaso")
     ]
     
     func fetch(lane: Int) -> Obstacle {

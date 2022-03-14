@@ -16,7 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var allObstacles: [SKSpriteNode] = []
     var moveAndRemove = SKAction()
     lazy var pauseButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBut"), action: {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
             self.pauseMenu.isHidden.toggle()
             self.isPaused.toggle()
         })
@@ -42,7 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.zPosition = 1
         bug.name = "Fly"
         bug.setScale(0.7)
-        setPhysics(node: bug)
+        
         
         let texture: [SKTexture] = [SKTexture(imageNamed: "mosca0.png"),
                                     SKTexture(imageNamed: "mosca1.png"),
@@ -71,7 +71,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeAllChildren()
         removeAllActions()
         
-        self.addChild(scenarioImage)
+        //self.addChild(scenarioImage)
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
@@ -100,6 +100,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.setUpScene()
         gameLogic.startUp()
         physicsWorld.contactDelegate = self
+        self.view?.showsPhysics = true
     }
     
     //MARK: didChangeSize
@@ -111,6 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for obstacle in allObstacles {
             obstacle.position = CGPoint(x: size.width - obstacle.size.width/2, y: obstacle.position.y)
         }
+        setPhysics(node: playerNode)
     }
     
     func setPhysics(node: SKSpriteNode) {
@@ -127,6 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: 50, y: size.height - 50)
+        pauseButton.setScale(0.1)
     }
        
     override func update(_ currentTime: TimeInterval) {
