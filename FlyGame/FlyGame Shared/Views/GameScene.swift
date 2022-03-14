@@ -141,7 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.size.width = self.size.width/3.2 * CGFloat(obstacle.weight)
         setPhysics(node: enemy)
 //        enemy.position.y = obstacle.lanePosition
-        enemy.position = CGPoint(x: size.width, y: size.height * obstacle.lanePosition / 6)
+        enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * obstacle.lanePosition / 6)
         addChild(enemy)
         allObstacles.append(enemy)
         return enemy
@@ -182,7 +182,7 @@ extension GameScene: GameLogicDelegate {
     
     func obstacleSpeed(speed: CGFloat) {
         for obstacle in allObstacles {
-            obstacle.position.x -= speed
+            obstacle.position.x -= speed 
         }
     }
     

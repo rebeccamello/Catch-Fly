@@ -33,7 +33,7 @@ class GameSceneController {
     }
     
     func startUp() {
-        timer = Timer.scheduledTimer(timeInterval: 0.08, target: self, selector: #selector(obstacleSpeed), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(obstacleSpeed), userInfo: nil, repeats: true)
     }
     
     @objc func obstacleSpeed(speed: CGFloat) {
@@ -43,7 +43,7 @@ class GameSceneController {
         //MARK: AUMENTAR O INTERVALO DE TEMPO
         if timeCounter >= 5 {
             timeCounter = 0
-            newSpeed += 1
+            newSpeed += 0.1
             count += 1
         }        
         gameDelegate?.obstacleSpeed(speed: newSpeed)
