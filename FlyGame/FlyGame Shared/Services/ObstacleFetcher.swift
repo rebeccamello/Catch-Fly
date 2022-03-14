@@ -14,7 +14,7 @@ class ObstacleFetcher {
         Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre"),
         Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "globo"),
         Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "cadeira"),
-        Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "banquinho"),
+        Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "banco"),
         Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "vaso"),
         Obstacle(lanePosition: 1, weight: 1, width: 2, assetName: "comoda"),
         Obstacle(lanePosition: 1, weight: 1, width: 2, assetName: "mesa"),
@@ -22,10 +22,10 @@ class ObstacleFetcher {
         Obstacle(lanePosition: 3, weight: 1, width: 2, assetName: "estanteVasos"),
         Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha"),
         Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "vovo"),
-        Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "banquinhoVaso"),
         Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano"),
         Obstacle(lanePosition: 4, weight: 2, width: 2, assetName: "armario"),
-        Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "bancoVaso")
+        Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "bancoVaso"),
+        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "mesaVaso")
     ]
     
     func fetch(lane: Int) -> Obstacle {
