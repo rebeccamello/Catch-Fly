@@ -30,7 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }()
     
     lazy var playerNode: SKSpriteNode = {
-        var bug = SKSpriteNode(imageNamed: "Mosca")
+        var bug = SKSpriteNode(imageNamed: "mosca")
         bug.zPosition = 1
         bug.name = "Fly"
         bug.setScale(0.8)

@@ -19,7 +19,6 @@
 		E9A0F31C27D67B9300F965DE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F2F527D67B9100F965DE /* GameScene.swift */; };
 		E9A0F31D27D67B9300F965DE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F2F527D67B9100F965DE /* GameScene.swift */; };
 		E9A0F31E27D67B9300F965DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A0F2F627D67B9300F965DE /* Assets.xcassets */; };
-		E9A0F31F27D67B9300F965DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A0F2F627D67B9300F965DE /* Assets.xcassets */; };
 		E9A0F32C27D6804E00F965DE /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F32B27D6804E00F965DE /* MenuScene.swift */; };
 		E9A0F32D27D6804E00F965DE /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F32B27D6804E00F965DE /* MenuScene.swift */; };
 		E9A0F32F27D685CE00F965DE /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F32E27D685CE00F965DE /* GameOverScene.swift */; };
@@ -46,6 +45,9 @@
 		E9A0F35727D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */; };
 		E9A0F35927D6A84900F965DE /* GameLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */; };
 		E9A0F35A27D6A84900F965DE /* GameLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */; };
+		E9A99EDA27DBD568004D86FF /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9A99ED727DBCA66004D86FF /* munro.ttf */; };
+		E9A99EDB27DBD569004D86FF /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9A99ED727DBCA66004D86FF /* munro.ttf */; };
+		E9A99EDC27DBE6C6004D86FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A0F2F627D67B9300F965DE /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,9 @@
 		E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLogicDelegate.swift; sourceTree = "<group>"; };
 		E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverLogicDelegate.swift; sourceTree = "<group>"; };
 		E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogicDelegate.swift; sourceTree = "<group>"; };
+		E9A99ED727DBCA66004D86FF /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
+		E9A99ED827DBCAA7004D86FF /* FlyGame-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "FlyGame-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E9A99ED927DBCAB9004D86FF /* FlyGame-tvOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "FlyGame-tvOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +119,7 @@
 		E9A0F2F227D67B9100F965DE /* FlyGame Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E9A99ED627DBCA28004D86FF /* Font */,
 				E9A0F34E27D6A6F900F965DE /* Delegate */,
 				E9A0F34927D6A68600F965DE /* Services */,
 				E9A0F32A27D6802400F965DE /* Controllers */,
@@ -137,6 +143,7 @@
 		E9A0F2FD27D67B9300F965DE /* FlyGame iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E9A99ED827DBCAA7004D86FF /* FlyGame-iOS-Info.plist */,
 				E9A0F2FE27D67B9300F965DE /* AppDelegate.swift */,
 				E9A0F30027D67B9300F965DE /* GameViewController.swift */,
 			);
@@ -146,6 +153,7 @@
 		E9A0F30D27D67B9300F965DE /* FlyGame tvOS */ = {
 			isa = PBXGroup;
 			children = (
+				E9A99ED927DBCAB9004D86FF /* FlyGame-tvOS-Info.plist */,
 				E9A0F30E27D67B9300F965DE /* AppDelegate.swift */,
 				E9A0F31027D67B9300F965DE /* GameViewController.swift */,
 			);
@@ -201,6 +209,14 @@
 				E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */,
 			);
 			path = Delegate;
+			sourceTree = "<group>";
+		};
+		E9A99ED627DBCA28004D86FF /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				E9A99ED727DBCA66004D86FF /* munro.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +300,7 @@
 			files = (
 				E9A0F31E27D67B9300F965DE /* Assets.xcassets in Resources */,
 				9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */,
+				E9A99EDA27DBD568004D86FF /* munro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,7 +308,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9A0F31F27D67B9300F965DE /* Assets.xcassets in Resources */,
+				E9A99EDC27DBE6C6004D86FF /* Assets.xcassets in Resources */,
+				E9A99EDB27DBD569004D86FF /* munro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,8 +487,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = B47883TN4D;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -499,8 +518,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = B47883TN4D;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -530,8 +550,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = B47883TN4D;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -555,8 +576,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = B47883TN4D;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
