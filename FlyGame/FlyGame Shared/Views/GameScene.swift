@@ -140,7 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.name = "Enemy"
         print("weight: \(obstacle.weight)")
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.width/3.2 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
@@ -152,7 +152,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func startMovement() {
         var node = SKSpriteNode()
         let spawn = SKAction.run {
-//            node = self.createObstacle(obstacle: Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "Comoda"))
             self.gameLogic.chooseObstacle().forEach { obstacle in
                 node = self.createObstacle(obstacle: obstacle)
             }

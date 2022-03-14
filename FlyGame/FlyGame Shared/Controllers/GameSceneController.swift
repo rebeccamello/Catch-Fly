@@ -68,7 +68,6 @@ class GameSceneController {
         let weight: Int = randomizer(min: 1, max: 2)
         let quantity = chooseObstacleQuantity(for: weight)
         let lanes = chooseObstacleLane(for: weight, quantity: quantity)
-        print(weight, quantity, lanes)
         
         return lanes.map { fetcher.fetch(lane: $0) } // transforma a lista de lanes em lista de obstacles
     }
