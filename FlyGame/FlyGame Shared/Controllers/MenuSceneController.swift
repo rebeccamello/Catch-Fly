@@ -10,4 +10,7 @@ import SpriteKit
 
 class MenuSceneController {
     
+    func playGame() {
+        
+    }
 }

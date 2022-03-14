@@ -23,8 +23,6 @@ class MenuScene: SKScene {
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
             // TODO: levar implementação para a controller
-            let scene = GameScene.newGameScene()
-            self.view?.presentScene(scene)
         }
         return bt
     }()
@@ -194,6 +192,8 @@ extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
     }
     func playGame() {
+        let scene = GameScene.newGameScene()
+        self.view?.presentScene(scene)
     }
     func toggleSound() {
     }
