@@ -18,6 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBut"), action: {
             self.pauseMenu.isHidden.toggle()
+            self.isPaused.toggle()
         })
         return but
     }()
@@ -104,11 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
-        playerNode.size.height = self.size.height/5
-        playerNode.size.width = self.size.height/5
-        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
-        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
-        pauseButton.position = CGPoint(x: 50, y: size.height - 50)
+        self.setNodePosition()
         
         startMovement()
         for obstacle in allObstacles {
@@ -122,6 +119,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
         node.physicsBody?.restitution = 0.4
+    }
+    
+    func setNodePosition() {
+        playerNode.size.height = self.size.height/5
+        playerNode.size.width = self.size.height/5
+        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        pauseButton.position = CGPoint(x: 50, y: size.height - 50)
     }
        
     override func update(_ currentTime: TimeInterval) {
@@ -177,15 +182,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        let delay = SKAction.wait(forDuration: 4)
+        let delay = SKAction.wait(forDuration: 2)
         let spawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(spawnDelay)
         self.run(spawnDelayForever)
-        
-        let distance = CGFloat(self.frame.width + node.frame.width)
-        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
-        let removeObs = SKAction.removeFromParent()
-        moveAndRemove = SKAction.sequence([moveObs, removeObs])
+//
+//        let distance = CGFloat(self.frame.width + node.frame.width)
+//        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
+//        let removeObs = SKAction.removeFromParent()
+//        moveAndRemove = SKAction.sequence([moveObs, removeObs])
     }
 }
 
