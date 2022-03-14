@@ -68,8 +68,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
-//        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/3, weight: 2, width: 2, assetName: "comodaVaso"))
-//        lustre = createObstacle(obstacle: Obstacle(lanePosition: self.size.height/6*5, weight: 1, width: 1, assetName: "lustre"))
+        
+        let fetcher = ObstacleFetcher()
+        
+//        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVaso"))
+//        lustre = createObstacle(obstacle: Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre"))
+        //comodaVaso = createObstacle(obstacle: fetcher.fetch(lane: 2, weight: 2))
+        //lustre = createObstacle(obstacle: fetcher .fetch(lane: 5, weight: 1))
+        
+        gameLogic.chooseObstacle().forEach { obstacle in
+            createObstacle(obstacle: obstacle)
+        }
+        print(gameLogic.chooseObstacle())
         
         let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -141,7 +151,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.size.width = self.size.width/3.2 * CGFloat(obstacle.weight)
         setPhysics(node: enemy)
 //        enemy.position.y = obstacle.lanePosition
-        enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * obstacle.lanePosition / 6)
+        enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
         allObstacles.append(enemy)
         return enemy
