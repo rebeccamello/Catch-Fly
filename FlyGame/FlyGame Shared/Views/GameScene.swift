@@ -95,12 +95,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 //        comodaVaso = createObstacle(obstacle: Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVaso"))
 //        lustre = createObstacle(obstacle: Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre"))
-        comodaVaso = createObstacle(obstacle: fetcher.fetch(lane: 2, weight: 2))
-        lustre = createObstacle(obstacle: fetcher .fetch(lane: 5, weight: 1))
+        //comodaVaso = createObstacle(obstacle: fetcher.fetch(lane: 2, weight: 2))
+        //lustre = createObstacle(obstacle: fetcher .fetch(lane: 5, weight: 1))
         
-//        gameLogic.newChoose().forEach { obstacle in
-//            createObstacle(obstacle: obstacle)
-//        }
+        gameLogic.chooseObstacle().forEach { obstacle in
+            createObstacle(obstacle: obstacle)
+        }
         print(gameLogic.chooseObstacle())
         
         let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))

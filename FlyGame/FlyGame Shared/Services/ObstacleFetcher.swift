@@ -10,19 +10,28 @@ import CoreGraphics
 
 class ObstacleFetcher {
     private var obstacles: [Obstacle] = [
-        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVaso"),
-        Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre")
+        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVasoGlobo"),
+        Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre"),
+        Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "globo"),
+        Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "cadeira"),
+        Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "banquinho"),
+        Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "vaso"),
+        Obstacle(lanePosition: 1, weight: 1, width: 2, assetName: "comoda"),
+        Obstacle(lanePosition: 1, weight: 1, width: 2, assetName: "mesa"),
+        Obstacle(lanePosition: 3, weight: 1, width: 2, assetName: "estanteLivros"),
+        Obstacle(lanePosition: 3, weight: 1, width: 2, assetName: "estanteVasos"),
+        Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteXicara"),
+        Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "vovo"),
+        Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "banquinhoVaso"),
+        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano"),
+        Obstacle(lanePosition: 4, weight: 4, width: 2, assetName: "armarioCopo")
     ]
     
-    func fetch(lane: Int, weight: Int) -> Obstacle {
+    func fetch(lane: Int) -> Obstacle {
         let filteredObstacles = obstacles.filter { obstacle in
             (obstacle.lanePosition == lane)
-            && (weight == obstacle.weight)
         }
         let index = randomizer(min: 0, max: filteredObstacles.count-1)
         return filteredObstacles[index]
     }
 }
-
-let weight1assets: [[String]] = [["cadeira", "comoda", "mesa", "vaso", "banquinho"],["estanteVasos", "estateLivros"],["lustre"]] // matriz [[obstacs posição1], [posição3], [posição5]]
-let weight2assets: [[String]] = [["comodaVasoGlobo", "piano", "vovo", "banquinhoVaso"],["estanteXicaras", "armarioCopos"]]
