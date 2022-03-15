@@ -10,16 +10,17 @@ import SpriteKit
 
 class PauseMenu: SKNode {
     
-    //var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
     var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
+    var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
+    
     lazy var retryButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "retryButton")) {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
             
         }
         return but
     }()
     lazy var homeButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "homeButton")) {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
             
         }
         return but
@@ -31,50 +32,37 @@ class PauseMenu: SKNode {
         return but
     }()
     lazy var soundButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "soundButton")) {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
         }
         return but
     }()
     
     lazy var musicButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicButton")) {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
         }
         return but
     }()
     
-    
-    
-    
     override init() {
        
         super.init()
-        //addChild(bg)
+        addChild(bg)
         addChild(buttonsContainer)
         buttonsContainer.addChild(homeButton)
         buttonsContainer.addChild(retryButton)
         buttonsContainer.addChild(soundButton)
         buttonsContainer.addChild(musicButton)
         buttonsContainer.addChild(resumeButton)
+
         
-        homeButton.setScale(0.1)
-        retryButton.setScale(0.1)
-        soundButton.setScale(0.1)
-        musicButton.setScale(0.1)
-        resumeButton.setScale(0.1)
-        
-//        bg.zPosition = 950
-//        buttonsContainer.zPosition = 951
-//        returnButton.zPosition = 952
-//        exitButton.zPosition = 952
-//        bg.alpha = 0.45
-//        buttonsContainer.fillColor = .pauseMenuGray
-//        buttonsContainer.lineWidth = 0
-        resumeButton.position = CGPoint(x: 200, y: 200)
-        
-        
-        
-     
-        
+        homeButton.setScale(bg.size.width * 0.00023)
+        retryButton.setScale(bg.size.width * 0.00023)
+        soundButton.setScale(bg.size.width * 0.00023)
+        musicButton.setScale(bg.size.width * 0.00023)
+        resumeButton.setScale(bg.size.width * 0.00026)
+                
+        buttonsContainer.lineWidth = 0
+        setPositions()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -90,7 +78,25 @@ class PauseMenu: SKNode {
         }
     }
    
-    
+    func setPositions() {
+        resumeButton.zPosition = 4
+        resumeButton.position = CGPoint(x: 0, y: buttonsContainer.frame.size.height * 0.15)
+        
+        bg.zPosition = 3
+        bg.alpha = 0.45
+        
+        homeButton.zPosition = 4
+        homeButton.position = CGPoint(x: -buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
+        
+        retryButton.zPosition = 4
+        retryButton.position = CGPoint(x: -buttonsContainer.frame.size.width/9, y: -resumeButton.position.y*1.4)
+        
+        soundButton.zPosition = 4
+        soundButton.position = CGPoint(x: buttonsContainer.frame.size.width/9, y: -resumeButton.position.y*1.4)
+        
+        musicButton.zPosition = 4
+        musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
+    }
     
    
     

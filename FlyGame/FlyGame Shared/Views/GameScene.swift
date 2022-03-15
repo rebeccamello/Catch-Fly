@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         return but
     }()
+    
     var pauseMenu = PauseMenu()
     
     lazy var scenarioImage: SKSpriteNode = {
@@ -92,7 +93,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addGestureRecognizer(swipeUp)
         self.view?.addGestureRecognizer(swipeDown)
         
-        pauseMenu.isHidden = true
+        pauseMenu.isHidden = false
     }
     
     //MARK: - didMove
@@ -100,7 +101,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.setUpScene()
         gameLogic.startUp()
         physicsWorld.contactDelegate = self
-        self.view?.showsPhysics = true
     }
     
     //MARK: didChangeSize
@@ -163,16 +163,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
-        print("weight: \(obstacle.weight)")
-        enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3 * CGFloat(obstacle.width)
+        enemy.size.height = self.size.height/3.1 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3.1 * CGFloat(obstacle.width)
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
         allObstacles.append(enemy)
         return enemy
     }
-    
     
     func startMovement() {
         var node = SKSpriteNode()
