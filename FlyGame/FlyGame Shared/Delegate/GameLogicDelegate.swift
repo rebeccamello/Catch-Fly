@@ -15,6 +15,14 @@ protocol GameLogicDelegate: AnyObject {
     
     func gameOver()
     
+    func goToHome()
+    
+    func retryGame()
+    
+    func sound()
+    
+    func music()
+    
     func movePlayer(position: Int)
     
     func obstacleSpeed(speed: CGFloat)

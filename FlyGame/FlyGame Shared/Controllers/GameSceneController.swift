@@ -25,7 +25,6 @@ class GameSceneController {
     
     private let maxWeight = 2
     
-    
     func movePlayer(direction: Direction, position: Int) {
         var newPosition = position
         

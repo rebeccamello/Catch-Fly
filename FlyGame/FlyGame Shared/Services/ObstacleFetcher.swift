@@ -20,6 +20,8 @@ class ObstacleFetcher {
         Obstacle(lanePosition: 1, weight: 1, width: 2, assetName: "mesa"),
         Obstacle(lanePosition: 3, weight: 1, width: 2, assetName: "estanteLivros"),
         Obstacle(lanePosition: 3, weight: 1, width: 2, assetName: "estanteVasos"),
+        Obstacle(lanePosition: 5, weight: 1, width: 2, assetName: "estanteLivros"),
+        Obstacle(lanePosition: 5, weight: 1, width: 2, assetName: "estanteVasos"),
         Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha"),
         Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "vovo"),
         Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano"),
