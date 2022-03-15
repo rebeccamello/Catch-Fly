@@ -129,8 +129,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.size.width = self.size.height/5
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
-        pauseButton.position = CGPoint(x: 50, y: size.height - 50)
-        pauseButton.setScale(0.1)
+        pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
+        
+        pauseButton.setScale(self.size.height*0.00035)
     }
        
     override func update(_ currentTime: TimeInterval) {
