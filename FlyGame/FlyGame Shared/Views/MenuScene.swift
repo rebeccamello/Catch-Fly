@@ -160,7 +160,7 @@ class MenuScene: SKScene {
         soundButton.setScale(self.size.height/2300)
         gameCenterButton.setScale(self.size.height/2300)
         piano.setScale(self.size.height/2300)
-        catAction.setScale(self.size.height/2500)
+        catAction.setScale(self.size.height/3000)
         chandelier.setScale(self.size.height/2300)
         chair.setScale(self.size.height/2300)
         flyAction.setScale(self.size.height/2800)
