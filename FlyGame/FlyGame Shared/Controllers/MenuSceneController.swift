@@ -10,7 +10,29 @@ import SpriteKit
 
 class MenuSceneController {
     
+    weak var menuDelegate: MenuLogicDelegate?
+    var soundOn: Bool = true
+    
     func playGame() {
+        let scene = GameScene.newGameScene()
+        menuDelegate?.playGame(scene: scene)
+    }
+    
+    func toggleSound() {
         
+        if let node = menuDelegate?.toggleSound() {
+            let texture: [SKTexture] = [SKTexture(imageNamed: "somBotao"),
+                                        SKTexture(imageNamed: "somDesligadoBotao")]
+            soundOn.toggle()
+            
+            if soundOn {
+                node.image.texture = texture[0]
+            } else {
+                node.image.texture = texture[1]
+            }
+        } else {
+            return
+            
+        }
     }
 }
