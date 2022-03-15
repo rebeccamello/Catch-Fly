@@ -62,7 +62,24 @@ class MenuScene: SKScene {
         let texture: [SKTexture] = [SKTexture(imageNamed: "gato0.png"),
                                     SKTexture(imageNamed: "gato1.png"),
                                     SKTexture(imageNamed: "gato2.png"),
-                                    SKTexture(imageNamed: "gato3.png")]
+                                    SKTexture(imageNamed: "gato3.png"),
+                                    SKTexture(imageNamed: "gato4.png"),
+                                    SKTexture(imageNamed: "gato5.png"),
+                                    SKTexture(imageNamed: "gato6.png"),
+                                    SKTexture(imageNamed: "gato7.png"),
+                                    SKTexture(imageNamed: "gato8.png"),
+                                    SKTexture(imageNamed: "gato9.png"),
+                                    SKTexture(imageNamed: "gato10.png"),
+                                    SKTexture(imageNamed: "gato11.png"),
+                                    SKTexture(imageNamed: "gato12.png"),
+                                    SKTexture(imageNamed: "gato13.png"),
+                                    SKTexture(imageNamed: "gato14.png"),
+                                    SKTexture(imageNamed: "gato15.png"),
+                                    SKTexture(imageNamed: "gato16.png"),
+                                    SKTexture(imageNamed: "gato17.png"),
+                                    SKTexture(imageNamed: "gato18.png"),
+                                    SKTexture(imageNamed: "gato19.png"),
+                                    SKTexture(imageNamed: "gato20.png")]
         for t in texture {
             t.filteringMode = .nearest
         }
