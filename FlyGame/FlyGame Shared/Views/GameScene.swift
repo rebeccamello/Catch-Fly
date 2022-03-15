@@ -208,9 +208,16 @@ extension GameScene: GameLogicDelegate {
     
     func obstacleSpeed(speed: CGFloat) {
         for obstacle in allObstacles {
-            obstacle.position.x -= speed 
+            if isPaused == true{
+                obstacle.position.x -= 0
+            }
+            else{
+                obstacle.position.x -= speed
+            }
+            
         }
     }
+
     
     func movePlayer(position: Int) {
         playerNode.position.y = CGFloat(position) * (size.height / 6)
