@@ -9,7 +9,6 @@ import Foundation
 import SpriteKit
 
 class MenuScene: SKScene {
-    var Node: SKButtonNode = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao"), action: {print("oi")})
     
     lazy var menuLogic: MenuSceneController = {
         let m = MenuSceneController()
@@ -45,6 +44,7 @@ class MenuScene: SKScene {
         
         lazy var musicButton: SKButtonNode = {
             var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
+                self.menuLogic.toggleMusic()
             }
             return bt
         }()
@@ -209,7 +209,8 @@ extension MenuScene: MenuLogicDelegate {
         return soundButton
     }
     
-    func toggleMusic() {
+    func toggleMusic() -> SKButtonNode {
+        return musicButton
     }
 }
 
