@@ -13,7 +13,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var comodaVaso: SKSpriteNode = SKSpriteNode()
     var lustre: SKSpriteNode = SKSpriteNode()
-    var allObstacles: [SKSpriteNode] = []
     var moveAndRemove = SKAction()
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
@@ -135,7 +134,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
        
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        let outOfTheScreenNodes = children.filter { node in
+            if let sprite = node as? SKSpriteNode {
+                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+            } else {
+                return false
+            }
+        }
+        
+        removeChildren(in: outOfTheScreenNodes)
     }
     
     //MARK: - Colisão
@@ -173,7 +180,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        allObstacles.append(enemy)
         return enemy
     }
     
@@ -186,7 +192,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         #if os(tvOS)
-        let delay = SKAction.wait(forDuration: 8)
+        let delay = SKAction.wait(forDuration: 6)
         
         #else
         let delay = SKAction.wait(forDuration: 4)
@@ -195,12 +201,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let spawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(spawnDelay)
         self.run(spawnDelayForever)
-
-//        let distance = CGFloat(self.frame.width + node.frame.width)
-//        let moveObs = SKAction.moveBy(x: distance - 10, y: 0, duration: TimeInterval(0.1 * distance))
-//        let removeObs = SKAction.removeFromParent()
-//        moveAndRemove = SKAction.sequence([moveObs, removeObs])
-//        node.removeFromParent()
     }
 }
 
@@ -237,6 +237,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func obstacleSpeed(speed: CGFloat) {
+        let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
             if isPaused == true{
                 obstacle.position.x -= 0
@@ -244,13 +245,13 @@ extension GameScene: GameLogicDelegate {
             else{
                 obstacle.position.x -= speed
             }
-            
         }
     }
 
     
     func movePlayer(position: Int) {
-        playerNode.position.y = CGFloat(position) * (size.height / 6)
+        let moveAction = SKAction.moveTo(y: CGFloat(position) * (size.height / 6), duration: 0.2)
+        playerNode.run(moveAction)
         currentPosition = CGFloat(position)
     }
 }
