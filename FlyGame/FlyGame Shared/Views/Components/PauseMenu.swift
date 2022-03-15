@@ -11,6 +11,7 @@ import SpriteKit
 class PauseMenu: SKNode {
     
     //var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
+    var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
     lazy var retryButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "retryButton")) {
             
@@ -48,11 +49,12 @@ class PauseMenu: SKNode {
        
         super.init()
         //addChild(bg)
-        addChild(homeButton)
-        addChild(retryButton)
-        addChild(soundButton)
-        addChild(musicButton)
-        addChild(resumeButton)
+        addChild(buttonsContainer)
+        buttonsContainer.addChild(homeButton)
+        buttonsContainer.addChild(retryButton)
+        buttonsContainer.addChild(soundButton)
+        buttonsContainer.addChild(musicButton)
+        buttonsContainer.addChild(resumeButton)
         
         homeButton.setScale(0.1)
         retryButton.setScale(0.1)
