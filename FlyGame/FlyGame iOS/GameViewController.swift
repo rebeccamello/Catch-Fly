@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
     }
     
     override func loadView() {
-        let scene = MenuScene.newGameScene()
+        let scene = GameScene.newGameScene()
         
         let skView = SKView()
         skView.presentScene(scene)
@@ -26,6 +26,9 @@ class GameViewController: UIViewController {
         skView.showsNodeCount = true
         
         self.view = skView
+    }
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return UIRectEdge.bottom
     }
 
     override var shouldAutorotate: Bool {

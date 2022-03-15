@@ -15,6 +15,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lustre: SKSpriteNode = SKSpriteNode()
     var allObstacles: [SKSpriteNode] = []
     var moveAndRemove = SKAction()
+    lazy var pauseButton: SKButtonNode = {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
+            self.pauseMenu.isHidden.toggle()
+            self.isPaused.toggle()
+        })
+        return but
+    }()
+    var pauseMenu = PauseMenu()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
@@ -33,8 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bug = SKSpriteNode(imageNamed: "mosca")
         bug.zPosition = 1
         bug.name = "Fly"
-        bug.setScale(0.8)
-        setPhysics(node: bug)
+        bug.setScale(0.7)
+        
         
         let texture: [SKTexture] = [SKTexture(imageNamed: "mosca0.png"),
                                     SKTexture(imageNamed: "mosca1.png"),
@@ -58,6 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return scene
     }
     
+    //MARK: - setUpScenne
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
@@ -68,6 +77,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
+        self.addChild(pauseButton)
+        self.addChild(pauseMenu)
         
         
         print(gameLogic.chooseObstacle())
@@ -80,28 +91,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.view?.addGestureRecognizer(swipeUp)
         self.view?.addGestureRecognizer(swipeDown)
+        
+        pauseMenu.isHidden = true
     }
     
+    //MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
         gameLogic.startUp()
         physicsWorld.contactDelegate = self
+        self.view?.showsPhysics = true
     }
     
+    //MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
-        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        self.setNodePosition()
         
         startMovement()
-        for obstacle in allObstacles {
-            obstacle.position = CGPoint(x: size.width - obstacle.size.width/2, y: obstacle.position.y)
-        }
+        setPhysics(node: playerNode)
+    }
+    
+    func setPhysics(node: SKSpriteNode) {
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
+        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
+        node.physicsBody?.restitution = 0.4
+    }
+    
+    func setNodePosition() {
+        playerNode.size.height = self.size.height/5
+        playerNode.size.width = self.size.height/5
+        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        pauseButton.position = CGPoint(x: 50, y: size.height - 50)
+        pauseButton.setScale(0.1)
     }
        
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
     
+    //MARK: - Colisão
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
@@ -126,21 +158,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLogic.movePlayer(direction: direction, position: Int(currentPosition))
     }
     
-    func setPhysics(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
-        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
-        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
-        node.physicsBody?.restitution = 0.4
-    }
-    
+    //MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
         print("weight: \(obstacle.weight)")
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3 * CGFloat(obstacle.width)
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
@@ -157,15 +182,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        let delay = SKAction.wait(forDuration: 4)
+        let delay = SKAction.wait(forDuration: 3)
         let spawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(spawnDelay)
         self.run(spawnDelayForever)
-        
+
         let distance = CGFloat(self.frame.width + node.frame.width)
         let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
         let removeObs = SKAction.removeFromParent()
         moveAndRemove = SKAction.sequence([moveObs, removeObs])
+        node.removeFromParent()
     }
 }
 
