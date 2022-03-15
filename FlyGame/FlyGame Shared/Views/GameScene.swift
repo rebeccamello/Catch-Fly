@@ -23,7 +23,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return but
     }()
     
-    var pauseMenu = PauseMenu()
+    lazy var pauseMenu: PauseMenu = {
+        var menu = PauseMenu()
+        menu.gameDelegate = self
+        return menu
+    }()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
@@ -93,7 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addGestureRecognizer(swipeUp)
         self.view?.addGestureRecognizer(swipeDown)
         
-        pauseMenu.isHidden = false
+        pauseMenu.isHidden = true
     }
     
     //MARK: - didMove
@@ -196,6 +200,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 extension GameScene: GameLogicDelegate {
     func resumeGame() {
         print("resume")
+        self.isPaused.toggle()
+        pauseMenu.isHidden = true
     }
     
     func pauseGame() {
@@ -204,6 +210,23 @@ extension GameScene: GameLogicDelegate {
     
     func gameOver() {
         print("gameOver")
+    }
+    
+    func goToHome() {
+        let scene = MenuScene.newGameScene()
+        view?.presentScene(scene)
+    }
+    
+    func retryGame() {
+        print("retry")
+    }
+    
+    func sound() {
+        print("sound")
+    }
+    
+    func music() {
+        print("music")
     }
     
     func obstacleSpeed(speed: CGFloat) {

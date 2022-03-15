@@ -12,39 +12,41 @@ class PauseMenu: SKNode {
     
     var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
     var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
+    weak var gameDelegate: GameLogicDelegate?
     
     lazy var retryButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
-            
+            self.gameDelegate?.retryGame()
         }
         return but
     }()
     lazy var homeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
-            
+            self.gameDelegate?.goToHome()
         }
         return but
     }()
     lazy var resumeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "continuarBotao")) {
-            
+            self.gameDelegate?.resumeGame()
         }
         return but
     }()
     lazy var soundButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
+            self.gameDelegate?.sound()
         }
         return but
     }()
     
     lazy var musicButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
+            self.gameDelegate?.music()
         }
         return but
     }()
     
     override init() {
-       
         super.init()
         addChild(bg)
         addChild(buttonsContainer)
@@ -53,7 +55,6 @@ class PauseMenu: SKNode {
         buttonsContainer.addChild(soundButton)
         buttonsContainer.addChild(musicButton)
         buttonsContainer.addChild(resumeButton)
-
         
         homeButton.setScale(bg.size.width * 0.00023)
         retryButton.setScale(bg.size.width * 0.00023)
