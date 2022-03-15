@@ -184,16 +184,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        let delay = SKAction.wait(forDuration: 3)
+        #if os(tvOS)
+        let delay = SKAction.wait(forDuration: 8)
+        
+        #else
+        let delay = SKAction.wait(forDuration: 4)
+        
+        #endif
         let spawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(spawnDelay)
         self.run(spawnDelayForever)
 
-        let distance = CGFloat(self.frame.width + node.frame.width)
-        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
-        let removeObs = SKAction.removeFromParent()
-        moveAndRemove = SKAction.sequence([moveObs, removeObs])
-        node.removeFromParent()
+//        let distance = CGFloat(self.frame.width + node.frame.width)
+//        let moveObs = SKAction.moveBy(x: distance - 10, y: 0, duration: TimeInterval(0.1 * distance))
+//        let removeObs = SKAction.removeFromParent()
+//        moveAndRemove = SKAction.sequence([moveObs, removeObs])
+//        node.removeFromParent()
     }
 }
 
