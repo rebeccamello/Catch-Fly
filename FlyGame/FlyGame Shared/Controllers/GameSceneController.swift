@@ -22,6 +22,13 @@ class GameSceneController {
     var timeCounter = 0
     var count: CGFloat = 10
     var fetcher = ObstacleFetcher()
+    var shouldCreateObstacle: Bool = false
+    private var lastObstacleTimeCreated: TimeInterval = 0
+    private var delay: TimeInterval = 2.5
+    private var speed
+    // TODO: AAAAAAAAAAAAAA
+    // DEIXR A SPEED GLOBAL PRIVADA PRA FAZER AS CONTAS DO DELAY
+    // FAZER DELAY SER UMA VAR COMPUTAVEL
     
     private let maxWeight = 2
     
@@ -95,7 +102,16 @@ class GameSceneController {
     }
     
     func update(currentTime: TimeInterval) {
+        if lastObstacleTimeCreated == 0 {
+            lastObstacleTimeCreated = currentTime
+        }
+        let pastTime = (currentTime - lastObstacleTimeCreated)
         
+        if pastTime >= delay {
+            let obstacles = chooseObstacle()
+            obstacles.forEach { gameDelegate?.createObstacle(obstacle: $0) }
+            lastObstacleTimeCreated = currentTime
+        }
     }
     
     func tearDown() {

@@ -26,6 +26,8 @@ protocol GameLogicDelegate: AnyObject {
     func movePlayer(position: Int)
     
     func obstacleSpeed(speed: CGFloat)
+    
+    func createObstacle(obstacle: Obstacle)
 }
 
 

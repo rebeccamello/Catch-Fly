@@ -111,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.setUpScene()
         self.setNodePosition()
         
-        startMovement()
+        //startMovement()
         setPhysics(node: playerNode)
     }
     
@@ -141,8 +141,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return false
             }
         }
-        
         removeChildren(in: outOfTheScreenNodes)
+        gameLogic.update(currentTime: currentTime)
+        
     }
     
     //MARK: - Colisão
@@ -171,7 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: - Criação e movimentação de obstáculos
-    func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
+    func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
@@ -180,14 +181,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        return enemy
     }
     
     func startMovement() {
         var node = SKSpriteNode()
         let spawn = SKAction.run {
             self.gameLogic.chooseObstacle().forEach { obstacle in
-                node = self.createObstacle(obstacle: obstacle)
+                self.createObstacle(obstacle: obstacle)
             }
         }
         
