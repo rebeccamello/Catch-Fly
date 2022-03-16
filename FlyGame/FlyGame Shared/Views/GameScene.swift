@@ -14,7 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = "PNTS"
+        lbl.text = "0"
         return lbl
     }()
     
@@ -192,6 +192,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 }
 
 extension GameScene: GameLogicDelegate {
+    func drawScore(score: Int) {
+        scoreLabel.text = String(score)
+    }
+    
     func resumeGame() {
         print("resume")
         self.isPaused.toggle()
