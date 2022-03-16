@@ -24,6 +24,7 @@ class MenuScene: SKScene {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
             // TODO: levar implementação para a controller
             let scene = GameScene.newGameScene()
+            scene.isGameStarted = true
             self.view?.presentScene(scene)
         }
         return bt

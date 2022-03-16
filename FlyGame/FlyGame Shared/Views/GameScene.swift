@@ -9,6 +9,8 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
+    var isGameStarted: Bool = false
+    
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
             self.pauseMenu.isHidden.toggle()
@@ -86,8 +88,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
-        gameLogic.startUp()
-        physicsWorld.contactDelegate = self
+        
+        if isGameStarted {
+            gameLogic.startUp()
+            physicsWorld.contactDelegate = self
+        }
     }
     
     //MARK: didChangeSize
@@ -95,7 +100,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.setUpScene()
         self.setNodePosition()
         
-        //startMovement()
         setPhysics(node: playerNode)
     }
     
@@ -151,6 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(player: SKNode, enemy: SKNode) {
         gameLogic.tearDown()
+        self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
         view?.presentScene(scene)
     }
@@ -161,7 +166,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let direction = swipeGesture.direction.direction
         else { return }
         movePlayer(direction: direction)
-        //gameLogic.movePlayer(direction: direction, position: Int(currentPosition))
     }
     
     //MARK: - Criação e movimentação de obstáculos
@@ -175,31 +179,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
     }
+    
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.2)
         playerNode.run(moveAction)
     }
-    
-//    func startMovement() {
-//        //var node = SKSpriteNode()
-//        let spawn = SKAction.run {
-//            self.gameLogic.chooseObstacle().forEach { obstacle in
-//                self.createObstacle(obstacle: obstacle)
-//            }
-//        }
-//
-//        #if os(tvOS)
-//        let delay = SKAction.wait(forDuration: 6)
-//
-//        #else
-//        let delay = SKAction.wait(forDuration: 4)
-//
-//        #endif
-//        let spawnDelay = SKAction.sequence([spawn, delay])
-//        let spawnDelayForever = SKAction.repeatForever(spawnDelay)
-//        self.run(spawnDelayForever)
-//    }
 }
 
 extension GameScene: GameLogicDelegate {
@@ -214,7 +199,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func gameOver() {
-        print("gameOver")
+        
     }
     
     func goToHome() {
