@@ -16,7 +16,7 @@ class PauseMenu: SKNode {
     
     lazy var retryButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
-            self.gameDelegate?.retryGame()
+            //self.gameDelegate?.retryGame()
         }
         return but
     }()

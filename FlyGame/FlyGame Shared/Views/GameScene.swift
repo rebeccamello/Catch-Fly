@@ -8,11 +8,6 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
-    var currentPosition: CGFloat = 3
-    
-    var comodaVaso: SKSpriteNode = SKSpriteNode()
-    var lustre: SKSpriteNode = SKSpriteNode()
     var moveAndRemove = SKAction()
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
@@ -100,7 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.setUpScene()
         self.setNodePosition()
         
-        startMovement()
+        //startMovement()
         setPhysics(node: playerNode)
     }
     
@@ -120,7 +115,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         
         pauseButton.setScale(self.size.height*0.00035)
-        //playerNode.setScale(self.size.height/1000000)
     }
     
     func createTexture(_ name:String) -> [SKTexture] {
@@ -140,8 +134,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return false
             }
         }
-        
         removeChildren(in: outOfTheScreenNodes)
+        gameLogic.update(currentTime: currentTime)
+        
     }
     
     //MARK: - Colisão
@@ -165,12 +160,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let swipeGesture = gesture as? UISwipeGestureRecognizer,
             let direction = swipeGesture.direction.direction
         else { return }
-        
-        gameLogic.movePlayer(direction: direction, position: Int(currentPosition))
+        movePlayer(direction: direction)
+        //gameLogic.movePlayer(direction: direction, position: Int(currentPosition))
     }
     
     //MARK: - Criação e movimentação de obstáculos
-    func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
+    func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
@@ -179,28 +174,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        return enemy
+    }
+    func movePlayer(direction: Direction) {
+        let position = gameLogic.movePlayer(direction: direction)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.2)
+        playerNode.run(moveAction)
     }
     
-    func startMovement() {
-        var node = SKSpriteNode()
-        let spawn = SKAction.run {
-            self.gameLogic.chooseObstacle().forEach { obstacle in
-                node = self.createObstacle(obstacle: obstacle)
-            }
-        }
-        
-        #if os(tvOS)
-        let delay = SKAction.wait(forDuration: 6)
-        
-        #else
-        let delay = SKAction.wait(forDuration: 4)
-        
-        #endif
-        let spawnDelay = SKAction.sequence([spawn, delay])
-        let spawnDelayForever = SKAction.repeatForever(spawnDelay)
-        self.run(spawnDelayForever)
-    }
+//    func startMovement() {
+//        //var node = SKSpriteNode()
+//        let spawn = SKAction.run {
+//            self.gameLogic.chooseObstacle().forEach { obstacle in
+//                self.createObstacle(obstacle: obstacle)
+//            }
+//        }
+//
+//        #if os(tvOS)
+//        let delay = SKAction.wait(forDuration: 6)
+//
+//        #else
+//        let delay = SKAction.wait(forDuration: 4)
+//
+//        #endif
+//        let spawnDelay = SKAction.sequence([spawn, delay])
+//        let spawnDelayForever = SKAction.repeatForever(spawnDelay)
+//        self.run(spawnDelayForever)
+//    }
 }
 
 extension GameScene: GameLogicDelegate {
@@ -248,11 +247,7 @@ extension GameScene: GameLogicDelegate {
     }
 
     
-    func movePlayer(position: Int) {
-        let moveAction = SKAction.moveTo(y: CGFloat(position) * (size.height / 6), duration: 0.2)
-        playerNode.run(moveAction)
-        currentPosition = CGFloat(position)
-    }
+    
 }
 
 enum Direction {
