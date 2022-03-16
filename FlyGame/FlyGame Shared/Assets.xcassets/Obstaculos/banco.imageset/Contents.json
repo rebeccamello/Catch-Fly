@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "banco.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bancoTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "banco.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
