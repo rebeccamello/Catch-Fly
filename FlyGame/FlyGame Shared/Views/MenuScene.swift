@@ -17,34 +17,38 @@ class MenuScene: SKScene {
     
     lazy var piano: SKSpriteNode = {
         var piano = SKSpriteNode(imageNamed: "piano")
+        piano.texture?.filteringMode = .nearest
         return piano
     }()
     
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
-            // TODO: levar implementação para a controller
             let scene = GameScene.newGameScene()
             scene.isGameStarted = true
             self.view?.presentScene(scene)
         }
+        bt.image.texture?.filteringMode = .nearest
         return bt
     }()
     
     lazy var soundButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
         }
+        bt.image.texture?.filteringMode = .nearest
         return bt
     }()
     
     lazy var musicButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
         }
+        bt.image.texture?.filteringMode = .nearest
         return bt
     }()
     
     lazy var gameCenterButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "gameCenterBotao")) {
         }
+        bt.image.texture?.filteringMode = .nearest
         return bt
     }()
     
@@ -70,11 +74,13 @@ class MenuScene: SKScene {
     
     lazy var chandelier: SKSpriteNode = {
         var chand = SKSpriteNode(imageNamed: "lustre")
+        chand.texture?.filteringMode = .nearest
         return chand
     }()
     
     lazy var chair: SKSpriteNode = {
         var chair = SKSpriteNode(imageNamed: "cadeira")
+        chair.texture?.filteringMode = .nearest
         return chair
     }()
     
@@ -135,10 +141,10 @@ class MenuScene: SKScene {
         musicButton.setScale(self.size.height/2300)
         soundButton.setScale(self.size.height/2300)
         gameCenterButton.setScale(self.size.height/2300)
-        piano.setScale(self.size.height/2300)
+        piano.setScale(self.size.height/300)
         catAction.setScale(self.size.height/700)
-        chandelier.setScale(self.size.height/2300)
-        chair.setScale(self.size.height/2300)
+        chandelier.setScale(self.size.height/300)
+        chair.setScale(self.size.height/300)
         flyAction.setScale(self.size.height/2800)
     }
     

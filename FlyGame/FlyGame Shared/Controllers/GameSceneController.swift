@@ -29,7 +29,20 @@ class GameSceneController {
      var delay: TimeInterval = 3
     private var minimumDelay: CGFloat = 1.8
     var initialPosition: CGFloat { 3 }
-    private let maxWeight = 2
+    private var score: Int = 0
+    private var timeScore: TimeInterval = 0
+    
+    private func calculateScore(currentTime: TimeInterval) {
+        if timeScore == 0 {
+            timeScore = currentTime
+        }
+        let deltaTime = (currentTime - timeScore)
+        if deltaTime >= 1 {
+            score += 1
+            gameDelegate?.drawScore(score: score)
+            timeScore = currentTime
+        }
+    }
     
     func movePlayer(direction: Direction) -> CGFloat{
         var newPosition = currentPosition
@@ -101,6 +114,11 @@ class GameSceneController {
     }
     
     func update(currentTime: TimeInterval) {
+        calculateDelay(currentTime: currentTime)
+        calculateScore(currentTime: currentTime)
+    }
+    
+    private func calculateDelay(currentTime: TimeInterval) {
         if lastObstacleTimeCreated == 0 {
             lastObstacleTimeCreated = currentTime
         }
@@ -115,13 +133,14 @@ class GameSceneController {
             if delay > minimumDelay { // limite minimo do delay
                 delay -= 0.5 // cada vez que o update é chamado diminui o delay
             }
-            
         }
+        
     }
     
     func tearDown() {
         timeCounter = 0
         timer.invalidate()
+        score = 0
     }
 }
 

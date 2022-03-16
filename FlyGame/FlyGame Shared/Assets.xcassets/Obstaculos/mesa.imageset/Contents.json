@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "mesa.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "mesaTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "mesa.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

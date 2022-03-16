@@ -11,7 +11,7 @@ import SpriteKit
 protocol GameLogicDelegate: AnyObject {
     func resumeGame()
     
-    //func drawScore(score: Int)
+    func drawScore(score: Int)
     
     func goToHome()
     

@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "globo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "globoTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "globo.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

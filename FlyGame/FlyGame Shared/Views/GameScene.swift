@@ -10,6 +10,14 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
+    lazy var scoreLabel: SKLabelNode = {
+        var lbl = SKLabelNode()
+        lbl.numberOfLines = 0
+        lbl.fontColor = SKColor.black
+        lbl.fontName = "munro"
+        lbl.text = "0"
+        return lbl
+    }()
     
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
@@ -69,6 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(playerNode)
         self.addChild(pauseButton)
         self.addChild(pauseMenu)
+        self.addChild(scoreLabel)
         
         
         print(gameLogic.chooseObstacle())
@@ -117,7 +126,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
-        
+        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        print(pauseButton.frame.size.height)
         pauseButton.setScale(self.size.height*0.00035)
     }
     
@@ -188,6 +198,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 }
 
 extension GameScene: GameLogicDelegate {
+    func drawScore(score: Int) {
+        scoreLabel.text = String(score)
+    }
+    
     func resumeGame() {
         print("resume")
         self.isPaused.toggle()
@@ -230,9 +244,6 @@ extension GameScene: GameLogicDelegate {
             }
         }
     }
-
-    
-    
 }
 
 enum Direction {
