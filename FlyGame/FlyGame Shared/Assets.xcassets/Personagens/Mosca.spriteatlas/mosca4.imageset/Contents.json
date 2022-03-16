@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "Property 1=mosca4.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "mosca4TV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "mosca4.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

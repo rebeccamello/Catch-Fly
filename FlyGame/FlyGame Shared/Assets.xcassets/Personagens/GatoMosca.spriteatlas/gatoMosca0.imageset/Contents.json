@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "gatoMosca0.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "gatoMosca0TV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "gatoMosca0.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
