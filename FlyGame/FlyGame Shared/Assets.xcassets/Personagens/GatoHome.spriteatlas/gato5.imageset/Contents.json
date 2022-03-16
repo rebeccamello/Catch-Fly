@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "gato5.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "gato5.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "gato5-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
