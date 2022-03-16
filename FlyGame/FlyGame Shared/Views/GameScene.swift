@@ -9,6 +9,7 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
+    var isGameStarted: Bool = false
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
         lbl.numberOfLines = 0
@@ -96,14 +97,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
-        gameLogic.startUp()
-        physicsWorld.contactDelegate = self
+        
+        if isGameStarted {
+            gameLogic.startUp()
+            physicsWorld.contactDelegate = self
+        }
     }
     
     //MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
         self.setNodePosition()
+        
         setPhysics(node: playerNode)
     }
     
@@ -160,6 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(player: SKNode, enemy: SKNode) {
         gameLogic.tearDown()
+        self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
         view?.presentScene(scene)
     }
@@ -183,12 +189,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
     }
+    
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.2)
         playerNode.run(moveAction)
     }
-    
 }
 
 extension GameScene: GameLogicDelegate {
@@ -207,7 +213,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func gameOver() {
-        print("gameOver")
+        
     }
     
     func goToHome() {

@@ -24,6 +24,7 @@ class MenuScene: SKScene {
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
             let scene = GameScene.newGameScene()
+            scene.isGameStarted = true
             self.view?.presentScene(scene)
         }
         bt.image.texture?.filteringMode = .nearest
