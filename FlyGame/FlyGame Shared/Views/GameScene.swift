@@ -47,19 +47,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.name = "Fly"
         bug.setScale(0.7)
         
-        
-        let texture: [SKTexture] = [SKTexture(imageNamed: "mosca0.png"),
-                                    SKTexture(imageNamed: "mosca1.png"),
-                                    SKTexture(imageNamed: "mosca2.png"),
-                                    SKTexture(imageNamed: "mosca3.png"),
-                                    SKTexture(imageNamed: "mosca4.png"),
-                                    SKTexture(imageNamed: "mosca5.png")]
-        for t in texture{
-            t.filteringMode = .nearest
-        }
-        let idleAnimation = SKAction.animate(with: texture, timePerFrame: 0.04)
-        let loop = SKAction.repeatForever(idleAnimation)
-        bug.run(loop)
+        let frames:[SKTexture] = createTexture("Mosca")
+        bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                            timePerFrame: TimeInterval(0.2),
+                                                            resize: false, restore: true)))
         
         return bug
     }()
@@ -131,6 +122,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         
         pauseButton.setScale(self.size.height*0.00035)
+    }
+    
+    func createTexture(_ name:String) -> [SKTexture] {
+        let textureAtlas = SKTextureAtlas(named: name)
+        var frames = [SKTexture]()
+        for i in 1...textureAtlas.textureNames.count - 1 {
+            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
+        }
+        return frames
     }
        
     override func update(_ currentTime: TimeInterval) {

@@ -59,35 +59,10 @@ class MenuScene: SKScene {
     lazy var catAction: SKSpriteNode = {
         var cat = SKSpriteNode(imageNamed: "gato0")
         
-        let texture: [SKTexture] = [SKTexture(imageNamed: "gato0.png"),
-                                    SKTexture(imageNamed: "gato1.png"),
-                                    SKTexture(imageNamed: "gato2.png"),
-                                    SKTexture(imageNamed: "gato3.png"),
-                                    SKTexture(imageNamed: "gato4.png"),
-                                    SKTexture(imageNamed: "gato5.png"),
-                                    SKTexture(imageNamed: "gato6.png"),
-                                    SKTexture(imageNamed: "gato7.png"),
-                                    SKTexture(imageNamed: "gato8.png"),
-                                    SKTexture(imageNamed: "gato9.png"),
-                                    SKTexture(imageNamed: "gato10.png"),
-                                    SKTexture(imageNamed: "gato11.png"),
-                                    SKTexture(imageNamed: "gato12.png"),
-                                    SKTexture(imageNamed: "gato13.png"),
-                                    SKTexture(imageNamed: "gato14.png"),
-                                    SKTexture(imageNamed: "gato15.png"),
-                                    SKTexture(imageNamed: "gato16.png"),
-                                    SKTexture(imageNamed: "gato17.png"),
-                                    SKTexture(imageNamed: "gato18.png"),
-                                    SKTexture(imageNamed: "gato19.png"),
-                                    SKTexture(imageNamed: "gato20.png")]
-        for t in texture {
-            t.filteringMode = .nearest
-        }
-        
-        let idleAnimation = SKAction.animate(with: texture, timePerFrame: 0.25)
-        let loop = SKAction.repeatForever(idleAnimation)
-        cat.run(loop)
-        
+        let frames:[SKTexture] = createTexture("GatoHome")
+        cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                            timePerFrame: TimeInterval(0.2),
+                                                            resize: false, restore: true)))
         return cat
     }()
     
@@ -104,20 +79,10 @@ class MenuScene: SKScene {
     lazy var flyAction: SKSpriteNode = {
         var fly = SKSpriteNode(imageNamed: "mosca")
         
-        let texture: [SKTexture] = [SKTexture(imageNamed: "mosca0"),
-                                     SKTexture(imageNamed: "mosca1"),
-                                     SKTexture(imageNamed: "mosca2"),
-                                     SKTexture(imageNamed: "mosca3"),
-                                     SKTexture(imageNamed: "mosca4"),
-                                     SKTexture(imageNamed: "mosca5")]
-        
-        for t in texture {
-            t.filteringMode = .nearest
-        }
-        
-        let idleANimation = SKAction.animate(with: texture, timePerFrame: 0.08)
-        let loop = SKAction.repeatForever(idleANimation)
-        fly.run(loop)
+        let frames:[SKTexture] = createTexture("Mosca")
+        fly.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                            timePerFrame: TimeInterval(0.2),
+                                                            resize: false, restore: true)))
         
         return fly
     }()
@@ -140,6 +105,15 @@ class MenuScene: SKScene {
         self.addChild(chandelier)
         self.addChild(chair)
         self.addChild(flyAction)
+    }
+    
+    func createTexture(_ name:String) -> [SKTexture] {
+        let textureAtlas = SKTextureAtlas(named: name)
+        var frames = [SKTexture]()
+        for i in 1...textureAtlas.textureNames.count - 1 {
+            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
+        }
+        return frames
     }
     
     override func didMove(to view: SKView) {
