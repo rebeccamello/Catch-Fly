@@ -58,6 +58,7 @@ class MenuScene: SKScene {
     
     lazy var catAction: SKSpriteNode = {
         var cat = SKSpriteNode(imageNamed: "gato0")
+        cat.texture?.filteringMode = .nearest
         
         let frames:[SKTexture] = createTexture("GatoHome")
         cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
@@ -134,7 +135,7 @@ class MenuScene: SKScene {
         soundButton.setScale(self.size.height/2300)
         gameCenterButton.setScale(self.size.height/2300)
         piano.setScale(self.size.height/2300)
-        catAction.setScale(self.size.height/3000)
+        catAction.setScale(self.size.height/700)
         chandelier.setScale(self.size.height/2300)
         chair.setScale(self.size.height/2300)
         flyAction.setScale(self.size.height/2800)

@@ -45,13 +45,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bug = SKSpriteNode(imageNamed: "mosca")
         bug.zPosition = 1
         bug.name = "Fly"
-        bug.setScale(0.7)
-        
+        bug.texture?.filteringMode = .nearest
         let frames:[SKTexture] = createTexture("Mosca")
         bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                             timePerFrame: TimeInterval(0.2),
                                                             resize: false, restore: true)))
-        
         return bug
     }()
     
@@ -122,6 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         
         pauseButton.setScale(self.size.height*0.00035)
+        //playerNode.setScale(self.size.height/1000000)
     }
     
     func createTexture(_ name:String) -> [SKTexture] {
