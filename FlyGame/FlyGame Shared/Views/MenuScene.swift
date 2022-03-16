@@ -38,7 +38,7 @@ class MenuScene: SKScene {
             var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
                 self.menuLogic.toggleSound()
             }
-            
+
             return bt
         }()
         
@@ -46,12 +46,14 @@ class MenuScene: SKScene {
             var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
                 self.menuLogic.toggleMusic()
             }
+
             return bt
         }()
         
         lazy var gameCenterButton: SKButtonNode = {
             var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "gameCenterBotao")) {
             }
+
             return bt
         }()
         
@@ -183,7 +185,7 @@ class MenuScene: SKScene {
             catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.4)
             catAction.zPosition = 2
             
-            chandelier.position = CGPoint(x: self.size.width/1.42, y: self.size.height/1.19)
+            chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.19)
             chandelier.zPosition = 1
             
             chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/6.5)
@@ -213,6 +215,14 @@ extension MenuScene: MenuLogicDelegate {
         return musicButton
     }
 }
+
+#if os(tvOS)
+extension MenuScene {
+      override var preferredFocusEnvironments: [UIFocusEnvironment] {
+          return [playButton]
+     }
+}
+#endif
 
 
 
