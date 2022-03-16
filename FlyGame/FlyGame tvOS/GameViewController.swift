@@ -13,7 +13,6 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
     }
     
     override func loadView() {
@@ -28,5 +27,15 @@ class GameViewController: UIViewController {
         
         self.view = skView
     }
-
 }
+
+extension GameViewController {
+
+      override var preferredFocusEnvironments: [UIFocusEnvironment] {
+           if let scene = (view as? SKView)?.scene {
+               return [scene]
+           }
+          
+           return []
+      }
+ }
