@@ -115,7 +115,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         
         pauseButton.setScale(self.size.height*0.00035)
-        //playerNode.setScale(self.size.height/1000000)
     }
     
     func createTexture(_ name:String) -> [SKTexture] {
