@@ -9,6 +9,7 @@ import Foundation
 import SpriteKit
 
 class MenuScene: SKScene {
+    let tapGeneralSelection = UITapGestureRecognizer()
     
     lazy var menuLogic: MenuSceneController = {
         let m = MenuSceneController()
@@ -30,7 +31,7 @@ class MenuScene: SKScene {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
             self.menuLogic.playGame()
         }
-        
+        tapGeneralSelection.addTarget(self, action: #selector(playGameTV))
         return bt
         }()
         
@@ -38,7 +39,7 @@ class MenuScene: SKScene {
             var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
                 self.menuLogic.toggleSound()
             }
-
+            tapGeneralSelection.addTarget(self, action: #selector(toogleSoundTV))
             return bt
         }()
         
@@ -137,6 +138,8 @@ class MenuScene: SKScene {
         
         override func didMove(to view: SKView) {
             self.setUpScene()
+            
+            self.view?.addGestureRecognizer(tapGeneralSelection)
         }
         
         override func didChangeSize(_ oldSize: CGSize) {
@@ -196,6 +199,14 @@ class MenuScene: SKScene {
         }
         
         override func update(_ currentTime: TimeInterval) {
+        }
+    
+        @objc func playGameTV() {
+            self.menuLogic.playGame()
+        }
+    
+        @objc func toogleSoundTV() {
+            self.menuLogic.toggleSound()
         }
     }
     

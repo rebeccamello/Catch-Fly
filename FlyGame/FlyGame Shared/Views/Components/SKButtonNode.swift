@@ -11,7 +11,7 @@ import SpriteKit
 class SKButtonNode: SKNode {
     
     var image: SKSpriteNode
-    var action: (() -> Void) // TODO: Adicionar foco nos botões
+    var action: (() -> Void)
     var isFocusable = true
     
     init(image: SKSpriteNode, action: @escaping () -> Void) {
