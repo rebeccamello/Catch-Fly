@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "piano.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "pianoTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "piano.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

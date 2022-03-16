@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "somBotao.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bt_somLigadoTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bt_somLigado.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

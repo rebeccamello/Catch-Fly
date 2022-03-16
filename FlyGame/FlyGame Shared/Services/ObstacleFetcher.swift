@@ -27,7 +27,13 @@ class ObstacleFetcher {
         Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano"),
         Obstacle(lanePosition: 4, weight: 2, width: 2, assetName: "armario"),
         Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "bancoVaso"),
-        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "mesaVaso")
+        Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "mesaVaso"),
+        Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre2"),
+        Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre3"),
+        Obstacle(lanePosition: 3, weight: 1, width: 1, assetName: "relogio"),
+        Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "relogio"),
+        Obstacle(lanePosition: 3, weight: 1, width: 1, assetName: "vasoAzul"),
+        Obstacle(lanePosition: 3, weight: 1, width: 1, assetName: "flor")
     ]
     
     func fetch(lane: Int) -> Obstacle {

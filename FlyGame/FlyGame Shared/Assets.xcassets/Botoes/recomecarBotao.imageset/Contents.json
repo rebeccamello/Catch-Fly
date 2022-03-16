@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "recomecarBotao.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bt_restartTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bt_restart.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

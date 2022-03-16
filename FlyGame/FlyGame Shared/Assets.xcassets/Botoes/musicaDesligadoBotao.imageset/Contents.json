@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "musicaDesligadoBotao.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bt_musicaDesligadoTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bt_musicaDesligado.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
