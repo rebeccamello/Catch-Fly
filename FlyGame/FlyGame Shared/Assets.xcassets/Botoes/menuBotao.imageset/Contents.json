@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "menuBotao.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bt_menuTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bt_menu.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

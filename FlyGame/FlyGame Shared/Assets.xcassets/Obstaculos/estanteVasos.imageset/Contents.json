@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "estanteVasos.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "estanteVasosTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "estanteVasos.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
