@@ -82,19 +82,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
         
-        
-        print(gameLogic.chooseObstacle())
-        
-        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeUp.direction = .up
-        
-        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = .down
-        
-        self.view?.addGestureRecognizer(swipeUp)
-        self.view?.addGestureRecognizer(swipeDown)
+        setSwipeGesture()
         
         pauseMenu.isHidden = true
+        pauseMenu.retryButton.action = {
+            let scene = GameScene.newGameScene()
+            scene.isGameStarted = true
+            self.view?.presentScene(scene)
+        }
     }
     
     //MARK: - didMove
@@ -113,6 +108,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.setNodePosition()
         
         setPhysics(node: playerNode)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        let outOfTheScreenNodes = children.filter { node in
+            if let sprite = node as? SKSpriteNode {
+                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+            } else {
+                return false
+            }
+        }
+        removeChildren(in: outOfTheScreenNodes)
+        gameLogic.update(currentTime: currentTime)
     }
     
     func setPhysics(node: SKSpriteNode) {
@@ -134,6 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.setScale(self.size.height*0.00035)
     }
     
+    //MARK: Create Texture
     func createTexture(_ name:String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
         var frames = [SKTexture]()
@@ -142,18 +150,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         return frames
     }
-       
-    override func update(_ currentTime: TimeInterval) {
-        let outOfTheScreenNodes = children.filter { node in
-            if let sprite = node as? SKSpriteNode {
-                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
-            } else {
-                return false
-            }
-        }
-        removeChildren(in: outOfTheScreenNodes)
-        gameLogic.update(currentTime: currentTime)
+    
+    //MARK: Gesture
+    func setSwipeGesture() {
+        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeUp.direction = .up
         
+        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = .down
+        
+        self.view?.addGestureRecognizer(swipeUp)
+        self.view?.addGestureRecognizer(swipeDown)
     }
     
     //MARK: - Colisão
@@ -195,7 +202,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.2)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
         playerNode.run(moveAction)
     }
 }
@@ -222,10 +229,6 @@ extension GameScene: GameLogicDelegate {
     func goToHome() {
         let scene = MenuScene.newGameScene()
         view?.presentScene(scene)
-    }
-    
-    func retryGame() {
-        print("retry")
     }
     
     func sound() {
