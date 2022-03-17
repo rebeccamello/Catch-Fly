@@ -9,6 +9,13 @@ import Foundation
 import SpriteKit
 
 class MenuScene: SKScene {
+    let tapGeneralSelection = UITapGestureRecognizer()
+    
+    lazy var menuLogic: MenuSceneController = {
+        let m = MenuSceneController()
+        m.menuDelegate = self
+        return m
+    }()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -26,13 +33,17 @@ class MenuScene: SKScene {
             let scene = GameScene.newGameScene()
             scene.isGameStarted = true
             self.view?.presentScene(scene)
+//            self.menuLogic.playGame()
         }
+        
         bt.image.texture?.filteringMode = .nearest
+
         return bt
     }()
     
     lazy var soundButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
+            self.menuLogic.toggleSound()
         }
         bt.image.texture?.filteringMode = .nearest
         return bt
@@ -40,6 +51,7 @@ class MenuScene: SKScene {
     
     lazy var musicButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
+            self.menuLogic.toggleMusic()
         }
         bt.image.texture?.filteringMode = .nearest
         return bt
@@ -126,11 +138,17 @@ class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
+        addTapGestureRecognizer()
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
         setupNodesPosition()
         setupNodesSize()
+    }
+    
+    func addTapGestureRecognizer(){
+        tapGeneralSelection.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(tapGeneralSelection)
     }
     
     private func setupNodesSize() {
@@ -174,7 +192,7 @@ class MenuScene: SKScene {
         catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.4)
         catAction.zPosition = 2
         
-        chandelier.position = CGPoint(x: self.size.width/1.42, y: self.size.height/1.19)
+        chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.19)
         chandelier.zPosition = 1
         
         chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/6.5)
@@ -185,21 +203,52 @@ class MenuScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
     }
+    
+    @objc func clicked() {
+        if let focussedItem = UIScreen.main.focusedItem as? SKButtonNode {
+            
+            if focussedItem == playButton {
+                let scene = GameScene.newGameScene()
+                scene.isGameStarted = true
+                self.view?.presentScene(scene)
+            } else if focussedItem == soundButton {
+                
+            }else if focussedItem == musicButton {
+                
+            }else if focussedItem == gameCenterButton {
+                
+            }
+        }
+      
+    }
+    
 }
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
     }
-    func playGame() {
+    
+    func playGame(scene: SKScene) {
+        self.view?.presentScene(scene)
     }
-    func toggleSound() {
+    
+    func toggleSound() -> SKButtonNode {
+        return soundButton
     }
-    func toggleMusic() {
+    
+    func toggleMusic() -> SKButtonNode {
+        return musicButton
     }
 }
 
+#if os(tvOS)
+extension MenuScene {
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [playButton]
+    }
+}
+#endif
 
 
 
