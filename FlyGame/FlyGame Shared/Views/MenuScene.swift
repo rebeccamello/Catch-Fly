@@ -143,10 +143,7 @@ class MenuScene: SKScene {
         setupNodesSize()
     }
     
-    func addTapGestureRecognizer(){
-        tapGeneralSelection.addTarget(self, action: #selector(clicked))
-        self.view?.addGestureRecognizer(tapGeneralSelection)
-    }
+
     
     func playGame() {
         let scene = GameScene.newGameScene()
@@ -207,6 +204,12 @@ class MenuScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
     }
+
+#if os(tvOS)
+    func addTapGestureRecognizer(){
+        tapGeneralSelection.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(tapGeneralSelection)
+    }
     
     @objc func clicked() {
         
@@ -223,6 +226,7 @@ class MenuScene: SKScene {
             
         }
     }
+#endif
 }
 
 extension MenuScene: MenuLogicDelegate {
