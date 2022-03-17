@@ -10,14 +10,57 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     
-    lazy var label: SKLabelNode = {
-        var label = SKLabelNode()
-         label.fontColor = .blue
-         label.numberOfLines = 0
-         label.fontSize = 60
-         label.text = "GameOver scene"
-         
-         return label
+    lazy var scenarioImage: SKSpriteNode = {
+        var scenario = SKSpriteNode(imageNamed: "cenario")
+        return scenario
+    }()
+    
+    lazy var floor: SKSpriteNode = {
+        var floor = SKSpriteNode(imageNamed: "floor")
+        return floor
+    }()
+    
+    lazy var cat: SKSpriteNode = {
+        var cat = SKSpriteNode(imageNamed: "gatoMosca0")
+        cat.texture?.filteringMode = .nearest
+        
+        let frames:[SKTexture] = createTexture("GatoMosca")
+        cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                            timePerFrame: TimeInterval(0.2),
+                                                            resize: false, restore: true)))
+        return cat
+    }()
+    
+    lazy var gameOverLabel: SKLabelNode = {
+        var lbl = SKLabelNode()
+        lbl.numberOfLines = 0
+        lbl.fontColor = UIColor.init(named: "GameOverRed")
+        lbl.fontName = "munro"
+        lbl.text = "Game Over"
+        return lbl
+    }()
+    
+    lazy var scoreLabel: SKLabelNode = {
+        var lbl = SKLabelNode()
+        lbl.numberOfLines = 0
+        lbl.fontColor = SKColor.black
+        lbl.fontName = "munro"
+        lbl.text = "Your Score: "
+        return lbl
+    }()
+    
+    lazy var homeButton: SKButtonNode = {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
+//            self.gameDelegate?.goToHome()
+        }
+        return but
+    }()
+    
+    lazy var retryButton: SKButtonNode = {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
+            
+        }
+        return but
     }()
     
     class func newGameScene() -> GameOverScene {
@@ -27,7 +70,22 @@ class GameOverScene: SKScene {
     }
 
     func setUpScene() {
-        self.addChild(label)
+        self.addChild(scenarioImage)
+        self.addChild(floor)
+        self.addChild(cat)
+        self.addChild(gameOverLabel)
+        self.addChild(scoreLabel)
+        self.addChild(homeButton)
+        self.addChild(retryButton)
+    }
+    
+    func createTexture(_ name:String) -> [SKTexture] {
+        let textureAtlas = SKTextureAtlas(named: name)
+        var frames = [SKTexture]()
+        for i in 1...textureAtlas.textureNames.count - 1 {
+            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
+        }
+        return frames
     }
     
     override func didMove(to view: SKView) {
@@ -35,7 +93,46 @@ class GameOverScene: SKScene {
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
-        label.position = CGPoint(x: size.width/2, y: size.height/2)
+        setupNodesPosition()
+        setupNodesSize()
+    }
+    
+    private func setupNodesPosition() {
+        scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        scenarioImage.zPosition = 0
+        
+        floor.position = CGPoint(x: self.size.width/2, y: floor.size.height/2)
+        floor.zPosition = 1
+        
+        cat.position = CGPoint(x: self.size.width/4, y: floor.size.height)
+        cat.zPosition = 2
+        
+        gameOverLabel.position = CGPoint(x: self.size.width * 0.71, y: self.size.height * 0.67)
+        gameOverLabel.zPosition = 2
+        
+        scoreLabel.position = CGPoint(x: gameOverLabel.position.x, y: self.size.height * 0.55)
+        scoreLabel.zPosition = 2
+        
+        homeButton.position = CGPoint(x: gameOverLabel.position.x - self.size.width * 0.055, y: self.size.height * 0.42)
+        homeButton.zPosition = 2
+        
+        retryButton.position = CGPoint(x: gameOverLabel.position.x + self.size.width * 0.055, y: self.size.height * 0.42)
+        retryButton.zPosition = 2
+        
+    }
+    
+    private func setupNodesSize() {
+        scenarioImage.size.width = self.size.width
+        scenarioImage.size.height = self.size.height
+        
+        floor.size.width = self.size.width
+        floor.size.height = self.size.height * 0.3
+        
+        cat.setScale(self.size.height/700)
+        gameOverLabel.setScale(self.size.height * 0.006)
+        scoreLabel.setScale(self.size.height * 0.003)
+        homeButton.setScale(self.size.width * 0.00021)
+        retryButton.setScale(self.size.width * 0.00021)
     }
 }
 
