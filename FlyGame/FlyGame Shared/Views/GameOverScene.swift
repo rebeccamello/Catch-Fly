@@ -97,6 +97,11 @@ class GameOverScene: SKScene {
         setupNodesSize()
     }
     
+    func goToMenu() {
+        let scene = MenuScene.newGameScene()
+        self.view?.presentScene(scene)
+    }
+    
     private func setupNodesPosition() {
         scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         scenarioImage.zPosition = 0
@@ -139,11 +144,11 @@ class GameOverScene: SKScene {
 extension GameOverScene: GameOverLogicDelegate {
     
     func restartGame() {
-       
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = false
+        self.view?.presentScene(scene)
     }
     
-    func goToMenu() {
-       
-    }
+
 }
 
