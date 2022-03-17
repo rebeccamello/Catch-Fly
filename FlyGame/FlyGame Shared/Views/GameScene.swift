@@ -135,7 +135,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
-        print(pauseButton.frame.size.height)
         pauseButton.setScale(self.size.height*0.00035)
     }
     
