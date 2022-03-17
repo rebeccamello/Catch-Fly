@@ -51,14 +51,14 @@ class GameOverScene: SKScene {
     
     lazy var homeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
-//            self.gameDelegate?.goToHome()
+            self.goToMenu()
         }
         return but
     }()
     
     lazy var retryButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
-            
+            self.restartGame()
         }
         return but
     }()
@@ -145,10 +145,16 @@ extension GameOverScene: GameOverLogicDelegate {
     
     func restartGame() {
         let scene = GameScene.newGameScene()
-        scene.isGameStarted = false
+        scene.isGameStarted = true
         self.view?.presentScene(scene)
     }
-    
-
 }
+
+#if os(tvOS)
+extension GameOverScene {
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [homeButton]
+    }
+}
+#endif
 
