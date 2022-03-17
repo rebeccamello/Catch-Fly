@@ -30,10 +30,12 @@ class MenuScene: SKScene {
     
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
-            self.menuLogic.playGame()
+            let scene = GameScene.newGameScene()
+            scene.isGameStarted = true
+            self.view?.presentScene(scene)
+//            self.menuLogic.playGame()
         }
         
-        scene.isGameStarted = true
         bt.image.texture?.filteringMode = .nearest
 
         return bt
@@ -207,7 +209,9 @@ class MenuScene: SKScene {
         if let focussedItem = UIScreen.main.focusedItem as? SKButtonNode {
             
             if focussedItem == playButton {
-                self.menuLogic.playGame()
+                let scene = GameScene.newGameScene()
+                scene.isGameStarted = true
+                self.view?.presentScene(scene)
             } else if focussedItem == soundButton {
                 
             }else if focussedItem == musicButton {

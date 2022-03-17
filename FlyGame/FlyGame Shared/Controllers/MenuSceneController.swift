@@ -14,11 +14,6 @@ class MenuSceneController {
     var soundOn: Bool = true
     var musicOn: Bool = true
     
-    func playGame() {
-        let scene = GameScene.newGameScene()
-        menuDelegate?.playGame(scene: scene)
-    }
-    
     func toggleSound() {
         
         if let node = menuDelegate?.toggleSound() {

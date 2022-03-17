@@ -10,6 +10,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
+    
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
         lbl.numberOfLines = 0
