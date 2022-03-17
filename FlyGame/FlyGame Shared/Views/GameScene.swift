@@ -126,18 +126,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setPhysics(node: SKSpriteNode) {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
+        //node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.contactTestBitMask = 1
     }
     func setPhysicsObstacles(node: SKSpriteNode) {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
+        //node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
         node.physicsBody?.friction = 0
         node.physicsBody?.mass = 1
-        
         node.physicsBody?.categoryBitMask = 1
     }
     

@@ -63,22 +63,9 @@ class GameSceneController {
     }
     
     func startUp() {
-//        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(obstacleSpeed), userInfo: nil, repeats: true)
+
     }
-//
-//    @objc func obstacleSpeed(speed: CGFloat) {
-//        timeCounter += 1
-//        newSpeed = count
-//        print("speed: \(newSpeed)")
-//        if newSpeed <= 70 {
-//            if timeCounter >= 30 {
-//                timeCounter = 0
-//                newSpeed += 0.008
-//                count += 1
-//            }
-//        }
-//        gameDelegate?.obstacleSpeed(speed: newSpeed)
-//    }
+
     
     func chooseObstacle() -> [Obstacle] {
         /*
@@ -127,7 +114,7 @@ class GameSceneController {
             timeSpeed = currentTime
         }
         let deltaTimeSpeed = (currentTime - timeSpeed)
-        print(duration)
+        //print(duration)
         if deltaTimeSpeed >= 1 && duration > 0.8 {
             duration -= 0.04
             timeSpeed = currentTime
@@ -146,7 +133,7 @@ class GameSceneController {
                 gameDelegate?.createObstacle(obstacle: $0)
             }
             lastObstacleTimeCreated = currentTime
-            print("delay: \(delay)")
+            //print("delay: \(delay)")
             if delay > minimumDelay { // limite minimo do delay
                 delay -= 0.055 // cada vez que o update é chamado diminui o delay
             }
