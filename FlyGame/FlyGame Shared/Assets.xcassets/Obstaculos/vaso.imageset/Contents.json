@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "vaso.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "vasoTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "vaso.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

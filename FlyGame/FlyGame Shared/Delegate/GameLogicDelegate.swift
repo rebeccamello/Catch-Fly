@@ -11,13 +11,17 @@ import SpriteKit
 protocol GameLogicDelegate: AnyObject {
     func resumeGame()
     
-    func pauseGame()
+    func drawScore(score: Int)
     
-    func gameOver()
+    func goToHome()
     
-    func movePlayer(position: Int)
+    func sound()
+    
+    func music()
     
     func obstacleSpeed(speed: CGFloat)
+    
+    func createObstacle(obstacle: Obstacle)
 }
 
 

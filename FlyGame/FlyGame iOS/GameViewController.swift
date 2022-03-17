@@ -27,6 +27,9 @@ class GameViewController: UIViewController {
         
         self.view = skView
     }
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return UIRectEdge.bottom
+    }
 
     override var shouldAutorotate: Bool {
         return true

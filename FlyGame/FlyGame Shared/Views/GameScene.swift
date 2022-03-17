@@ -8,13 +8,30 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
-    var currentPosition: CGFloat = 3
-    
-    var comodaVaso: SKSpriteNode = SKSpriteNode()
-    var lustre: SKSpriteNode = SKSpriteNode()
-    var allObstacles: [SKSpriteNode] = []
     var moveAndRemove = SKAction()
+    var isGameStarted: Bool = false
+    lazy var scoreLabel: SKLabelNode = {
+        var lbl = SKLabelNode()
+        lbl.numberOfLines = 0
+        lbl.fontColor = SKColor.black
+        lbl.fontName = "munro"
+        lbl.text = "0"
+        return lbl
+    }()
+    
+    lazy var pauseButton: SKButtonNode = {
+        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
+            self.pauseMenu.isHidden.toggle()
+            self.isPaused.toggle()
+        })
+        return but
+    }()
+    
+    lazy var pauseMenu: PauseMenu = {
+        var menu = PauseMenu()
+        menu.gameDelegate = self
+        return menu
+    }()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
@@ -33,22 +50,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bug = SKSpriteNode(imageNamed: "mosca")
         bug.zPosition = 1
         bug.name = "Fly"
-        bug.setScale(0.8)
-        setPhysics(node: bug)
-        
-        let texture: [SKTexture] = [SKTexture(imageNamed: "mosca0.png"),
-                                    SKTexture(imageNamed: "mosca1.png"),
-                                    SKTexture(imageNamed: "mosca2.png"),
-                                    SKTexture(imageNamed: "mosca3.png"),
-                                    SKTexture(imageNamed: "mosca4.png"),
-                                    SKTexture(imageNamed: "mosca5.png")]
-        for t in texture{
-            t.filteringMode = .nearest
-        }
-        let idleAnimation = SKAction.animate(with: texture, timePerFrame: 0.04)
-        let loop = SKAction.repeatForever(idleAnimation)
-        bug.run(loop)
-        
+        bug.texture?.filteringMode = .nearest
+        let frames:[SKTexture] = createTexture("Mosca")
+        bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                            timePerFrame: TimeInterval(0.2),
+                                                            resize: false, restore: true)))
         return bug
     }()
     
@@ -58,6 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return scene
     }
     
+    //MARK: - setUpScenne
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
@@ -68,6 +75,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
+        self.addChild(pauseButton)
+        self.addChild(pauseMenu)
+        self.addChild(scoreLabel)
         
         
         print(gameLogic.chooseObstacle())
@@ -80,28 +90,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.view?.addGestureRecognizer(swipeUp)
         self.view?.addGestureRecognizer(swipeDown)
+        
+        pauseMenu.isHidden = true
     }
     
+    //MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
-        gameLogic.startUp()
-        physicsWorld.contactDelegate = self
+        
+        if isGameStarted {
+            gameLogic.startUp()
+            physicsWorld.contactDelegate = self
+        }
     }
     
+    //MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
-        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        self.setNodePosition()
         
-        startMovement()
-        for obstacle in allObstacles {
-            obstacle.position = CGPoint(x: size.width - obstacle.size.width/2, y: obstacle.position.y)
+        setPhysics(node: playerNode)
+    }
+    
+    func setPhysics(node: SKSpriteNode) {
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
+        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
+        node.physicsBody?.restitution = 0.4
+    }
+    
+    func setNodePosition() {
+        playerNode.size.height = self.size.height/5
+        playerNode.size.width = self.size.height/5
+        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
+        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        print(pauseButton.frame.size.height)
+        pauseButton.setScale(self.size.height*0.00035)
+    }
+    
+    func createTexture(_ name:String) -> [SKTexture] {
+        let textureAtlas = SKTextureAtlas(named: name)
+        var frames = [SKTexture]()
+        for i in 1...textureAtlas.textureNames.count - 1 {
+            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
         }
+        return frames
     }
        
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        let outOfTheScreenNodes = children.filter { node in
+            if let sprite = node as? SKSpriteNode {
+                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+            } else {
+                return false
+            }
+        }
+        removeChildren(in: outOfTheScreenNodes)
+        gameLogic.update(currentTime: currentTime)
+        
     }
     
+    //MARK: - Colisão
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
@@ -113,6 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(player: SKNode, enemy: SKNode) {
         gameLogic.tearDown()
+        self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
         view?.presentScene(scene)
     }
@@ -122,56 +175,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let swipeGesture = gesture as? UISwipeGestureRecognizer,
             let direction = swipeGesture.direction.direction
         else { return }
-        
-        gameLogic.movePlayer(direction: direction, position: Int(currentPosition))
+        movePlayer(direction: direction)
     }
     
-    func setPhysics(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
-        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
-        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
-        node.physicsBody?.restitution = 0.4
-    }
-    
-    func createObstacle(obstacle: Obstacle) -> SKSpriteNode {
+    //MARK: - Criação e movimentação de obstáculos
+    func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
-        print("weight: \(obstacle.weight)")
-        enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3 * CGFloat(obstacle.weight)
+        enemy.size.height = self.size.height/3.1 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3.1 * CGFloat(obstacle.width)
         setPhysics(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        allObstacles.append(enemy)
-        return enemy
     }
     
-    
-    func startMovement() {
-        var node = SKSpriteNode()
-        let spawn = SKAction.run {
-            self.gameLogic.chooseObstacle().forEach { obstacle in
-                node = self.createObstacle(obstacle: obstacle)
-            }
-        }
-        
-        let delay = SKAction.wait(forDuration: 4)
-        let spawnDelay = SKAction.sequence([spawn, delay])
-        let spawnDelayForever = SKAction.repeatForever(spawnDelay)
-        self.run(spawnDelayForever)
-        
-        let distance = CGFloat(self.frame.width + node.frame.width)
-        let moveObs = SKAction.moveBy(x: distance - 50, y: 0, duration: TimeInterval(0.1 * distance))
-        let removeObs = SKAction.removeFromParent()
-        moveAndRemove = SKAction.sequence([moveObs, removeObs])
+    func movePlayer(direction: Direction) {
+        let position = gameLogic.movePlayer(direction: direction)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.2)
+        playerNode.run(moveAction)
     }
 }
 
 extension GameScene: GameLogicDelegate {
+    func drawScore(score: Int) {
+        scoreLabel.text = String(score)
+    }
+    
     func resumeGame() {
         print("resume")
+        self.isPaused.toggle()
+        pauseMenu.isHidden = true
     }
     
     func pauseGame() {
@@ -179,18 +213,36 @@ extension GameScene: GameLogicDelegate {
     }
     
     func gameOver() {
-        print("gameOver")
+        
+    }
+    
+    func goToHome() {
+        let scene = MenuScene.newGameScene()
+        view?.presentScene(scene)
+    }
+    
+    func retryGame() {
+        print("retry")
+    }
+    
+    func sound() {
+        print("sound")
+    }
+    
+    func music() {
+        print("music")
     }
     
     func obstacleSpeed(speed: CGFloat) {
+        let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
-            obstacle.position.x -= speed 
+            if isPaused == true{
+                obstacle.position.x -= 0
+            }
+            else{
+                obstacle.position.x -= speed
+            }
         }
-    }
-    
-    func movePlayer(position: Int) {
-        playerNode.position.y = CGFloat(position) * (size.height / 6)
-        currentPosition = CGFloat(position)
     }
 }
 

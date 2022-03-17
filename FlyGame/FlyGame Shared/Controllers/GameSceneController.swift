@@ -22,24 +22,42 @@ class GameSceneController {
     var timeCounter = 0
     var count: CGFloat = 10
     var fetcher = ObstacleFetcher()
+    var shouldCreateObstacle: Bool = false
+    private var currentPosition: Int = 3
+    private var lastObstacleTimeCreated: TimeInterval = 3
+     private var newSpeed: CGFloat = 1
+     var delay: TimeInterval = 3
+    private var minimumDelay: CGFloat = 1.8
+    var initialPosition: CGFloat { 3 }
+    private var score: Int = 0
+    private var timeScore: TimeInterval = 0
     
-    private let maxWeight = 2
+    private func calculateScore(currentTime: TimeInterval) {
+        if timeScore == 0 {
+            timeScore = currentTime
+        }
+        let deltaTime = (currentTime - timeScore)
+        if deltaTime >= 1 {
+            score += 1
+            gameDelegate?.drawScore(score: score)
+            timeScore = currentTime
+        }
+    }
     
-    
-    func movePlayer(direction: Direction, position: Int) {
-        var newPosition = position
+    func movePlayer(direction: Direction) -> CGFloat{
+        var newPosition = currentPosition
         
         if direction == .up {
-            if position != 5 {
+            if currentPosition != 5 {
                 newPosition += 2
             }
         } else {
-            if position != 1 {
+            if currentPosition != 1 {
                 newPosition -= 2
             }
         }
-        
-        gameDelegate?.movePlayer(position: newPosition)
+        currentPosition = newPosition
+        return CGFloat(newPosition)
     }
     
     func startUp() {
@@ -48,7 +66,7 @@ class GameSceneController {
     
     @objc func obstacleSpeed(speed: CGFloat) {
         timeCounter += 1
-        var newSpeed = count
+        newSpeed = count
         
         //MARK: AUMENTAR O INTERVALO DE TEMPO
         if timeCounter >= 30 {
@@ -96,12 +114,33 @@ class GameSceneController {
     }
     
     func update(currentTime: TimeInterval) {
+        calculateDelay(currentTime: currentTime)
+        calculateScore(currentTime: currentTime)
+    }
+    
+    private func calculateDelay(currentTime: TimeInterval) {
+        if lastObstacleTimeCreated == 0 {
+            lastObstacleTimeCreated = currentTime
+        }
+        let pastTime = (currentTime - lastObstacleTimeCreated)
+        
+        if pastTime >= delay {
+            let obstacles = chooseObstacle()
+            obstacles.forEach {
+                gameDelegate?.createObstacle(obstacle: $0)
+            }
+            lastObstacleTimeCreated = currentTime
+            if delay > minimumDelay { // limite minimo do delay
+                delay -= 0.5 // cada vez que o update é chamado diminui o delay
+            }
+        }
         
     }
     
     func tearDown() {
         timeCounter = 0
         timer.invalidate()
+        score = 0
     }
 }
 

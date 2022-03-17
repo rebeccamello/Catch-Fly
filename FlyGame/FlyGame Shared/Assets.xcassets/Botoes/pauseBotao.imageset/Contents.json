@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "pauseBotao.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bt_pauseTV.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bt_pause.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
