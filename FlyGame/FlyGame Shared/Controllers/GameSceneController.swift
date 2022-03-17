@@ -67,11 +67,10 @@ class GameSceneController {
     @objc func obstacleSpeed(speed: CGFloat) {
         timeCounter += 1
         newSpeed = count
-        
-        //MARK: AUMENTAR O INTERVALO DE TEMPO
+        print(newSpeed)
         if timeCounter >= 30 {
             timeCounter = 0
-            newSpeed += 0.1
+            newSpeed += 0.01
             count += 1
         }
         gameDelegate?.obstacleSpeed(speed: newSpeed)
@@ -131,7 +130,7 @@ class GameSceneController {
             }
             lastObstacleTimeCreated = currentTime
             if delay > minimumDelay { // limite minimo do delay
-                delay -= 0.5 // cada vez que o update é chamado diminui o delay
+                delay -= 0.05 // cada vez que o update é chamado diminui o delay
             }
         }
         

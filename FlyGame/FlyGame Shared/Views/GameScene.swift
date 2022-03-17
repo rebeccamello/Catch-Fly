@@ -15,6 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var lbl = SKLabelNode()
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
+        lbl.zPosition = 3
         lbl.fontName = "munro"
         lbl.text = "0"
         return lbl
