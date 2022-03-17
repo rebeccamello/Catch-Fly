@@ -16,7 +16,9 @@ class PauseMenu: SKNode {
     
     lazy var retryButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
-            //self.gameDelegate?.retryGame()
+//            let scene = GameScene.newGameScene()
+//            scene.isGameStarted = true
+//            view?.presentScene(scene)
         }
         return but
     }()
@@ -98,7 +100,4 @@ class PauseMenu: SKNode {
         musicButton.zPosition = 4
         musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
     }
-    
-   
-    
 }
