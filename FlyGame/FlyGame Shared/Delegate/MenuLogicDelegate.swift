@@ -9,7 +9,7 @@ import Foundation
 import SpriteKit
 
 protocol MenuLogicDelegate: AudioDelegate {
-    func playGame(scene: SKScene)
+    func playGame()
     
     func goToGameCenter()
 }

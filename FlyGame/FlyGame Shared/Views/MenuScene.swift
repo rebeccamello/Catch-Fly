@@ -30,14 +30,11 @@ class MenuScene: SKScene {
     
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
-            let scene = GameScene.newGameScene()
-            scene.isGameStarted = true
-            self.view?.presentScene(scene)
-//            self.menuLogic.playGame()
+            self.playGame()
         }
         
         bt.image.texture?.filteringMode = .nearest
-
+        
         return bt
     }()
     
@@ -79,8 +76,8 @@ class MenuScene: SKScene {
         
         let frames:[SKTexture] = createTexture("GatoHome")
         cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                            timePerFrame: TimeInterval(0.2),
-                                                            resize: false, restore: true)))
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
         return cat
     }()
     
@@ -101,8 +98,8 @@ class MenuScene: SKScene {
         
         let frames:[SKTexture] = createTexture("Mosca")
         fly.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                            timePerFrame: TimeInterval(0.2),
-                                                            resize: false, restore: true)))
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
         
         return fly
     }()
@@ -206,30 +203,29 @@ class MenuScene: SKScene {
     }
     
     @objc func clicked() {
-        if let focussedItem = UIScreen.main.focusedItem as? SKButtonNode {
+        
+        if playButton.isFocused {
+            playGame()
             
-            if focussedItem == playButton {
-                let scene = GameScene.newGameScene()
-                scene.isGameStarted = true
-                self.view?.presentScene(scene)
-            } else if focussedItem == soundButton {
-                
-            }else if focussedItem == musicButton {
-                
-            }else if focussedItem == gameCenterButton {
-                
-            }
+        } else if soundButton.isFocused {
+            self.menuLogic.toggleSound()
+            
+        }else if musicButton.isFocused {
+            self.menuLogic.toggleMusic()
+            
+        }else if gameCenterButton.isFocused {
+            
         }
-      
     }
-    
 }
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
     }
     
-    func playGame(scene: SKScene) {
+    func playGame() {
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = true
         self.view?.presentScene(scene)
     }
     
