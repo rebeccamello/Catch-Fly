@@ -9,6 +9,7 @@ import Foundation
 import SpriteKit
 
 class GameOverScene: SKScene {
+    let tapGeneralSelection = UITapGestureRecognizer()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -90,6 +91,10 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
+        
+#if os(tvOS)
+        addTapGestureRecognizer()
+#endif
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -139,6 +144,22 @@ class GameOverScene: SKScene {
         homeButton.setScale(self.size.width * 0.00021)
         retryButton.setScale(self.size.width * 0.00021)
     }
+#if os(tvOS)
+    func addTapGestureRecognizer(){
+        tapGeneralSelection.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(tapGeneralSelection)
+    }
+    
+    @objc func clicked() {
+        
+        if homeButton.isFocused {
+            goToMenu()
+            
+        } else if retryButton.isFocused {
+            self.restartGame()
+        }
+    }
+#endif
 }
 
 extension GameOverScene: GameOverLogicDelegate {
