@@ -26,6 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.pauseMenu.isHidden.toggle()
             self.isPaused.toggle()
         })
+        but.zPosition = 3
         return but
     }()
     
