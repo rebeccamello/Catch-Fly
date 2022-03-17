@@ -19,8 +19,6 @@ protocol GameLogicDelegate: AnyObject {
     
     func music()
     
-    func obstacleSpeed(speed: CGFloat)
-    
     func createObstacle(obstacle: Obstacle)
 }
 
