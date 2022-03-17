@@ -33,7 +33,6 @@ class MenuScene: SKScene {
             let scene = GameScene.newGameScene()
             scene.isGameStarted = true
             self.view?.presentScene(scene)
-//            self.menuLogic.playGame()
         }
         
         bt.image.texture?.filteringMode = .nearest
