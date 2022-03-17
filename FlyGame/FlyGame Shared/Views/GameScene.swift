@@ -200,7 +200,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.2)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
         playerNode.run(moveAction)
     }
 }
