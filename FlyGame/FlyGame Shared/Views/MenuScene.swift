@@ -135,7 +135,10 @@ class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
+        
+        #if os(tvOS)
         addTapGestureRecognizer()
+        #endif
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
