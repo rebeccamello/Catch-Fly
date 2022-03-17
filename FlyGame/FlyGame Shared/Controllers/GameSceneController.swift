@@ -31,6 +31,8 @@ class GameSceneController {
     var initialPosition: CGFloat { 3 }
     private var score: Int = 0
     private var timeScore: TimeInterval = 0
+    private var timeSpeed: TimeInterval = 0
+    var duration: CGFloat = 3
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -61,22 +63,22 @@ class GameSceneController {
     }
     
     func startUp() {
-        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(obstacleSpeed), userInfo: nil, repeats: true)
+//        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(obstacleSpeed), userInfo: nil, repeats: true)
     }
-    
-    @objc func obstacleSpeed(speed: CGFloat) {
-        timeCounter += 1
-        newSpeed = count
-        print("speed: \(newSpeed)")
-        if newSpeed <= 70 {
-            if timeCounter >= 30 {
-                timeCounter = 0
-                newSpeed += 0.008
-                count += 1
-            }
-        }
-        gameDelegate?.obstacleSpeed(speed: newSpeed)
-    }
+//
+//    @objc func obstacleSpeed(speed: CGFloat) {
+//        timeCounter += 1
+//        newSpeed = count
+//        print("speed: \(newSpeed)")
+//        if newSpeed <= 70 {
+//            if timeCounter >= 30 {
+//                timeCounter = 0
+//                newSpeed += 0.008
+//                count += 1
+//            }
+//        }
+//        gameDelegate?.obstacleSpeed(speed: newSpeed)
+//    }
     
     func chooseObstacle() -> [Obstacle] {
         /*
@@ -117,6 +119,19 @@ class GameSceneController {
     func update(currentTime: TimeInterval) {
         calculateDelay(currentTime: currentTime)
         calculateScore(currentTime: currentTime)
+        calculateDuration(currentTime: currentTime)
+    }
+    
+    private func calculateDuration(currentTime: TimeInterval) {
+        if timeSpeed == 0 {
+            timeSpeed = currentTime
+        }
+        let deltaTimeSpeed = (currentTime - timeSpeed)
+        print(duration)
+        if deltaTimeSpeed >= 1 && duration > 0.8 {
+            duration -= 0.04
+            timeSpeed = currentTime
+        }
     }
     
     private func calculateDelay(currentTime: TimeInterval) {
@@ -133,7 +148,7 @@ class GameSceneController {
             lastObstacleTimeCreated = currentTime
             print("delay: \(delay)")
             if delay > minimumDelay { // limite minimo do delay
-                delay -= 0.058 // cada vez que o update é chamado diminui o delay
+                delay -= 0.055 // cada vez que o update é chamado diminui o delay
             }
         }
         
