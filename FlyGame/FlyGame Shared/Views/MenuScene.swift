@@ -148,6 +148,12 @@ class MenuScene: SKScene {
         self.view?.addGestureRecognizer(tapGeneralSelection)
     }
     
+    func playGame() {
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = true
+        self.view?.presentScene(scene)
+    }
+    
     private func setupNodesSize() {
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
@@ -221,12 +227,6 @@ class MenuScene: SKScene {
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
-    }
-    
-    func playGame() {
-        let scene = GameScene.newGameScene()
-        scene.isGameStarted = true
-        self.view?.presentScene(scene)
     }
     
     func toggleSound() -> SKButtonNode {
