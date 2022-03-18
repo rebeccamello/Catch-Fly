@@ -121,7 +121,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
-        
     }
     
     func setPhysics(node: SKSpriteNode) {
@@ -188,6 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLogic.tearDown()
         self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
+        scene.score = gameLogic.score
         view?.presentScene(scene)
     }
     
@@ -204,9 +204,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
-        
-        enemy.size.height = self.size.height/3.1 * CGFloat(obstacle.weight)
-        enemy.size.width = self.size.height/3.1 * CGFloat(obstacle.width)
+        enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
+        enemy.size.width = self.size.height/3 * CGFloat(obstacle.width)
         setPhysicsObstacles(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
@@ -264,26 +263,6 @@ extension GameScene: GameLogicDelegate {
     func music() {
         print("music")
     }
-    
-//    func obstacleSpeed(speed: CGFloat) {
-        
-//        let allObstacles = children.filter { node in node.name == "Enemy" }
-//        for obstacle in allObstacles {
-//            var newPosition = obstacle.position.x
-//
-//            if isPaused == true{
-//                obstacle.position.x -= 0
-//            }
-//            else{
-//                newPosition -= speed
-//                obstacle.physicsBody?.applyForce(CGVector(dx: -100, dy: 0))
-//                //let moveObstAction = SKAction.moveTo(x: (-self.size.width - obstacle.frame.width) , duration: 3)
-//
-//                //obstacle.run(moveObstAction)
-//                //obstacle.position.x -= speed
-//            }
-//        }
-//    }
 }
 
 enum Direction {
