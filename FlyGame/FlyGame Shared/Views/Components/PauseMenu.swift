@@ -24,26 +24,25 @@ class PauseMenu: SKNode {
     }()
     lazy var homeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
-            self.gameDelegate?.goToHome()
+    
         }
         return but
     }()
     lazy var resumeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "continuarBotao")) {
-            self.gameDelegate?.resumeGame()
+            
         }
         return but
     }()
     lazy var soundButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
-//            self.gameLogic.toggleSound()
+
         }
         return but
     }()
     
     lazy var musicButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
-//            self.gameLogic.toggleMusic()
         }
         return but
     }()

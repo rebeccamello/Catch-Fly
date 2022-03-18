@@ -94,11 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setSwipeGesture()
         
         pauseMenu.isHidden = true
-        pauseMenu.retryButton.action = {
-            let scene = GameScene.newGameScene()
-            scene.isGameStarted = true
-            self.view?.presentScene(scene)
-        }
+        buttonActions()
     }
     
     //MARK: - didMove
@@ -221,12 +217,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             goToHome()
             
         }else if pauseMenu.retryButton.isFocused {
-            
+            restartGame()
             
         }else if pauseMenu.soundButton.isFocused {
+            sound()
             
         }else if pauseMenu.musicButton.isFocused {
-            
+            music()
         }
     }
 #endif
@@ -277,6 +274,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     @objc private func tvOSAction() {
         self.pauseGame()
     }
+    
+    func restartGame() {
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = true
+        self.view?.presentScene(scene)
+    }
+    
+    func sound() {
+        gameLogic.toggleSound()
+    }
+    
+    func music() {
+        gameLogic.toggleMusic()
+    }
+    
+    func buttonActions() {
+        pauseMenu.retryButton.action = {
+            self.restartGame()
+        }
+        
+        pauseMenu.homeButton.action = {
+            self.goToHome()
+        }
+        
+        pauseMenu.resumeButton.action = {
+            self.resumeGame()
+        }
+        
+        pauseMenu.soundButton.action = {
+            self.sound()
+        }
+        
+        pauseMenu.musicButton.action = {
+            self.music()
+        }
+    }
 }
 
 
@@ -295,7 +328,6 @@ extension GameScene: GameLogicDelegate {
     }
     
     func resumeGame() {
-        print("resume")
         self.isPaused.toggle()
         pauseMenu.isHidden = true
     }
