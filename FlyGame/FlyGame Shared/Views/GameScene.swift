@@ -10,6 +10,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
+    private var currentTime: TimeInterval = 0
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -24,6 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
             self.pauseMenu.isHidden.toggle()
+            self.gameLogic.handlePause(isPaused: !self.isPaused)
             self.isPaused.toggle()
         })
         but.zPosition = 3
@@ -112,6 +114,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
             if let sprite = node as? SKSpriteNode {
                 return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
@@ -119,20 +122,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return false
             }
         }
+        
+        for node in outOfTheScreenNodes {
+            node.physicsBody = nil
+        }
+        
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
+        
+        children
+            .filter { node in node.name == "Enemy" }
+            .forEach { node in
+                node.position.x -= 7
+            }
+        
     }
     
     func setPhysics(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
-        //node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.contactTestBitMask = 1
     }
+    
     func setPhysicsObstacles(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
-        //node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
@@ -209,7 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysicsObstacles(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        moveObstacle()
+        //moveObstacle()
     }
     
     func moveObstacle() {
@@ -240,6 +254,7 @@ extension GameScene: GameLogicDelegate {
     func resumeGame() {
         print("resume")
         self.isPaused.toggle()
+        self.gameLogic.handlePause(isPaused: isPaused)
         pauseMenu.isHidden = true
     }
     
