@@ -196,8 +196,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 #if os(tvOS)
         scene.run(SKAction.wait(forDuration: 0.02)) {
-            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+        scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+        scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
 #endif
     }
@@ -385,3 +385,11 @@ extension UISwipeGestureRecognizer.Direction {
         }
     }
 }
+
+#if os(tvOS)
+extension GameScene {
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [pauseMenu.resumeButton]
+    }
+}
+#endif
