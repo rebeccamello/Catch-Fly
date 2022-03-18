@@ -206,6 +206,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #endif
     }
     
+#if os(tvOS)
+    func addTapGestureRecognizer(){
+        buttonTvOS.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(buttonTvOS)
+    }
+    
+    @objc func clicked() {
+        
+        if pauseMenu.resumeButton.isFocused {
+            resumeGame()
+            
+        } else if pauseMenu.homeButton.isFocused {
+            goToHome()
+            
+        }else if pauseMenu.retryButton.isFocused {
+            
+            
+        }else if pauseMenu.soundButton.isFocused {
+            
+        }else if pauseMenu.musicButton.isFocused {
+            
+        }
+    }
+#endif
+    
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         guard
             let swipeGesture = gesture as? UISwipeGestureRecognizer,
@@ -246,6 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
         playerNode.run(moveAction)
     }
+
     
     //MARK: - Função de clicar no botão com tvRemote
     @objc private func tvOSAction() {

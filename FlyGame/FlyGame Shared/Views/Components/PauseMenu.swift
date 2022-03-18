@@ -10,6 +10,8 @@ import SpriteKit
 
 class PauseMenu: SKNode {
     
+    let buttonsPause = UITapGestureRecognizer()
+    
     var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
     var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
     weak var gameDelegate: GameLogicDelegate?
@@ -78,6 +80,8 @@ class PauseMenu: SKNode {
             return true
         }
     }
+    
+
    
     func setPositions() {
         resumeButton.zPosition = 4
