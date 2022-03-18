@@ -35,6 +35,7 @@ class GameSceneController {
     var duration: CGFloat = 3
     var currentScore: Int?
     let defaults = UserDefaults.standard
+    var pausedTime: TimeInterval = 0
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -66,6 +67,17 @@ class GameSceneController {
     
     func startUp() {
 
+    }
+    
+    func handlePause(isPaused: Bool) {
+        if isPaused {
+            pausedTime = Date().timeIntervalSince1970
+        } else {
+            let timeDifference = Date().timeIntervalSince1970 - pausedTime
+            print(timeDifference, lastObstacleTimeCreated)
+            lastObstacleTimeCreated += timeDifference
+            print(lastObstacleTimeCreated)
+        }
     }
 
     
