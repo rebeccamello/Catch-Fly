@@ -102,6 +102,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.setUpScene()
         
+#if os(tvOS)
+        addTapGestureRecognizer()
+#endif
         if isGameStarted {
             gameLogic.startUp()
             physicsWorld.contactDelegate = self
