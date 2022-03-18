@@ -11,6 +11,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
     let buttonTvOS = UITapGestureRecognizer()
+    let buttonsPause = UITapGestureRecognizer()
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -204,8 +205,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
 #if os(tvOS)
     func addTapGestureRecognizer(){
-        buttonTvOS.addTarget(self, action: #selector(clicked))
-        self.view?.addGestureRecognizer(buttonTvOS)
+        buttonsPause.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(buttonsPause)
     }
     
     @objc func clicked() {
