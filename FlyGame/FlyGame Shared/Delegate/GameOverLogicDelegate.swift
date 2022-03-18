@@ -10,5 +10,4 @@ import Foundation
 protocol GameOverLogicDelegate: AnyObject {
     func restartGame()
     
-    func goToMenu()
 }

@@ -30,13 +30,11 @@ class MenuScene: SKScene {
     
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
-            let scene = GameScene.newGameScene()
-            scene.isGameStarted = true
-            self.view?.presentScene(scene)
+            self.playGame()
         }
         
         bt.image.texture?.filteringMode = .nearest
-
+        
         return bt
     }()
     
@@ -78,8 +76,8 @@ class MenuScene: SKScene {
         
         let frames:[SKTexture] = createTexture("GatoHome")
         cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                            timePerFrame: TimeInterval(0.2),
-                                                            resize: false, restore: true)))
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
         return cat
     }()
     
@@ -100,8 +98,8 @@ class MenuScene: SKScene {
         
         let frames:[SKTexture] = createTexture("Mosca")
         fly.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                            timePerFrame: TimeInterval(0.2),
-                                                            resize: false, restore: true)))
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
         
         return fly
     }()
@@ -137,7 +135,10 @@ class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
+        
+        #if os(tvOS)
         addTapGestureRecognizer()
+        #endif
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -145,9 +146,12 @@ class MenuScene: SKScene {
         setupNodesSize()
     }
     
-    func addTapGestureRecognizer(){
-        tapGeneralSelection.addTarget(self, action: #selector(clicked))
-        self.view?.addGestureRecognizer(tapGeneralSelection)
+
+    
+    func playGame() {
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = true
+        self.view?.presentScene(scene)
     }
     
     private func setupNodesSize() {
@@ -203,33 +207,33 @@ class MenuScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
     }
-    
-    @objc func clicked() {
-        if let focussedItem = UIScreen.main.focusedItem as? SKButtonNode {
-            
-            if focussedItem == playButton {
-                let scene = GameScene.newGameScene()
-                scene.isGameStarted = true
-                self.view?.presentScene(scene)
-            } else if focussedItem == soundButton {
-                
-            }else if focussedItem == musicButton {
-                
-            }else if focussedItem == gameCenterButton {
-                
-            }
-        }
-      
+
+#if os(tvOS)
+    func addTapGestureRecognizer(){
+        tapGeneralSelection.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(tapGeneralSelection)
     }
     
+    @objc func clicked() {
+        
+        if playButton.isFocused {
+            playGame()
+            
+        } else if soundButton.isFocused {
+            self.menuLogic.toggleSound()
+            
+        }else if musicButton.isFocused {
+            self.menuLogic.toggleMusic()
+            
+        }else if gameCenterButton.isFocused {
+            
+        }
+    }
+#endif
 }
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
-    }
-    
-    func playGame(scene: SKScene) {
-        self.view?.presentScene(scene)
     }
     
     func toggleSound() -> SKButtonNode {

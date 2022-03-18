@@ -9,6 +9,7 @@ import Foundation
 import SpriteKit
 
 class GameOverScene: SKScene {
+    let tapGeneralSelection = UITapGestureRecognizer()
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -51,14 +52,14 @@ class GameOverScene: SKScene {
     
     lazy var homeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
-//            self.gameDelegate?.goToHome()
+            self.goToMenu()
         }
         return but
     }()
     
     lazy var retryButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
-            
+            self.restartGame()
         }
         return but
     }()
@@ -90,11 +91,20 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
+        
+#if os(tvOS)
+        addTapGestureRecognizer()
+#endif
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
         setupNodesPosition()
         setupNodesSize()
+    }
+    
+    func goToMenu() {
+        let scene = MenuScene.newGameScene()
+        self.view?.presentScene(scene)
     }
     
     private func setupNodesPosition() {
@@ -134,16 +144,38 @@ class GameOverScene: SKScene {
         homeButton.setScale(self.size.width * 0.00021)
         retryButton.setScale(self.size.width * 0.00021)
     }
+#if os(tvOS)
+    func addTapGestureRecognizer(){
+        tapGeneralSelection.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(tapGeneralSelection)
+    }
+    
+    @objc func clicked() {
+        
+        if homeButton.isFocused {
+            goToMenu()
+            
+        } else if retryButton.isFocused {
+            self.restartGame()
+        }
+    }
+#endif
 }
 
 extension GameOverScene: GameOverLogicDelegate {
     
     func restartGame() {
-       
-    }
-    
-    func goToMenu() {
-       
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = true
+        self.view?.presentScene(scene)
     }
 }
+
+#if os(tvOS)
+extension GameOverScene {
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [homeButton]
+    }
+}
+#endif
 
