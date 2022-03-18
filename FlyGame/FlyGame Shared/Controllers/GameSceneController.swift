@@ -33,6 +33,7 @@ class GameSceneController {
     private var timeScore: TimeInterval = 0
     private var timeSpeed: TimeInterval = 0
     var duration: CGFloat = 3
+    var currentScore: Int = 0
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -144,6 +145,7 @@ class GameSceneController {
     func tearDown() {
         timeCounter = 0
         timer.invalidate()
+        currentScore = score
         score = 0
     }
 }
