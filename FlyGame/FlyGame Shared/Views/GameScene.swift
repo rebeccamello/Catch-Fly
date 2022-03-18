@@ -15,6 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var lbl = SKLabelNode()
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
+        lbl.zPosition = 3
         lbl.fontName = "munro"
         lbl.text = "0"
         return lbl
@@ -25,6 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.pauseMenu.isHidden.toggle()
             self.isPaused.toggle()
         })
+        but.zPosition = 3
         return but
     }()
     
@@ -69,6 +71,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
+        self.view?.showsPhysics = true
         
         self.addChild(scenarioImage)
         scenarioImage.size.width = self.size.width
@@ -118,14 +121,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
+        
     }
     
     func setPhysics(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
-        node.physicsBody?.affectedByGravity = false // faz continuar a colisao mas sem cair
+        node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
+        //node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
-        node.physicsBody?.restitution = 0.4
+        node.physicsBody?.contactTestBitMask = 1
+    }
+    func setPhysicsObstacles(node: SKSpriteNode) {
+        node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
+        //node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody?.affectedByGravity = false
+        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        node.physicsBody?.linearDamping = 0
+        node.physicsBody?.friction = 0
+        node.physicsBody?.mass = 1
+        node.physicsBody?.categoryBitMask = 1
     }
     
     func setNodePosition() {
@@ -190,11 +204,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.zPosition = 2
         enemy.name = "Enemy"
+        
         enemy.size.height = self.size.height/3.1 * CGFloat(obstacle.weight)
         enemy.size.width = self.size.height/3.1 * CGFloat(obstacle.width)
-        setPhysics(node: enemy)
+        setPhysicsObstacles(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
+        moveObstacle()
+    }
+    
+    func moveObstacle() {
+        let allObstacles = children.filter { node in node.name == "Enemy" }
+        for obstacle in allObstacles {
+            if isPaused == true{
+                obstacle.position.x -= 0
+            }
+            else {
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.duration*100)
+                obstacle.run(moveObstAction)
+            }
+        }
     }
     
     func movePlayer(direction: Direction) {
@@ -236,17 +265,25 @@ extension GameScene: GameLogicDelegate {
         print("music")
     }
     
-    func obstacleSpeed(speed: CGFloat) {
-        let allObstacles = children.filter { node in node.name == "Enemy" }
-        for obstacle in allObstacles {
-            if isPaused == true{
-                obstacle.position.x -= 0
-            }
-            else{
-                obstacle.position.x -= speed
-            }
-        }
-    }
+//    func obstacleSpeed(speed: CGFloat) {
+        
+//        let allObstacles = children.filter { node in node.name == "Enemy" }
+//        for obstacle in allObstacles {
+//            var newPosition = obstacle.position.x
+//
+//            if isPaused == true{
+//                obstacle.position.x -= 0
+//            }
+//            else{
+//                newPosition -= speed
+//                obstacle.physicsBody?.applyForce(CGVector(dx: -100, dy: 0))
+//                //let moveObstAction = SKAction.moveTo(x: (-self.size.width - obstacle.frame.width) , duration: 3)
+//
+//                //obstacle.run(moveObstAction)
+//                //obstacle.position.x -= speed
+//            }
+//        }
+//    }
 }
 
 enum Direction {
