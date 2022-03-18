@@ -23,8 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
-            self.pauseMenu.isHidden.toggle()
-            self.isPaused.toggle()
+            self.pauseGame()
         })
         but.zPosition = 3
         return but
@@ -56,8 +55,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.texture?.filteringMode = .nearest
         let frames:[SKTexture] = createTexture("Mosca")
         bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                            timePerFrame: TimeInterval(0.2),
-                                                            resize: false, restore: true)))
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
         return bug
     }()
     
@@ -190,12 +189,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let scene = GameOverScene.newGameScene()
         view?.presentScene(scene)
         
-    #if os(tvOS)
+#if os(tvOS)
         scene.run(SKAction.wait(forDuration: 0.02)) {
             scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
             scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
-    #endif
+#endif
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -238,7 +237,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
         playerNode.run(moveAction)
     }
+    
+    //MARK: - Funções de clicar no botão com tvRemote
+    func addGestureRecognizer() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector((pauseplay)))
+        self.view?.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func pauseplay() {
+        
+        func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+            for press in presses {
+                if press.type == .playPause {
+                    pauseGame()
+                }
+                else {
+                    super.pressesEnded(presses, with: event)
+                }
+            }
+        }
+    }
 }
+
 
 extension GameScene: GameLogicDelegate {
     func drawScore(score: Int) {
@@ -252,7 +272,8 @@ extension GameScene: GameLogicDelegate {
     }
     
     func pauseGame() {
-        print("pause")
+        self.pauseMenu.isHidden.toggle()
+        self.isPaused.toggle()
     }
     
     func gameOver() {
@@ -272,25 +293,25 @@ extension GameScene: GameLogicDelegate {
         print("music")
     }
     
-//    func obstacleSpeed(speed: CGFloat) {
-        
-//        let allObstacles = children.filter { node in node.name == "Enemy" }
-//        for obstacle in allObstacles {
-//            var newPosition = obstacle.position.x
-//
-//            if isPaused == true{
-//                obstacle.position.x -= 0
-//            }
-//            else{
-//                newPosition -= speed
-//                obstacle.physicsBody?.applyForce(CGVector(dx: -100, dy: 0))
-//                //let moveObstAction = SKAction.moveTo(x: (-self.size.width - obstacle.frame.width) , duration: 3)
-//
-//                //obstacle.run(moveObstAction)
-//                //obstacle.position.x -= speed
-//            }
-//        }
-//    }
+    //    func obstacleSpeed(speed: CGFloat) {
+    
+    //        let allObstacles = children.filter { node in node.name == "Enemy" }
+    //        for obstacle in allObstacles {
+    //            var newPosition = obstacle.position.x
+    //
+    //            if isPaused == true{
+    //                obstacle.position.x -= 0
+    //            }
+    //            else{
+    //                newPosition -= speed
+    //                obstacle.physicsBody?.applyForce(CGVector(dx: -100, dy: 0))
+    //                //let moveObstAction = SKAction.moveTo(x: (-self.size.width - obstacle.frame.width) , duration: 3)
+    //
+    //                //obstacle.run(moveObstAction)
+    //                //obstacle.position.x -= speed
+    //            }
+    //        }
+    //    }
 }
 
 enum Direction {
