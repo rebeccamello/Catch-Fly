@@ -130,10 +130,17 @@ class GameSceneController {
         }
         let deltaTimeSpeed = (currentTime - timeSpeed)
         //print(duration)
+        #if os(iOS)
         if deltaTimeSpeed >= 1 && duration > 0.8 {
             duration -= 0.04
             timeSpeed = currentTime
         }
+        #elseif os(tvOS)
+        if deltaTimeSpeed >= 3 && duration > 0.8 {
+            duration -= 0.04
+            timeSpeed = currentTime
+        }
+        #endif
     }
     
     private func calculateDelay(currentTime: TimeInterval) {
@@ -149,9 +156,15 @@ class GameSceneController {
             }
             lastObstacleTimeCreated = currentTime
             //print("delay: \(delay)")
+            #if os(iOS)
             if delay > minimumDelay { // limite minimo do delay
                 delay -= 0.055 // cada vez que o update é chamado diminui o delay
             }
+            #elseif os(tvOS)
+            if delay > 2 { // limite minimo do delay
+                delay -= 0.04 // cada vez que o update é chamado diminui o delay
+            }
+            #endif
         }
         
     }
