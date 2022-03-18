@@ -33,6 +33,8 @@ class GameSceneController {
     private var timeScore: TimeInterval = 0
     private var timeSpeed: TimeInterval = 0
     var duration: CGFloat = 3
+    var soundOn: Bool = true
+    var musicOn: Bool = true
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -139,6 +141,42 @@ class GameSceneController {
             }
         }
         
+    }
+    
+    func toggleSound() {
+        
+        if let node = gameDelegate?.toggleSound() {
+            let texture: [SKTexture] = [SKTexture(imageNamed: "somBotao"),
+                                        SKTexture(imageNamed: "somDesligadoBotao")]
+            soundOn.toggle()
+            
+            if soundOn {
+                node.image.texture = texture[0]
+            } else {
+                node.image.texture = texture[1]
+            }
+        } else {
+            return
+            
+        }
+    }
+    
+    func toggleMusic() {
+        
+        if let node = gameDelegate?.toggleMusic() {
+            let texture: [SKTexture] = [SKTexture(imageNamed: "musicaBotao"),
+                                        SKTexture(imageNamed: "musicaDesligadoBotao")]
+            
+            musicOn.toggle()
+            
+            if musicOn {
+                node.image.texture = texture[0]
+            } else {
+                node.image.texture = texture[1]
+            }
+        } else {
+            return
+        }
     }
     
     func tearDown() {

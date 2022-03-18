@@ -10,6 +10,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
+    let buttonTvOS = UITapGestureRecognizer()
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -67,10 +68,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: - setUpScenne
+    
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
         self.view?.showsPhysics = true
+        
+#if os(tvOS)
+        self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
+        self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        self.view?.addGestureRecognizer(self.buttonTvOS)
+        
+#endif
         
         self.addChild(scenarioImage)
         scenarioImage.size.width = self.size.width
@@ -238,29 +247,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.run(moveAction)
     }
     
-    //MARK: - Funções de clicar no botão com tvRemote
-    func addGestureRecognizer() {
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector((pauseplay)))
-        self.view?.addGestureRecognizer(tapRecognizer)
-    }
-    
-    @objc func pauseplay() {
-        
-        func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-            for press in presses {
-                if press.type == .playPause {
-                    pauseGame()
-                }
-                else {
-                    super.pressesEnded(presses, with: event)
-                }
-            }
-        }
+    //MARK: - Função de clicar no botão com tvRemote
+    @objc private func tvOSAction() {
+        self.pauseGame()
     }
 }
 
 
 extension GameScene: GameLogicDelegate {
+    func toggleSound() -> SKButtonNode {
+        return pauseMenu.soundButton
+    }
+    
+    func toggleMusic() -> SKButtonNode {
+        return pauseMenu.musicButton
+    }
+    
+    
     func drawScore(score: Int) {
         scoreLabel.text = String(score)
     }
@@ -283,14 +286,6 @@ extension GameScene: GameLogicDelegate {
     func goToHome() {
         let scene = MenuScene.newGameScene()
         view?.presentScene(scene)
-    }
-    
-    func sound() {
-        print("sound")
-    }
-    
-    func music() {
-        print("music")
     }
     
     //    func obstacleSpeed(speed: CGFloat) {

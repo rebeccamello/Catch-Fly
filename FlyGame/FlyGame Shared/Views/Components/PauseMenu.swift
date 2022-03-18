@@ -34,14 +34,14 @@ class PauseMenu: SKNode {
     }()
     lazy var soundButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
-            self.gameDelegate?.sound()
+//            self.gameLogic.toggleSound()
         }
         return but
     }()
     
     lazy var musicButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
-            self.gameDelegate?.music()
+//            self.gameLogic.toggleMusic()
         }
         return but
     }()

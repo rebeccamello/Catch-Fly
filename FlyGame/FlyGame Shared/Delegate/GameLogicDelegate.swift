@@ -15,9 +15,9 @@ protocol GameLogicDelegate: AnyObject {
     
     func goToHome()
     
-    func sound()
+    func toggleSound() -> SKButtonNode
     
-    func music()
+    func toggleMusic() -> SKButtonNode
     
     func createObstacle(obstacle: Obstacle)
 }

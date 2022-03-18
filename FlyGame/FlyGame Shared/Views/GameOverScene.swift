@@ -92,9 +92,9 @@ class GameOverScene: SKScene {
     override func didMove(to view: SKView) {
         self.setUpScene()
         
-#if os(tvOS)
+    #if os(tvOS)
         addTapGestureRecognizer()
-#endif
+    #endif
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
