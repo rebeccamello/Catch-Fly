@@ -191,7 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view?.presentScene(scene)
         
     #if os(tvOS)
-        scene.run(SKAction.wait(forDuration: 0.02)) { 
+        scene.run(SKAction.wait(forDuration: 0.02)) {
             scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
             scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
