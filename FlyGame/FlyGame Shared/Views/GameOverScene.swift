@@ -10,6 +10,8 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     let tapGeneralSelection = UITapGestureRecognizer()
+    var score: Int = 20
+    let defaults = UserDefaults.standard
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -46,7 +48,6 @@ class GameOverScene: SKScene {
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = "Your Score: "
         return lbl
     }()
     
@@ -64,12 +65,17 @@ class GameOverScene: SKScene {
         return but
     }()
     
+    lazy var gameLogic: GameSceneController = {
+        let g = GameSceneController()
+        return g
+    }()
+    
     class func newGameScene() -> GameOverScene {
         let scene = GameOverScene()
         scene.scaleMode = .resizeFill
         return scene
     }
-
+    
     func setUpScene() {
         self.addChild(scenarioImage)
         self.addChild(floor)
@@ -91,7 +97,8 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
-        
+        let currentScore = defaults.object(forKey: "currentScore")
+        scoreLabel.text = "Your Score: \(currentScore ?? 0)"
 #if os(tvOS)
         addTapGestureRecognizer()
 #endif

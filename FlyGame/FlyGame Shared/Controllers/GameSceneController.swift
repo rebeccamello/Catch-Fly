@@ -29,10 +29,12 @@ class GameSceneController {
     var delay: TimeInterval = 3
     private var minimumDelay: CGFloat = 1.0
     var initialPosition: CGFloat { 3 }
-    private var score: Int = 0
+    var score: Int = 0
     private var timeScore: TimeInterval = 0
     private var timeSpeed: TimeInterval = 0
     var duration: CGFloat = 3
+    var currentScore: Int?
+    let defaults = UserDefaults.standard
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -107,6 +109,7 @@ class GameSceneController {
         calculateDelay(currentTime: currentTime)
         calculateScore(currentTime: currentTime)
         calculateDuration(currentTime: currentTime)
+        currentScore = score
     }
     
     private func calculateDuration(currentTime: TimeInterval) {
@@ -144,6 +147,7 @@ class GameSceneController {
     func tearDown() {
         timeCounter = 0
         timer.invalidate()
+        defaults.set(score, forKey: "currentScore")
         score = 0
     }
 }
