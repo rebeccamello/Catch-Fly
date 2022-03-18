@@ -129,13 +129,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
-        
-        children
-            .filter { node in node.name == "Enemy" }
-            .forEach { node in
-                node.position.x -= 7
-            }
-        
     }
     
     func setPhysics(node: SKSpriteNode) {
@@ -223,7 +216,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysicsObstacles(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        //moveObstacle()
+        moveObstacle()
     }
     
     func moveObstacle() {

@@ -26,7 +26,7 @@ class GameSceneController {
     private var currentPosition: Int = 3
     private var lastObstacleTimeCreated: TimeInterval = 3
     private var newSpeed: CGFloat = 1
-    var delay: TimeInterval = 3
+    var delay: TimeInterval = 2.8
     private var minimumDelay: CGFloat = 1.0
     var initialPosition: CGFloat { 3 }
     var score: Int = 0
