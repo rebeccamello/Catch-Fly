@@ -189,6 +189,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
         view?.presentScene(scene)
+        
+    #if os(tvOS)
+        scene.run(SKAction.wait(forDuration: 0.02)) { 
+            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+        }
+    #endif
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
