@@ -136,6 +136,7 @@ class GameSceneController {
             timeSpeed = currentTime
         }
         #elseif os(tvOS)
+        print("tv!!")
         if deltaTimeSpeed >= 3 && duration > 0.8 {
             duration -= 0.04
             timeSpeed = currentTime
@@ -161,6 +162,7 @@ class GameSceneController {
                 delay -= 0.055 // cada vez que o update é chamado diminui o delay
             }
             #elseif os(tvOS)
+            print("tv!")
             if delay > 2 { // limite minimo do delay
                 delay -= 0.04 // cada vez que o update é chamado diminui o delay
             }
