@@ -34,7 +34,7 @@ class GameSceneController {
     private var timeScore: TimeInterval = 0
     private var timeSpeed: TimeInterval = 0
     var duration: CGFloat = 3
-    var durationTV: CGFloat = 2.3
+    var durationTV: CGFloat = 2
     var currentScore: Int?
     let defaults = UserDefaults.standard
     var pausedTime: TimeInterval = 0
@@ -140,8 +140,8 @@ class GameSceneController {
             timeSpeed = currentTime
         }
         #elseif os(tvOS)
-        if deltaTimeSpeed >= 3 && durationTV > 0.8 {
-            durationTV -= 0.055
+        if deltaTimeSpeed >= 1 && durationTV > 0.6 {
+            durationTV -= 0.07
             timeSpeed = currentTime
         }
         #endif
@@ -182,7 +182,8 @@ class GameSceneController {
             }
             lastObstacleTimeCreated = currentTime
             
-            if delayTV > 3.5 { // limite minimo do delay
+            if delayTV > 3.7 { // limite minimo do delay
+                print("entrou")
                 delayTV -= 0.06 // cada vez que o update é chamado diminui o delay
             }
         }

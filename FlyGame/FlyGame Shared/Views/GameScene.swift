@@ -81,7 +81,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
+        
+        #if os(iOS)
         self.addChild(pauseButton)
+        #endif
+        
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
         
@@ -149,13 +153,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setNodePosition() {
-        playerNode.size.height = self.size.height/5
-        playerNode.size.width = self.size.height/5
+        playerNode.size.height = self.size.height/5.2
+        playerNode.size.width = self.size.height/5.2
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
-        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
         pauseButton.setScale(self.size.height*0.00035)
+        
+        #if os(iOS)
+        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        #elseif os(tvOS)
+        scoreLabel.position = pauseButton.position
+        #endif
     }
     
     //MARK: Create Texture
