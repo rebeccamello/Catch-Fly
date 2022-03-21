@@ -51,9 +51,7 @@ class SKButtonNode: SKNode {
         }
     }
     
-
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         self.action()
     }
 }

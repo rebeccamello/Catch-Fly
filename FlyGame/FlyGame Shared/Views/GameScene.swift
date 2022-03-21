@@ -88,7 +88,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
+        
+#if os(iOS)
         self.addChild(pauseButton)
+#endif
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
         
@@ -104,6 +107,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 #if os(tvOS)
         addTapGestureRecognizer()
+
+        if pauseMenu.isHidden == false {
+            self.run(SKAction.wait(forDuration: 0.02)) {
+            self.view?.window?.rootViewController?.setNeedsFocusUpdate()
+            self.view?.window?.rootViewController?.updateFocusIfNeeded()
+            }
+        }
 #endif
         if isGameStarted {
             gameLogic.startUp()
@@ -213,7 +223,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func clicked() {
-        
         if pauseMenu.resumeButton.isFocused {
             resumeGame()
             
@@ -334,6 +343,7 @@ extension GameScene: GameLogicDelegate {
     func resumeGame() {
         self.isPaused.toggle()
         pauseMenu.isHidden = true
+        pauseButton.isHidden = false
     }
     
     func pauseGame() {
@@ -392,8 +402,14 @@ extension UISwipeGestureRecognizer.Direction {
 
 #if os(tvOS)
 extension GameScene {
-    override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        return [pauseMenu.resumeButton]
+   override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        if !pauseMenu.isHidden {
+            return [pauseMenu.resumeButton]
+        }
+        
+        print("me odiou")
+        return []
+       
     }
 }
 #endif

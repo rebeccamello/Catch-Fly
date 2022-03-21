@@ -147,18 +147,15 @@ class MenuScene: SKScene {
     }
     
 
-    
     func playGame() {
         let scene = GameScene.newGameScene()
         scene.isGameStarted = true
         self.view?.presentScene(scene)
         
 #if os(tvOS)
-        if scene.pauseMenu.isHidden == false {
-            scene.run(SKAction.wait(forDuration: 0.02)) {
-            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-            }
+        scene.run(SKAction.wait(forDuration: 0.02)) {
+        scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+        scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
 #endif
     }
