@@ -403,13 +403,7 @@ extension UISwipeGestureRecognizer.Direction {
 #if os(tvOS)
 extension GameScene {
    override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        if !pauseMenu.isHidden {
-            return [pauseMenu.resumeButton]
-        }
-        
-        print("me odiou")
-        return []
-       
+        return [pauseMenu.resumeButton]
     }
 }
 #endif

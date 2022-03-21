@@ -102,3 +102,11 @@ class PauseMenu: SKNode {
         musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
     }
 }
+
+#if os(tvOS)
+extension PauseMenu {
+   override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [resumeButton]
+    }
+}
+#endif
