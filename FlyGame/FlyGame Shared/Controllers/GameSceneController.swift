@@ -27,13 +27,14 @@ class GameSceneController {
     private var lastObstacleTimeCreated: TimeInterval = 3
     private var newSpeed: CGFloat = 1
     var delayIOS: TimeInterval = 2.8
-    var delayTV: TimeInterval = 3
+    var delayTV: TimeInterval = 4.44
     private var minimumDelay: CGFloat = 1.1
     var initialPosition: CGFloat { 3 }
     var score: Int = 0
     private var timeScore: TimeInterval = 0
     private var timeSpeed: TimeInterval = 0
     var duration: CGFloat = 3
+    var durationTV: CGFloat = 2.3
     var currentScore: Int?
     let defaults = UserDefaults.standard
     var pausedTime: TimeInterval = 0
@@ -125,6 +126,7 @@ class GameSceneController {
         currentScore = score
     }
     
+    //MARK: Calculo de Duration
     private func calculateDuration(currentTime: TimeInterval) {
         if timeSpeed == 0 {
             timeSpeed = currentTime
@@ -138,13 +140,14 @@ class GameSceneController {
             timeSpeed = currentTime
         }
         #elseif os(tvOS)
-        if deltaTimeSpeed >= 3 && duration > 0.8 {
-            duration -= 0.04
+        if deltaTimeSpeed >= 3 && durationTV > 0.8 {
+            durationTV -= 0.055
             timeSpeed = currentTime
         }
         #endif
     }
     
+    //MARK: Calculo de Delay
     private func calculateDelay(currentTime: TimeInterval) {
         // delay será de acordo com a largura da tela
         let screen: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 1, heighMultiplier: 1), cornerRadius: 0)
@@ -168,8 +171,8 @@ class GameSceneController {
             if delayIOS > minimumDelay { // limite minimo do delay
                 delayIOS -= 0.05 // cada vez que o update é chamado diminui o delay
             }
-            
         }
+        
         #elseif os (tvOS)
         print("delay tv \(delayTV)")
         if pastTime >= delayTV {
@@ -179,15 +182,11 @@ class GameSceneController {
             }
             lastObstacleTimeCreated = currentTime
             
-            if delayTV > minimumDelay { // limite minimo do delay
+            if delayTV > 3.5 { // limite minimo do delay
                 delayTV -= 0.06 // cada vez que o update é chamado diminui o delay
             }
-            
         }
         #endif
-        
-
-        
     }
     
     func tearDown() {
