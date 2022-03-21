@@ -27,8 +27,8 @@ class GameSceneController {
     private var lastObstacleTimeCreated: TimeInterval = 3
     private var newSpeed: CGFloat = 1
     var delaySmallScreen: TimeInterval = 2.8
-    var delayMediumScreen: TimeInterval = 3.8
-    var delayBigScreen: TimeInterval = 3
+    var delayMediumScreen: TimeInterval = 4.2
+    var delayBigScreen: TimeInterval = 4.5
     private var minimumDelay: CGFloat = 1.1
     var initialPosition: CGFloat { 3 }
     var score: Int = 0
@@ -175,7 +175,7 @@ class GameSceneController {
         }
         
         // MEDIUM SCREEN
-        else if (screenWidth > 1000 && screenWidth <= 3000) {
+        else if (screenWidth > 1000 && screenWidth <= 1500) {
             print("delay medium \(delayMediumScreen)")
             if pastTime >= delayMediumScreen {
                 let obstacles = chooseObstacle()
@@ -207,8 +207,6 @@ class GameSceneController {
                 
             }
         }
-
-        
     }
     
     func tearDown() {
