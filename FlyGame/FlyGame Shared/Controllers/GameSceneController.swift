@@ -26,8 +26,10 @@ class GameSceneController {
     private var currentPosition: Int = 3
     private var lastObstacleTimeCreated: TimeInterval = 3
     private var newSpeed: CGFloat = 1
-    var delay: TimeInterval = 2.8
-    private var minimumDelay: CGFloat = 1.0
+    var delaySmallScreen: TimeInterval = 2.8
+    var delayMediumScreen: TimeInterval = 3.8
+    var delayBigScreen: TimeInterval = 3
+    private var minimumDelay: CGFloat = 1.1
     var initialPosition: CGFloat { 3 }
     var score: Int = 0
     private var timeScore: TimeInterval = 0
@@ -130,13 +132,13 @@ class GameSceneController {
         }
         let deltaTimeSpeed = (currentTime - timeSpeed)
         //print(duration)
+        
         #if os(iOS)
         if deltaTimeSpeed >= 1 && duration > 0.8 {
             duration -= 0.04
             timeSpeed = currentTime
         }
         #elseif os(tvOS)
-        print("tv!!")
         if deltaTimeSpeed >= 3 && duration > 0.8 {
             duration -= 0.04
             timeSpeed = currentTime
@@ -145,29 +147,67 @@ class GameSceneController {
     }
     
     private func calculateDelay(currentTime: TimeInterval) {
+        // delay será de acordo com a largura da tela
+        let screen: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 1, heighMultiplier: 1), cornerRadius: 0)
+        let screenWidth = screen.frame.width
+        print("Screen size: \(screenWidth)")
+        
         if lastObstacleTimeCreated == 0 {
             lastObstacleTimeCreated = currentTime
         }
         let pastTime = (currentTime - lastObstacleTimeCreated)
         
-        if pastTime >= delay {
-            let obstacles = chooseObstacle()
-            obstacles.forEach {
-                gameDelegate?.createObstacle(obstacle: $0)
+        // SMALL SCREEN
+        if screenWidth >= 600 && screenWidth <= 1000 {
+            print("delay small \(delaySmallScreen)")
+            if pastTime >= delaySmallScreen {
+                let obstacles = chooseObstacle()
+                obstacles.forEach {
+                    gameDelegate?.createObstacle(obstacle: $0)
+                }
+                lastObstacleTimeCreated = currentTime
+                
+                if delaySmallScreen > minimumDelay { // limite minimo do delay
+                    delaySmallScreen -= 0.05 // cada vez que o update é chamado diminui o delay
+                }
+                
             }
-            lastObstacleTimeCreated = currentTime
-            //print("delay: \(delay)")
-            #if os(iOS)
-            if delay > minimumDelay { // limite minimo do delay
-                delay -= 0.055 // cada vez que o update é chamado diminui o delay
-            }
-            #elseif os(tvOS)
-            print("tv!")
-            if delay > 2 { // limite minimo do delay
-                delay -= 0.04 // cada vez que o update é chamado diminui o delay
-            }
-            #endif
         }
+        
+        // MEDIUM SCREEN
+        else if (screenWidth > 1000 && screenWidth <= 3000) {
+            print("delay medium \(delayMediumScreen)")
+            if pastTime >= delayMediumScreen {
+                let obstacles = chooseObstacle()
+                obstacles.forEach {
+                    gameDelegate?.createObstacle(obstacle: $0)
+                }
+                lastObstacleTimeCreated = currentTime
+                
+                if delayMediumScreen > minimumDelay { // limite minimo do delay
+                    delayMediumScreen -= 0.055 // cada vez que o update é chamado diminui o delay
+                }
+                
+            }
+        }
+        
+        // BIG SCREEN
+        else {
+            print("delay big \(delayBigScreen)")
+            if pastTime >= delayBigScreen {
+                let obstacles = chooseObstacle()
+                obstacles.forEach {
+                    gameDelegate?.createObstacle(obstacle: $0)
+                }
+                lastObstacleTimeCreated = currentTime
+                
+                if delayBigScreen > minimumDelay { // limite minimo do delay
+                    delayBigScreen -= 0.06 // cada vez que o update é chamado diminui o delay
+                }
+                
+            }
+        }
+
         
     }
     
