@@ -24,15 +24,21 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cenario" translatesAutoresizingMaskIntoConstraints="NO" id="abr-8z-bf2">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="Og2-dS-Ur8">
+                                <rect key="frame" x="248" y="0.0" width="400" height="414"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Og2-dS-Ur8" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="2cr-oZ-0OL"/>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
+                            <constraint firstAttribute="bottom" secondItem="Og2-dS-Ur8" secondAttribute="bottom" id="9J0-j9-JVe"/>
                             <constraint firstItem="abr-8z-bf2" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Kob-DS-5dY"/>
                             <constraint firstAttribute="bottom" secondItem="abr-8z-bf2" secondAttribute="bottom" id="REB-0e-49t"/>
                             <constraint firstAttribute="trailing" secondItem="abr-8z-bf2" secondAttribute="trailing" id="RnC-LW-hl2"/>
-                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="20" symbolic="YES" id="SfN-ll-jLj"/>
+                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="SfN-ll-jLj"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="Og2-dS-Ur8" secondAttribute="centerX" id="VuW-Un-cBB"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
                             <constraint firstItem="abr-8z-bf2" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="nTb-qg-iq5"/>
                         </constraints>
@@ -45,5 +51,6 @@
     </scenes>
     <resources>
         <image name="cenario" width="896" height="414"/>
+        <image name="launch" width="400" height="400"/>
     </resources>
 </document>
