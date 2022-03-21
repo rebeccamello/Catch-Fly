@@ -235,7 +235,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 obstacle.position.x -= 0
             }
             else {
+                #if os(iOS)
                 let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.duration*100)
+                #elseif os(tvOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.durationTV*100)
+                #endif
                 obstacle.run(moveObstAction)
             }
         }

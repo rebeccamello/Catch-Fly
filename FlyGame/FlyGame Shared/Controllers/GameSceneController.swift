@@ -27,7 +27,7 @@ class GameSceneController {
     private var lastObstacleTimeCreated: TimeInterval = 3
     private var newSpeed: CGFloat = 1
     var delayIOS: TimeInterval = 2.8
-    var delayTV: TimeInterval = 4.44
+    var delayTV: TimeInterval = 3.5
     private var minimumDelay: CGFloat = 1.1
     var initialPosition: CGFloat { 3 }
     var score: Int = 0
@@ -140,8 +140,9 @@ class GameSceneController {
             timeSpeed = currentTime
         }
         #elseif os(tvOS)
-        if deltaTimeSpeed >= 1 && durationTV > 0.6 {
-            durationTV -= 0.07
+        if deltaTimeSpeed >= 0.8 && durationTV > 0.4 {
+            print("duration: \(durationTV)")
+            durationTV -= 0.015
             timeSpeed = currentTime
         }
         #endif
@@ -149,11 +150,6 @@ class GameSceneController {
     
     //MARK: Calculo de Delay
     private func calculateDelay(currentTime: TimeInterval) {
-        // delay será de acordo com a largura da tela
-        let screen: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 1, heighMultiplier: 1), cornerRadius: 0)
-        let screenWidth = screen.frame.width
-        print("Screen size: \(screenWidth)")
-        
         if lastObstacleTimeCreated == 0 {
             lastObstacleTimeCreated = currentTime
         }
@@ -182,9 +178,8 @@ class GameSceneController {
             }
             lastObstacleTimeCreated = currentTime
             
-            if delayTV > 3.7 { // limite minimo do delay
-                print("entrou")
-                delayTV -= 0.06 // cada vez que o update é chamado diminui o delay
+            if delayTV > 1 { // limite minimo do delay
+                delayTV -= 0.085 // cada vez que o update é chamado diminui o delay
             }
         }
         #endif
