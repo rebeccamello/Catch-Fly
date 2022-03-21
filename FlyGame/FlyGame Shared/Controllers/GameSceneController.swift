@@ -26,9 +26,8 @@ class GameSceneController {
     private var currentPosition: Int = 3
     private var lastObstacleTimeCreated: TimeInterval = 3
     private var newSpeed: CGFloat = 1
-    var delaySmallScreen: TimeInterval = 2.8
-    var delayMediumScreen: TimeInterval = 3.8
-    var delayBigScreen: TimeInterval = 3
+    var delayIOS: TimeInterval = 2.8
+    var delayTV: TimeInterval = 3
     private var minimumDelay: CGFloat = 1.1
     var initialPosition: CGFloat { 3 }
     var score: Int = 0
@@ -157,56 +156,36 @@ class GameSceneController {
         }
         let pastTime = (currentTime - lastObstacleTimeCreated)
         
-        // SMALL SCREEN
-        if screenWidth >= 600 && screenWidth <= 1000 {
-            print("delay small \(delaySmallScreen)")
-            if pastTime >= delaySmallScreen {
-                let obstacles = chooseObstacle()
-                obstacles.forEach {
-                    gameDelegate?.createObstacle(obstacle: $0)
-                }
-                lastObstacleTimeCreated = currentTime
-                
-                if delaySmallScreen > minimumDelay { // limite minimo do delay
-                    delaySmallScreen -= 0.05 // cada vez que o update é chamado diminui o delay
-                }
-                
+        #if os(iOS)
+        print("delay ios \(delayIOS)")
+        if pastTime >= delayIOS {
+            let obstacles = chooseObstacle()
+            obstacles.forEach {
+                gameDelegate?.createObstacle(obstacle: $0)
             }
+            lastObstacleTimeCreated = currentTime
+            
+            if delayIOS > minimumDelay { // limite minimo do delay
+                delayIOS -= 0.05 // cada vez que o update é chamado diminui o delay
+            }
+            
         }
+        #elseif os (tvOS)
+        print("delay tv \(delayTV)")
+        if pastTime >= delayTV {
+            let obstacles = chooseObstacle()
+            obstacles.forEach {
+                gameDelegate?.createObstacle(obstacle: $0)
+            }
+            lastObstacleTimeCreated = currentTime
+            
+            if delayTV > minimumDelay { // limite minimo do delay
+                delayTV -= 0.06 // cada vez que o update é chamado diminui o delay
+            }
+            
+        }
+        #endif
         
-        // MEDIUM SCREEN
-        else if (screenWidth > 1000 && screenWidth <= 3000) {
-            print("delay medium \(delayMediumScreen)")
-            if pastTime >= delayMediumScreen {
-                let obstacles = chooseObstacle()
-                obstacles.forEach {
-                    gameDelegate?.createObstacle(obstacle: $0)
-                }
-                lastObstacleTimeCreated = currentTime
-                
-                if delayMediumScreen > minimumDelay { // limite minimo do delay
-                    delayMediumScreen -= 0.055 // cada vez que o update é chamado diminui o delay
-                }
-                
-            }
-        }
-        
-        // BIG SCREEN
-        else {
-            print("delay big \(delayBigScreen)")
-            if pastTime >= delayBigScreen {
-                let obstacles = chooseObstacle()
-                obstacles.forEach {
-                    gameDelegate?.createObstacle(obstacle: $0)
-                }
-                lastObstacleTimeCreated = currentTime
-                
-                if delayBigScreen > minimumDelay { // limite minimo do delay
-                    delayBigScreen -= 0.06 // cada vez que o update é chamado diminui o delay
-                }
-                
-            }
-        }
 
         
     }
