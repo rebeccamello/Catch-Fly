@@ -145,7 +145,6 @@ class MenuScene: SKScene {
         setupNodesPosition()
         setupNodesSize()
     }
-    
 
     func playGame() {
         let scene = GameScene.newGameScene()
