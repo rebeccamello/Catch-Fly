@@ -323,15 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.isGameStarted = true
         self.view?.presentScene(scene)
     }
-    
-    func sound() {
-        gameLogic.toggleSound()
-    }
-    
-    func music() {
-        gameLogic.toggleMusic()
-    }
-    
+        
     func buttonActions() {
         pauseMenu.retryButton.action = {
             self.restartGame()
@@ -346,11 +338,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         pauseMenu.soundButton.action = {
-            self.sound()
+            self.soundAction()
         }
         
         pauseMenu.musicButton.action = {
-            self.music()
+            self.musicAction()
         }}
     
     //MARK: Parallax Background

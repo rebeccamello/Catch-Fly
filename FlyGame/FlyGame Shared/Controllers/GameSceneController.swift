@@ -185,42 +185,6 @@ class GameSceneController {
         #endif
     }
     
-    func toggleSound() {
-        
-        if let node = gameDelegate?.toggleSound() {
-            let texture: [SKTexture] = [SKTexture(imageNamed: "somBotao"),
-                                        SKTexture(imageNamed: "somDesligadoBotao")]
-            soundOn.toggle()
-            
-            if soundOn {
-                node.image.texture = texture[0]
-            } else {
-                node.image.texture = texture[1]
-            }
-        } else {
-            return
-            
-        }
-    }
-    
-    func toggleMusic() {
-        
-        if let node = gameDelegate?.toggleMusic() {
-            let texture: [SKTexture] = [SKTexture(imageNamed: "musicaBotao"),
-                                        SKTexture(imageNamed: "musicaDesligadoBotao")]
-            
-            musicOn.toggle()
-            
-            if musicOn {
-                node.image.texture = texture[0]
-            } else {
-                node.image.texture = texture[1]
-            }
-        } else {
-            return
-        }
-    }
-    
     func tearDown() {
         timeCounter = 0
         timer.invalidate()

@@ -80,17 +80,6 @@ class PauseMenu: SKNode {
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
     
-    override var isUserInteractionEnabled: Bool {
-        set {
-            // ignore
-        }
-        get {
-            return true
-        }
-    }
-    
-
-   
     func setPositions() {
         resumeButton.zPosition = 4
         resumeButton.position = CGPoint(x: 0, y: buttonsContainer.frame.size.height * 0.15)
