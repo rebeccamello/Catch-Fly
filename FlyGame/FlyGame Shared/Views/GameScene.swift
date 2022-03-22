@@ -10,6 +10,8 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
+    let buttonTvOS = UITapGestureRecognizer()
+    let buttonsPause = UITapGestureRecognizer()
     private var currentTime: TimeInterval = 0
     
     lazy var scoreLabel: SKLabelNode = {
@@ -58,8 +60,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.texture?.filteringMode = .nearest
         let frames:[SKTexture] = createTexture("Mosca")
         bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                            timePerFrame: TimeInterval(0.2),
-                                                            resize: false, restore: true)))
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
         return bug
     }()
     
@@ -70,10 +72,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: - setUpScenne
+    
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
         self.view?.showsPhysics = true
+        
+#if os(tvOS)
+        self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
+        self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        self.view?.addGestureRecognizer(self.buttonTvOS)
+        
+#endif
         
         self.addChild(scenarioImage)
         scenarioImage.size.width = self.size.width
@@ -81,27 +91,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         
         self.addChild(playerNode)
+        
+#if os(iOS)
         self.addChild(pauseButton)
+#endif
+        
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
         
         setSwipeGesture()
         
         pauseMenu.isHidden = true
-        pauseMenu.retryButton.action = {
-            let scene = GameScene.newGameScene()
-            scene.isGameStarted = true
-            self.view?.presentScene(scene)
-        }
+        buttonActions()
     }
     
     //MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
         
+#if os(tvOS)
+        addTapGestureRecognizer()
+        
+        if pauseMenu.isHidden == false {
+            self.run(SKAction.wait(forDuration: 0.02)) {
+                self.view?.window?.rootViewController?.setNeedsFocusUpdate()
+                self.view?.window?.rootViewController?.updateFocusIfNeeded()
+            }
+        }
+#endif
         if isGameStarted {
             gameLogic.startUp()
             physicsWorld.contactDelegate = self
+            makeBackground()
         }
         
         // Verifica se os áudios já estavam inativos
@@ -138,13 +159,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
-        
-        children
-            .filter { node in node.name == "Enemy" }
-            .forEach { node in
-                node.position.x -= 7
-            }
-        
     }
     
     func setPhysics(node: SKSpriteNode) {
@@ -165,14 +179,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setNodePosition() {
-        playerNode.size.height = self.size.height/5
-        playerNode.size.width = self.size.height/5
+        playerNode.size.height = self.size.height/5.2
+        playerNode.size.width = self.size.height/5.2
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
-        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width * 2.5, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
         pauseButton.setScale(self.size.height*0.00035)
-        scoreLabel.setScale(self.size.height * 0.004)
+        scoreLabel.fontSize = self.size.height/15
+        
+#if os(iOS)
+        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+#elseif os(tvOS)
+        scoreLabel.position = pauseButton.position
+#endif
     }
     
     //MARK: Create Texture
@@ -214,7 +233,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.score = gameLogic.score
         AudioService.shared.soundManager(with: .colision, soundAction: .play)
         view?.presentScene(scene)
+        
+#if os(tvOS)
+        scene.run(SKAction.wait(forDuration: 0.02)) {
+            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+        }
+#endif
     }
+    
+#if os(tvOS)
+    func addTapGestureRecognizer(){
+        buttonsPause.addTarget(self, action: #selector(clicked))
+        self.view?.addGestureRecognizer(buttonsPause)
+    }
+    
+    @objc func clicked() {
+        if pauseMenu.resumeButton.isFocused {
+            resumeGame()
+            
+        } else if pauseMenu.homeButton.isFocused {
+            goToHome()
+            
+        }else if pauseMenu.retryButton.isFocused {
+            restartGame()
+            
+        }else if pauseMenu.soundButton.isFocused {
+            sound()
+            
+        }else if pauseMenu.musicButton.isFocused {
+            music()
+        }
+    }
+#endif
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         guard
@@ -234,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysicsObstacles(node: enemy)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        //moveObstacle()
+        moveObstacle()
     }
     
     func moveObstacle() {
@@ -244,7 +295,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 obstacle.position.x -= 0
             }
             else {
+#if os(iOS)
                 let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.duration*100)
+#elseif os(tvOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.durationTV*100)
+#endif
                 obstacle.run(moveObstAction)
             }
         }
@@ -256,9 +311,79 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.run(moveAction)
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
+    
+    
+    //MARK: - Função de clicar no botão com tvRemote
+    @objc private func tvOSAction() {
+        self.pauseGame()
+    }
+    
+    func restartGame() {
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = true
+        self.view?.presentScene(scene)
+    }
+    
+    func sound() {
+        gameLogic.toggleSound()
+    }
+    
+    func music() {
+        gameLogic.toggleMusic()
+    }
+    
+    func buttonActions() {
+        pauseMenu.retryButton.action = {
+            self.restartGame()
+        }
+        
+        pauseMenu.homeButton.action = {
+            self.goToHome()
+        }
+        
+        pauseMenu.resumeButton.action = {
+            self.resumeGame()
+        }
+        
+        pauseMenu.soundButton.action = {
+            self.sound()
+        }
+        
+        pauseMenu.musicButton.action = {
+            self.music()
+        }}
+    
+    //MARK: Parallax Background
+    func makeBackground() {
+        let backgroundTexture = SKTexture(imageNamed: "cenario")
+        
+        //move background right to left; replace
+        let shiftBackground = SKAction.moveBy(x: -backgroundTexture.size().width, y: 0, duration: 9)
+        let replaceBackground = SKAction.moveBy(x: backgroundTexture.size().width, y:0, duration: 0)
+        let movingAndReplacingBackground = SKAction.repeatForever(SKAction.sequence([shiftBackground,replaceBackground]))
+        
+        for i in 0...3 {
+            scenarioImage = SKSpriteNode(texture:backgroundTexture)
+            scenarioImage.position = CGPoint(x: backgroundTexture.size().width/2 + (backgroundTexture.size().width * CGFloat(i)), y: self.frame.midY)
+            scenarioImage.size.height = self.frame.height
+            scenarioImage.run(movingAndReplacingBackground)
+            
+            self.addChild(scenarioImage)
+        }
+    }
 }
 
+
 extension GameScene: GameLogicDelegate {
+    func toggleSound() -> SKButtonNode {
+        return pauseMenu.soundButton
+    }
+    
+    func toggleMusic() -> SKButtonNode {
+        return pauseMenu.musicButton
+    }
+    
+    
     func drawScore(score: Int) {
         scoreLabel.text = String(score)
     }
@@ -267,10 +392,16 @@ extension GameScene: GameLogicDelegate {
         self.isPaused.toggle()
         self.gameLogic.handlePause(isPaused: isPaused)
         pauseMenu.isHidden = true
+        pauseButton.isHidden = false
     }
     
     func pauseGame() {
-        print("pause")
+        self.pauseMenu.isHidden.toggle()
+#if os(iOS)
+        self.gameLogic.handlePause(isPaused: !self.isPaused)
+#endif
+        self.isPaused.toggle()
+        
     }
     
     func gameOver() {
@@ -309,3 +440,12 @@ extension UISwipeGestureRecognizer.Direction {
         }
     }
 }
+
+#if os(tvOS)
+extension GameScene {
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [pauseMenu.resumeButton]
+    }
+}
+#endif
+

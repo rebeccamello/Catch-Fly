@@ -112,6 +112,13 @@ class GameOverScene: SKScene {
     func goToMenu() {
         let scene = MenuScene.newGameScene()
         self.view?.presentScene(scene)
+        
+    #if os(tvOS)
+        scene.run(SKAction.wait(forDuration: 0.02)) {
+        scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+        scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+        }
+    #endif
     }
     
     private func setupNodesPosition() {

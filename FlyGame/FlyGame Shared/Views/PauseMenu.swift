@@ -10,10 +10,10 @@ import SpriteKit
 
 class PauseMenu: SKNode {
     
-    var buttonsContainer = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
+    let buttonsPause = UITapGestureRecognizer()
     
-    var bg = SKSpriteNode(color: .black, size: .screenSize())
-    
+    var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
+    var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
     weak var gameDelegate: GameLogicDelegate?
     
     lazy var retryButton: SKButtonNode = {
@@ -80,6 +80,16 @@ class PauseMenu: SKNode {
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
     
+    override var isUserInteractionEnabled: Bool {
+        set {
+            // ignore
+        }
+        get {
+            return true
+        }
+    }
+    
+
    
     func setPositions() {
         resumeButton.zPosition = 4
@@ -101,3 +111,11 @@ class PauseMenu: SKNode {
         musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
     }
 }
+
+#if os(tvOS)
+extension PauseMenu {
+   override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [resumeButton]
+    }
+}
+#endif
