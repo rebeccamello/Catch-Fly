@@ -120,6 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if isGameStarted {
             gameLogic.startUp()
             physicsWorld.contactDelegate = self
+            makeBackground()
         }
     }
     
@@ -337,6 +338,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pauseMenu.musicButton.action = {
             self.music()
+    
+    //MARK: Parallax Background
+    func makeBackground() {
+        let backgroundTexture = SKTexture(imageNamed: "cenario")
+
+        //move background right to left; replace
+        let shiftBackground = SKAction.moveBy(x: -backgroundTexture.size().width, y: 0, duration: 9)
+        let replaceBackground = SKAction.moveBy(x: backgroundTexture.size().width, y:0, duration: 0)
+        let movingAndReplacingBackground = SKAction.repeatForever(SKAction.sequence([shiftBackground,replaceBackground]))
+
+        for i in 0...3 {
+            scenarioImage = SKSpriteNode(texture:backgroundTexture)
+            scenarioImage.position = CGPoint(x: backgroundTexture.size().width/2 + (backgroundTexture.size().width * CGFloat(i)), y: self.frame.midY)
+            scenarioImage.size.height = self.frame.height
+            scenarioImage.run(movingAndReplacingBackground)
+
+            self.addChild(scenarioImage)
         }
     }
 }
