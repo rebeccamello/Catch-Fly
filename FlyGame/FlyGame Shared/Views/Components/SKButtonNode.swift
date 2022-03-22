@@ -50,8 +50,12 @@ class SKButtonNode: SKNode {
             self.alpha = 1
         }
     }
-    
+    #if os(tvOS)
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        self.action()
+    }
+    #endif
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.action()
     }
 }

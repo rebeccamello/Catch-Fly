@@ -27,9 +27,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
             self.pauseGame()
-            self.pauseMenu.isHidden.toggle()
-            self.gameLogic.handlePause(isPaused: !self.isPaused)
-            self.isPaused.toggle()
         })
         but.zPosition = 3
         return but
@@ -368,7 +365,11 @@ extension GameScene: GameLogicDelegate {
     
     func pauseGame() {
         self.pauseMenu.isHidden.toggle()
+        #if os(iOS)
+        self.gameLogic.handlePause(isPaused: !self.isPaused)
+        #endif
         self.isPaused.toggle()
+        
     }
     
     func gameOver() {
@@ -380,11 +381,7 @@ extension GameScene: GameLogicDelegate {
         view?.presentScene(scene)
     }
     
-    //    func obstacleSpeed(speed: CGFloat) {
-    
-    func music() {
-        print("music")
-    }
+  
 }
 
 enum Direction {
