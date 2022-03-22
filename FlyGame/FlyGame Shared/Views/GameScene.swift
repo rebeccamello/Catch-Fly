@@ -76,7 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
-        self.view?.showsPhysics = true
+        //self.view?.showsPhysics = true
         
 #if os(tvOS)
         self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
