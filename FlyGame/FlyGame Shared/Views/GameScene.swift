@@ -90,9 +90,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(playerNode)
         
-        #if os(iOS)
+#if os(iOS)
         self.addChild(pauseButton)
-        #endif
+#endif
         
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
@@ -109,11 +109,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 #if os(tvOS)
         addTapGestureRecognizer()
-
+        
         if pauseMenu.isHidden == false {
             self.run(SKAction.wait(forDuration: 0.02)) {
-            self.view?.window?.rootViewController?.setNeedsFocusUpdate()
-            self.view?.window?.rootViewController?.updateFocusIfNeeded()
+                self.view?.window?.rootViewController?.setNeedsFocusUpdate()
+                self.view?.window?.rootViewController?.updateFocusIfNeeded()
             }
         }
 #endif
@@ -176,11 +176,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.setScale(self.size.height*0.00035)
         scoreLabel.fontSize = self.size.height/15
         
-        #if os(iOS)
+#if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
-        #elseif os(tvOS)
+#elseif os(tvOS)
         scoreLabel.position = pauseButton.position
-        #endif
+#endif
     }
     
     //MARK: Create Texture
@@ -224,8 +224,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 #if os(tvOS)
         scene.run(SKAction.wait(forDuration: 0.02)) {
-        scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-        scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
 #endif
     }
@@ -283,11 +283,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 obstacle.position.x -= 0
             }
             else {
-                #if os(iOS)
+#if os(iOS)
                 let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.duration*100)
-                #elseif os(tvOS)
+#elseif os(tvOS)
                 let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.durationTV*100)
-                #endif
+#endif
                 obstacle.run(moveObstAction)
             }
         }
@@ -298,7 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
         playerNode.run(moveAction)
     }
-
+    
     
     //MARK: - Função de clicar no botão com tvRemote
     @objc private func tvOSAction() {
@@ -338,22 +338,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pauseMenu.musicButton.action = {
             self.music()
+        }}
     
     //MARK: Parallax Background
     func makeBackground() {
         let backgroundTexture = SKTexture(imageNamed: "cenario")
-
+        
         //move background right to left; replace
         let shiftBackground = SKAction.moveBy(x: -backgroundTexture.size().width, y: 0, duration: 9)
         let replaceBackground = SKAction.moveBy(x: backgroundTexture.size().width, y:0, duration: 0)
         let movingAndReplacingBackground = SKAction.repeatForever(SKAction.sequence([shiftBackground,replaceBackground]))
-
+        
         for i in 0...3 {
             scenarioImage = SKSpriteNode(texture:backgroundTexture)
             scenarioImage.position = CGPoint(x: backgroundTexture.size().width/2 + (backgroundTexture.size().width * CGFloat(i)), y: self.frame.midY)
             scenarioImage.size.height = self.frame.height
             scenarioImage.run(movingAndReplacingBackground)
-
+            
             self.addChild(scenarioImage)
         }
     }
@@ -383,9 +384,9 @@ extension GameScene: GameLogicDelegate {
     
     func pauseGame() {
         self.pauseMenu.isHidden.toggle()
-        #if os(iOS)
+#if os(iOS)
         self.gameLogic.handlePause(isPaused: !self.isPaused)
-        #endif
+#endif
         self.isPaused.toggle()
         
     }
@@ -399,7 +400,7 @@ extension GameScene: GameLogicDelegate {
         view?.presentScene(scene)
     }
     
-  
+    
 }
 
 enum Direction {
@@ -423,8 +424,9 @@ extension UISwipeGestureRecognizer.Direction {
 
 #if os(tvOS)
 extension GameScene {
-   override var preferredFocusEnvironments: [UIFocusEnvironment] {
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
         return [pauseMenu.resumeButton]
     }
 }
 #endif
+
