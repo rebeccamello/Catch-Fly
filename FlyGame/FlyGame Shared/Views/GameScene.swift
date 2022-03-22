@@ -162,7 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setPhysics(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.contactTestBitMask = 1
