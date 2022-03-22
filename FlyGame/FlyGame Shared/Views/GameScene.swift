@@ -169,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setPhysicsObstacles(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
@@ -278,6 +278,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
+        enemy.physicsBody = obstacle.physicsBody.copy() as! SKPhysicsBody
         enemy.zPosition = 2
         enemy.name = "Enemy"
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
