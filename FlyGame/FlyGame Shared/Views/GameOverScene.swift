@@ -52,14 +52,14 @@ class GameOverScene: SKScene {
     }()
     
     lazy var homeButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
+        let but = SKButtonNode(image: .menu) {
             self.goToMenu()
         }
         return but
     }()
     
     lazy var retryButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
+        let but = SKButtonNode(image: .restart) {
             self.restartGame()
         }
         return but

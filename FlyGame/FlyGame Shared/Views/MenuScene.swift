@@ -29,17 +29,15 @@ class MenuScene: SKScene {
     }()
     
     lazy var playButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "jogarBotao")) {
+        var bt = SKButtonNode(image: .play) {
             self.playGame()
         }
-        
         bt.image.texture?.filteringMode = .nearest
-        
         return bt
     }()
     
     lazy var soundButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
+        var bt = SKButtonNode(image: .soundOn) {
             self.menuLogic.toggleSound()
         }
         bt.image.texture?.filteringMode = .nearest
@@ -47,7 +45,7 @@ class MenuScene: SKScene {
     }()
     
     lazy var musicButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
+        var bt = SKButtonNode(image: .musicOn) {
             self.menuLogic.toggleMusic()
         }
         bt.image.texture?.filteringMode = .nearest
@@ -55,7 +53,7 @@ class MenuScene: SKScene {
     }()
     
     lazy var gameCenterButton: SKButtonNode = {
-        var bt = SKButtonNode(image: SKSpriteNode(imageNamed: "gameCenterBotao")) {
+        var bt = SKButtonNode(image: .gameCenter) {
         }
         bt.image.texture?.filteringMode = .nearest
         return bt
@@ -139,6 +137,26 @@ class MenuScene: SKScene {
         #if os(tvOS)
         addTapGestureRecognizer()
         #endif
+        
+        
+        // Verifica se é a primeira vez que está entrando no app
+        if !UserDefaults.standard.bool(forKey: "firstTimeOpenApp") {
+            AudioService.shared.toggleSound(with: self.soundButton)
+            AudioService.shared.toggleMusic(with: self.musicButton)
+            
+            UserDefaults.standard.set(true, forKey: "firstTimeOpenApp")
+        }
+        
+        // Verifica se os áudios já estavam inativos
+        if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
+            self.soundButton.updateImage(with: .soundOff)
+        }
+        
+        if !AudioService.shared.getUserDefaultsStatus(with: .music) {
+            self.musicButton.updateImage(with: .musicOff)
+        } else {
+            AudioService.shared.soundManager(with: .backgroundMusic, soundAction: .play, .loop)
+        }
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -227,10 +245,10 @@ class MenuScene: SKScene {
         } else if soundButton.isFocused {
             self.menuLogic.toggleSound()
             
-        }else if musicButton.isFocused {
+        } else if musicButton.isFocused {
             self.menuLogic.toggleMusic()
             
-        }else if gameCenterButton.isFocused {
+        } else if gameCenterButton.isFocused {
             
         }
     }
@@ -241,11 +259,11 @@ extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
     }
     
-    func toggleSound() -> SKButtonNode {
+    func getSoundButton() -> SKButtonNode {
         return soundButton
     }
     
-    func toggleMusic() -> SKButtonNode {
+    func getMusicButton() -> SKButtonNode {
         return musicButton
     }
 }

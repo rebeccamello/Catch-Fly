@@ -17,35 +17,45 @@ class PauseMenu: SKNode {
     weak var gameDelegate: GameLogicDelegate?
     
     lazy var retryButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
-            
+        let but = SKButtonNode(image: .restart) {
         }
         return but
     }()
-    lazy var homeButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
     
+    lazy var homeButton: SKButtonNode = {
+        let but = SKButtonNode(image: .menu) {
+            self.gameDelegate?.goToHome()
         }
         return but
     }()
+    
     lazy var resumeButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "continuarBotao")) {
-            
+        let but = SKButtonNode(image: .resume) {
+            self.gameDelegate?.resumeGame()
         }
         return but
     }()
+    
     lazy var soundButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
-
+        let but = SKButtonNode(image: .soundOn) {
+            self.gameDelegate?.soundAction()
         }
         return but
     }()
     
     lazy var musicButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
+        let but = SKButtonNode(image: .musicOn) {
+            self.gameDelegate?.musicAction()
         }
         return but
     }()
+    
+    
+    override var isUserInteractionEnabled: Bool {
+        set {}
+        get {return true}
+    }
+    
     
     override init() {
         super.init()
@@ -67,21 +77,9 @@ class PauseMenu: SKNode {
         setPositions()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
-    override var isUserInteractionEnabled: Bool {
-        set {
-            // ignore
-        }
-        get {
-            return true
-        }
-    }
     
-
-   
     func setPositions() {
         resumeButton.zPosition = 4
         resumeButton.position = CGPoint(x: 0, y: buttonsContainer.frame.size.height * 0.15)

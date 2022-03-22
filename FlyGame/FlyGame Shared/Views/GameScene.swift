@@ -25,8 +25,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }()
     
     lazy var pauseButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
-            self.pauseGame()
+        let but = SKButtonNode(image: .pause, action: {
+            self.pauseMenu.isHidden.toggle()
+            self.gameLogic.handlePause(isPaused: !self.isPaused)
+            self.isPaused.toggle()
         })
         but.zPosition = 3
         return but
@@ -121,6 +123,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gameLogic.startUp()
             physicsWorld.contactDelegate = self
             makeBackground()
+        }
+        
+        // Verifica se os áudios já estavam inativos
+        if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
+            self.pauseMenu.soundButton.updateImage(with: .soundOff)
+        }
+        
+        if !AudioService.shared.getUserDefaultsStatus(with: .music) {
+            self.pauseMenu.musicButton.updateImage(with: .musicOff)
         }
     }
     
@@ -220,6 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
         scene.score = gameLogic.score
+        AudioService.shared.soundManager(with: .colision, soundAction: .play)
         view?.presentScene(scene)
         
 #if os(tvOS)
@@ -297,6 +309,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let position = gameLogic.movePlayer(direction: direction)
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
         playerNode.run(moveAction)
+        AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
     
     
@@ -310,15 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.isGameStarted = true
         self.view?.presentScene(scene)
     }
-    
-    func sound() {
-        gameLogic.toggleSound()
-    }
-    
-    func music() {
-        gameLogic.toggleMusic()
-    }
-    
+        
     func buttonActions() {
         pauseMenu.retryButton.action = {
             self.restartGame()
@@ -333,11 +338,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         pauseMenu.soundButton.action = {
-            self.sound()
+            self.soundAction()
         }
         
         pauseMenu.musicButton.action = {
-            self.music()
+            self.musicAction()
         }}
     
     //MARK: Parallax Background
@@ -400,7 +405,13 @@ extension GameScene: GameLogicDelegate {
         view?.presentScene(scene)
     }
     
+    func musicAction() -> Void {
+        AudioService.shared.toggleMusic(with: self.pauseMenu.musicButton)
+    }
     
+    func soundAction() -> Void {
+        AudioService.shared.toggleSound(with: self.pauseMenu.soundButton)
+    }
 }
 
 enum Direction {
@@ -411,10 +422,10 @@ extension UISwipeGestureRecognizer.Direction {
     var direction: Direction? {
         switch self {
         case .up:
-            return Direction.up
+            return .up
             
         case .down:
-            return Direction.down
+            return .down
             
         default:
             return nil
