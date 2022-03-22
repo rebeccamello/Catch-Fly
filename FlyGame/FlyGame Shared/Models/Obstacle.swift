@@ -13,4 +13,5 @@ struct Obstacle {
     let weight: Int
     let width: Int
     let assetName: String
+    let physicsBody: SKPhysicsBody
 }

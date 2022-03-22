@@ -85,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
-        self.view?.showsPhysics = true
+        //self.view?.showsPhysics = true
         
 #if os(tvOS)
         self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
@@ -180,14 +180,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: Set Physics
     func setPhysics(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.contactTestBitMask = 1
     }
     
     func setPhysicsObstacles(node: SKSpriteNode) {
-        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
+        
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
@@ -298,6 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
+        enemy.physicsBody = obstacle.physicsBody.copy() as! SKPhysicsBody
         enemy.zPosition = 2
         enemy.name = "Enemy"
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)
@@ -327,7 +328,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
+        moveAction.timingMode = .easeOut
         playerNode.run(moveAction)
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
@@ -368,8 +370,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: Parallax Background
     func moveBackground() {
-        scenarioImage.position.x -= 1.5
-        scenarioImage2.position.x -= 1.5
+        scenarioImage.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
+        scenarioImage2.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
         
         if scenarioImage.position.x <= -scenarioImage.size.width/2 {
             scenarioImage.position.x = scenarioImage.size.width/2 + scenarioImage2.position.x*2
