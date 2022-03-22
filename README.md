@@ -42,7 +42,7 @@ Esse projeto é licenciado pela [GNU General Public License v3.0](https://github
             <a href="https://github.com/rebeccamello">
                 <img src="https://avatars.githubusercontent.com/u/49920539" width="100px;" alt="Foto da Rebecca Melo no GitHub"/><br>
                 <sub>
-                    <b>Rebecca Melo</b>
+                    <b>Rebecca Mello</b>
                 </sub>
             </a>
         </td>
