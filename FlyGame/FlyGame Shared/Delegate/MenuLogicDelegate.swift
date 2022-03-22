@@ -8,6 +8,8 @@
 import Foundation
 import SpriteKit
 
-protocol MenuLogicDelegate: AudioDelegate {
-    func goToGameCenter()
+protocol MenuLogicDelegate {
+    func goToGameCenter() -> Void
+    func getMusicButton() -> SKButtonNode
+    func getSoundButton() -> SKButtonNode
 }

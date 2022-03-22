@@ -14,8 +14,8 @@ class SKButtonNode: SKNode {
     var action: (() -> Void)
     var isFocusable = true
     
-    init(image: SKSpriteNode, action: @escaping () -> Void) {
-        self.image = image
+    init(image: Buttons, action: @escaping () -> Void) {
+        self.image = SKSpriteNode(imageNamed: image.description)
         self.action = action
         
         super.init()
@@ -52,6 +52,12 @@ class SKButtonNode: SKNode {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        AudioService.shared.soundManager(with: .button, soundAction: .play)
         self.action()
+    }
+    
+    
+    public func updateImage(with image: Buttons) -> Void {
+        self.image.texture = SKTexture(imageNamed: image.description)
     }
 }

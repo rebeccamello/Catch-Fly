@@ -10,41 +10,52 @@ import SpriteKit
 
 class PauseMenu: SKNode {
     
-    var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
-    var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
+    var buttonsContainer = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
+    
+    var bg = SKSpriteNode(color: .black, size: .screenSize())
+    
     weak var gameDelegate: GameLogicDelegate?
     
     lazy var retryButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "recomecarBotao")) {
-            
+        let but = SKButtonNode(image: .restart) {
         }
         return but
     }()
+    
     lazy var homeButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
+        let but = SKButtonNode(image: .menu) {
             self.gameDelegate?.goToHome()
         }
         return but
     }()
+    
     lazy var resumeButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "continuarBotao")) {
+        let but = SKButtonNode(image: .resume) {
             self.gameDelegate?.resumeGame()
         }
         return but
     }()
+    
     lazy var soundButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
-            self.gameDelegate?.sound()
+        let but = SKButtonNode(image: .soundOn) {
+            self.gameDelegate?.soundAction()
         }
         return but
     }()
     
     lazy var musicButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
-            self.gameDelegate?.music()
+        let but = SKButtonNode(image: .musicOn) {
+            self.gameDelegate?.musicAction()
         }
         return but
     }()
+    
+    
+    override var isUserInteractionEnabled: Bool {
+        set {}
+        get {return true}
+    }
+    
     
     override init() {
         super.init()
@@ -66,18 +77,9 @@ class PauseMenu: SKNode {
         setPositions()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
-    override var isUserInteractionEnabled: Bool {
-        set {
-            // ignore
-        }
-        get {
-            return true
-        }
-    }
+    
    
     func setPositions() {
         resumeButton.zPosition = 4

@@ -23,7 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }()
     
     lazy var pauseButton: SKButtonNode = {
-        let but = SKButtonNode(image: SKSpriteNode(imageNamed: "pauseBotao"), action: {
+        let but = SKButtonNode(image: .pause, action: {
             self.pauseMenu.isHidden.toggle()
             self.gameLogic.handlePause(isPaused: !self.isPaused)
             self.isPaused.toggle()
@@ -102,6 +102,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if isGameStarted {
             gameLogic.startUp()
             physicsWorld.contactDelegate = self
+        }
+        
+        // Verifica se os áudios já estavam inativos
+        if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
+            self.pauseMenu.soundButton.updateImage(with: .soundOff)
+        }
+        
+        if !AudioService.shared.getUserDefaultsStatus(with: .music) {
+            self.pauseMenu.musicButton.updateImage(with: .musicOff)
         }
     }
     
@@ -203,6 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
         scene.score = gameLogic.score
+        AudioService.shared.soundManager(with: .colision, soundAction: .play)
         view?.presentScene(scene)
     }
     
@@ -244,6 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let position = gameLogic.movePlayer(direction: direction)
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
         playerNode.run(moveAction)
+        AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
 }
 
@@ -253,7 +264,6 @@ extension GameScene: GameLogicDelegate {
     }
     
     func resumeGame() {
-        print("resume")
         self.isPaused.toggle()
         self.gameLogic.handlePause(isPaused: isPaused)
         pauseMenu.isHidden = true
@@ -272,12 +282,12 @@ extension GameScene: GameLogicDelegate {
         view?.presentScene(scene)
     }
     
-    func sound() {
-        print("sound")
+    func musicAction() -> Void {
+        AudioService.shared.toggleMusic(with: self.pauseMenu.musicButton)
     }
     
-    func music() {
-        print("music")
+    func soundAction() -> Void {
+        AudioService.shared.toggleSound(with: self.pauseMenu.soundButton)
     }
 }
 
@@ -289,10 +299,10 @@ extension UISwipeGestureRecognizer.Direction {
     var direction: Direction? {
         switch self {
         case .up:
-            return Direction.up
+            return .up
             
         case .down:
-            return Direction.down
+            return .down
             
         default:
             return nil

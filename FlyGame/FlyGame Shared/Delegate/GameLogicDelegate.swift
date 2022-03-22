@@ -15,9 +15,9 @@ protocol GameLogicDelegate: AnyObject {
     
     func goToHome()
     
-    func sound()
+    func soundAction() -> Void
     
-    func music()
+    func musicAction() -> Void
     
     func createObstacle(obstacle: Obstacle)
 }
