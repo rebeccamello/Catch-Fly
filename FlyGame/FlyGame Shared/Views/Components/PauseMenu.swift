@@ -10,6 +10,8 @@ import SpriteKit
 
 class PauseMenu: SKNode {
     
+    let buttonsPause = UITapGestureRecognizer()
+    
     var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
     var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
     weak var gameDelegate: GameLogicDelegate?
@@ -22,26 +24,25 @@ class PauseMenu: SKNode {
     }()
     lazy var homeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "menuBotao")) {
-            self.gameDelegate?.goToHome()
+    
         }
         return but
     }()
     lazy var resumeButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "continuarBotao")) {
-            self.gameDelegate?.resumeGame()
+            
         }
         return but
     }()
     lazy var soundButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "somBotao")) {
-            self.gameDelegate?.sound()
+
         }
         return but
     }()
     
     lazy var musicButton: SKButtonNode = {
         let but = SKButtonNode(image: SKSpriteNode(imageNamed: "musicaBotao")) {
-            self.gameDelegate?.music()
         }
         return but
     }()
@@ -78,6 +79,8 @@ class PauseMenu: SKNode {
             return true
         }
     }
+    
+
    
     func setPositions() {
         resumeButton.zPosition = 4
@@ -99,3 +102,11 @@ class PauseMenu: SKNode {
         musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
     }
 }
+
+#if os(tvOS)
+extension PauseMenu {
+   override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [resumeButton]
+    }
+}
+#endif
