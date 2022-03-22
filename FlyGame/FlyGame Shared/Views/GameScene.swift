@@ -328,7 +328,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.08)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
+        moveAction.timingMode = .easeOut
         playerNode.run(moveAction)
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
@@ -369,8 +370,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: Parallax Background
     func moveBackground() {
-        scenarioImage.position.x -= 1.5
-        scenarioImage2.position.x -= 1.5
+        scenarioImage.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
+        scenarioImage2.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
         
         if scenarioImage.position.x <= -scenarioImage.size.width/2 {
             scenarioImage.position.x = scenarioImage.size.width/2 + scenarioImage2.position.x*2
