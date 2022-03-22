@@ -13,6 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let buttonTvOS = UITapGestureRecognizer()
     let buttonsPause = UITapGestureRecognizer()
     private var currentTime: TimeInterval = 0
+    var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
+    var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -41,6 +43,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }()
     
     lazy var scenarioImage: SKSpriteNode = {
+        var scenario = SKSpriteNode()
+        scenario = SKSpriteNode(imageNamed: "cenario")
+        scenario.zPosition = -1
+        return scenario
+    }()
+    
+    lazy var scenarioImage2: SKSpriteNode = {
         var scenario = SKSpriteNode()
         scenario = SKSpriteNode(imageNamed: "cenario")
         scenario.zPosition = -1
@@ -86,9 +95,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #endif
         
         self.addChild(scenarioImage)
-        scenarioImage.size.width = self.size.width
+        self.addChild(scenarioImage2)
+        scenarioImage.size.width = self.size.width * 1.2
         scenarioImage.size.height = self.size.height
+        scenarioImage2.size.width = self.size.width * 1.2
+        scenarioImage2.size.height = self.size.height
+        
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
+        scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
         
         self.addChild(playerNode)
         
@@ -122,7 +136,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if isGameStarted {
             gameLogic.startUp()
             physicsWorld.contactDelegate = self
-            makeBackground()
         }
         
         // Verifica se os áudios já estavam inativos
@@ -143,6 +156,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysics(node: playerNode)
     }
     
+    //MARK: Update
     override func update(_ currentTime: TimeInterval) {
         self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
@@ -157,10 +171,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node.physicsBody = nil
         }
         
+        moveObstacle()
+        moveBackground()
+        
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
     }
     
+    //MARK: Set Physics
     func setPhysics(node: SKSpriteNode) {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
         node.physicsBody?.affectedByGravity = false
@@ -178,6 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.categoryBitMask = 1
     }
     
+    //MARK: Set Node Positions
     func setNodePosition() {
         playerNode.size.height = self.size.height/5.2
         playerNode.size.width = self.size.height/5.2
@@ -242,6 +261,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #endif
     }
     
+    //MARK: Gesture Recognizer
 #if os(tvOS)
     func addTapGestureRecognizer(){
         buttonsPause.addTarget(self, action: #selector(clicked))
@@ -344,24 +364,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pauseMenu.musicButton.action = {
             self.musicAction()
-        }}
+        }
+    }
     
     //MARK: Parallax Background
-    func makeBackground() {
-        let backgroundTexture = SKTexture(imageNamed: "cenario")
+    func moveBackground() {
+        scenarioImage.position.x -= 1.5
+        scenarioImage2.position.x -= 1.5
         
-        //move background right to left; replace
-        let shiftBackground = SKAction.moveBy(x: -backgroundTexture.size().width, y: 0, duration: 9)
-        let replaceBackground = SKAction.moveBy(x: backgroundTexture.size().width, y:0, duration: 0)
-        let movingAndReplacingBackground = SKAction.repeatForever(SKAction.sequence([shiftBackground,replaceBackground]))
-        
-        for i in 0...3 {
-            scenarioImage = SKSpriteNode(texture:backgroundTexture)
-            scenarioImage.position = CGPoint(x: backgroundTexture.size().width/2 + (backgroundTexture.size().width * CGFloat(i)), y: self.frame.midY)
-            scenarioImage.size.height = self.frame.height
-            scenarioImage.run(movingAndReplacingBackground)
+        if scenarioImage.position.x <= -scenarioImage.size.width/2 {
+            scenarioImage.position.x = scenarioImage.size.width/2 + scenarioImage2.position.x*2
             
-            self.addChild(scenarioImage)
+            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
+                scenarioImage.texture = blueScenarioTexture
+            } else {
+                scenarioImage.texture = greenScenarioTexture
+            }
+        }
+        
+        if scenarioImage2.position.x <= -scenarioImage2.size.width/2 {
+            scenarioImage2.position.x = scenarioImage2.size.width/2 + scenarioImage.position.x*2
+            
+            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
+                scenarioImage2.texture = blueScenarioTexture
+            } else {
+                scenarioImage2.texture = greenScenarioTexture
+            }
         }
     }
 }
