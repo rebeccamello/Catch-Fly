@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		227117C227EBA93E0083C7E8 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C127EBA93E0083C7E8 /* GameCenterService.swift */; };
+		227117C327EBA93E0083C7E8 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C127EBA93E0083C7E8 /* GameCenterService.swift */; };
+		227117C527EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */; };
+		227117C627EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */; };
+		227117C827EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */; };
+		227117C927EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */; };
 		22C105FE27E8F9C20095EB3E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C105FD27E8F9C20095EB3E /* Audio.swift */; };
 		22C105FF27E8F9C20095EB3E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C105FD27E8F9C20095EB3E /* Audio.swift */; };
 		22C1060527E8F9ED0095EB3E /* Som-Colisao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22C1060127E8F9EC0095EB3E /* Som-Colisao.mp3 */; };
@@ -65,6 +71,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		227117C127EBA93E0083C7E8 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
+		227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterDelegate.swift; sourceTree = "<group>"; };
+		227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		22C105FD27E8F9C20095EB3E /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		22C1060127E8F9EC0095EB3E /* Som-Colisao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Som-Colisao.mp3"; sourceTree = "<group>"; };
 		22C1060227E8F9EC0095EB3E /* Som-Botao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Som-Botao.mp3"; sourceTree = "<group>"; };
@@ -232,6 +241,8 @@
 			children = (
 				E9A0F34B27D6A6BD00F965DE /* AudioService.swift */,
 				C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */,
+				227117C127EBA93E0083C7E8 /* GameCenterService.swift */,
+				227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -243,6 +254,7 @@
 				E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */,
 				E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */,
 				E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */,
+				227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -373,6 +385,7 @@
 				22C1060E27E903490095EB3E /* Buttons.swift in Sources */,
 				E9A0F35327D6A75800F965DE /* MenuLogicDelegate.swift in Sources */,
 				E9A0F32C27D6804E00F965DE /* MenuScene.swift in Sources */,
+				227117C527EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */,
 				E9A0F35627D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */,
 				E9A0F35027D6A71200F965DE /* AudioDelegate.swift in Sources */,
 				E9A0F34127D6A59800F965DE /* MenuSceneController.swift in Sources */,
@@ -382,7 +395,9 @@
 				C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				E9A0F34727D6A63700F965DE /* GameSceneController.swift in Sources */,
+				227117C227EBA93E0083C7E8 /* GameCenterService.swift in Sources */,
 				E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */,
+				227117C827EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */,
 				E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */,
 				E9A0F33B27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);
@@ -401,6 +416,7 @@
 				22C1060F27E903490095EB3E /* Buttons.swift in Sources */,
 				E9A0F35427D6A75800F965DE /* MenuLogicDelegate.swift in Sources */,
 				E9A0F32D27D6804E00F965DE /* MenuScene.swift in Sources */,
+				227117C627EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */,
 				E9A0F35727D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */,
 				E9A0F35127D6A71200F965DE /* AudioDelegate.swift in Sources */,
 				E9A0F34227D6A59800F965DE /* MenuSceneController.swift in Sources */,
@@ -410,7 +426,9 @@
 				C8BAAFDC27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				E9A0F34827D6A63700F965DE /* GameSceneController.swift in Sources */,
+				227117C327EBA93E0083C7E8 /* GameCenterService.swift in Sources */,
 				E9A0F31127D67B9300F965DE /* GameViewController.swift in Sources */,
+				227117C927EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */,
 				E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */,
 				E9A0F33C27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);
