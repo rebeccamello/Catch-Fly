@@ -11,7 +11,6 @@ import SpriteKit
 class GameOverScene: SKScene {
     let tapGeneralSelection = UITapGestureRecognizer()
     var score: Int = 20
-    let defaults = UserDefaults.standard
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -97,11 +96,24 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
-        let currentScore = defaults.object(forKey: "currentScore")
-        scoreLabel.text = String(format: NSLocalizedString(.yourScore), currentScore as! CVarArg)
+        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
+        scoreLabel.text = String(format: NSLocalizedString(.yourScore), \(currentScore)")
 #if os(tvOS)
         addTapGestureRecognizer()
 #endif
+        
+        let gameCenterService = GameCenterService()
+        
+        if currentScore > UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) {
+            gameCenterService.submitHighScore(score: currentScore) { result in
+                switch result {
+                case .failure(let error):
+                    print("ERRO GAME CENTER: \(error)")
+                case .success(_):
+                    print("Placar atualizado")
+                }
+            }
+        }
     }
     
     override func didChangeSize(_ oldSize: CGSize) {

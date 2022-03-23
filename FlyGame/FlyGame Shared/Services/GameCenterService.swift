@@ -13,6 +13,8 @@ class GameCenterService: GKGameCenterViewController {
     
     static let leaderboardID = "mainLeaderboard"
     
+    static let highscoreKey = "highscore"
+    
     
     
     /* MARK: - Métodos */
@@ -57,8 +59,8 @@ class GameCenterService: GKGameCenterViewController {
                     }
                     
                     // Atualiza o user defaults caso necessário
-                    if UserDefaults.standard.integer(forKey: "score") < score {
-                        UserDefaults.standard.set(player?.score, forKey: "score")
+                    if UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) < score {
+                        UserDefaults.standard.set(player?.score, forKey: GameCenterService.highscoreKey)
                     }
                     
                     completionHandler(.success(score))
@@ -73,7 +75,7 @@ class GameCenterService: GKGameCenterViewController {
     /// Define o score no Game Center
     public func submitHighScore(score: Int, _ completionHandler: @escaping (Result<Bool, ErrorHandler>) -> Void ) -> Void {
         if (GKLocalPlayer.local.isAuthenticated) {
-            UserDefaults.standard.set(score, forKey: "score")
+            UserDefaults.standard.set(score, forKey: GameCenterService.highscoreKey)
             
             GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [GameCenterService.leaderboardID]) {error in
                 

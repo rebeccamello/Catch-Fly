@@ -70,7 +70,7 @@ class MenuScene: SKScene {
     
     lazy var playerHighscore: String = {
         //TODO: Pegar valor do gameCenter
-        var score = String(2)
+        var score = "0"
         return score
     }()
     
@@ -162,6 +162,20 @@ class MenuScene: SKScene {
             self.musicButton.updateImage(with: .musicOff)
         } else {
             AudioService.shared.soundManager(with: .backgroundMusic, soundAction: .play, .loop)
+        }
+        
+        
+        // Game Center
+        
+        let gameCenterService = GameCenterService()
+        
+        gameCenterService.getHighScore() { result in
+            switch result {
+            case .success(let score):
+                self.setScore(with: score)
+            case .failure(let error):
+                print("ERRO GAME CENTER: \(error.description)")
+            }
         }
     }
     
@@ -259,6 +273,11 @@ class MenuScene: SKScene {
         }
     }
 #endif
+    
+    
+    public func setScore(with score: Int) -> Void {
+        self.scoreLabel.text = String(format: NSLocalizedString(.highscore), score)
+    }
 }
 
 extension MenuScene: MenuLogicDelegate {
