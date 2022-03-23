@@ -64,8 +64,14 @@ class MenuScene: SKScene {
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = "Highscore: 2067"
+        lbl.text = String(format: NSLocalizedString(.highscore), playerHighscore)
         return lbl
+    }()
+    
+    lazy var playerHighscore: String = {
+        //TODO: Pegar valor do gameCenter
+        var score = String(2)
+        return score
     }()
     
     lazy var catAction: SKSpriteNode = {
@@ -181,7 +187,7 @@ class MenuScene: SKScene {
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
         
-        playButton.setScale(self.size.height/2300)
+        playButton.setScale(self.size.height/500)
         musicButton.setScale(self.size.height/2300)
         soundButton.setScale(self.size.height/2300)
         gameCenterButton.setScale(self.size.height/2300)

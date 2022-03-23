@@ -69,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.texture?.filteringMode = .nearest
         let frames:[SKTexture] = createTexture("Mosca")
         bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                        timePerFrame: TimeInterval(0.2),
+                                                        timePerFrame: TimeInterval(0.05),
                                                         resize: false, restore: true)))
         return bug
     }()
@@ -279,10 +279,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             restartGame()
             
         }else if pauseMenu.soundButton.isFocused {
-            sound()
+            soundAction()
             
         }else if pauseMenu.musicButton.isFocused {
-            music()
+            musicAction()
         }
     }
 #endif

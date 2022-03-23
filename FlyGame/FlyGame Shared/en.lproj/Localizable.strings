@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  FlyGame
+
+  Created by Rebecca Mello on 23/03/22.
+  
+*/
+
+"your_score" = "Your Score: %@";
+"highscore" = "Highscore: %@";
