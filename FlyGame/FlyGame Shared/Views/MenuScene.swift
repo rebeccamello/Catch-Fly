@@ -64,8 +64,13 @@ class MenuScene: SKScene {
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = "Highscore: 2067"
+        lbl.text = String(format: NSLocalizedString(.highscore), \(playerHighscore))
         return lbl
+    }()
+    
+    lazy var playerHighscore: String = {
+        var score = String(2)
+        return score
     }()
     
     lazy var catAction: SKSpriteNode = {
