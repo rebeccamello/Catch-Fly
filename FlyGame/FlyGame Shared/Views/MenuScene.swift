@@ -187,7 +187,7 @@ class MenuScene: SKScene {
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
         
-        playButton.setScale(self.size.height/2300)
+        playButton.setScale(self.size.height/140)
         musicButton.setScale(self.size.height/2300)
         soundButton.setScale(self.size.height/2300)
         gameCenterButton.setScale(self.size.height/2300)

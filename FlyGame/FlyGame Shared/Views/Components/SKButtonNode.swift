@@ -15,7 +15,10 @@ class SKButtonNode: SKNode {
     var isFocusable = true
     
     init(image: Buttons, action: @escaping () -> Void) {
-        self.image = SKSpriteNode(imageNamed: image.description)
+        let texture = SKTexture(imageNamed: image.description)
+        texture.filteringMode = .nearest
+        
+        self.image = SKSpriteNode(texture: texture)
         self.action = action
         
         super.init()

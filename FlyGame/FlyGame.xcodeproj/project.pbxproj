@@ -25,6 +25,7 @@
 		9D7E401F27EB8DAE00376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
 		9D7E402827EB8DF800376C51 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E402727EB8DF800376C51 /* Localizable.swift */; };
 		9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
+		9D7E402C27EB94E400376C51 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E402727EB8DF800376C51 /* Localizable.swift */; };
 		C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */; };
@@ -404,6 +405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D7E402C27EB94E400376C51 /* Localizable.swift in Sources */,
 				E9A0F33027D685CE00F965DE /* GameOverScene.swift in Sources */,
 				C8D2275227DFCF7B0077CEF2 /* PauseMenu.swift in Sources */,
 				E9A0F31D27D67B9300F965DE /* GameScene.swift in Sources */,
