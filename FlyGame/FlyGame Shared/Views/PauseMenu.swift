@@ -71,7 +71,7 @@ class PauseMenu: SKNode {
         retryButton.setScale(bg.size.width * 0.00023)
         soundButton.setScale(bg.size.width * 0.00023)
         musicButton.setScale(bg.size.width * 0.00023)
-        resumeButton.setScale(bg.size.width * 0.00026)
+        resumeButton.setScale(bg.size.width * 0.0012)
                 
         buttonsContainer.lineWidth = 0
         setPositions()
