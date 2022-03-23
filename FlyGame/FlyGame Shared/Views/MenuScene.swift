@@ -276,7 +276,7 @@ class MenuScene: SKScene {
     
     
     public func setScore(with score: Int) -> Void {
-        self.scoreLabel.text = String(format: NSLocalizedString(.highscore), score)
+        self.scoreLabel.text = String(format: NSLocalizedString(.highscore), "\(score)")
     }
 }
 

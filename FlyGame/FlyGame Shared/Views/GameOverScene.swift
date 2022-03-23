@@ -97,7 +97,7 @@ class GameOverScene: SKScene {
     override func didMove(to view: SKView) {
         self.setUpScene()
         let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
-        scoreLabel.text = String(format: NSLocalizedString(.yourScore), \(currentScore)")
+        scoreLabel.text = String(format: NSLocalizedString(.yourScore), "\(currentScore)")
 #if os(tvOS)
         addTapGestureRecognizer()
 #endif

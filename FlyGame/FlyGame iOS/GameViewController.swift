@@ -28,17 +28,7 @@ class GameViewController: UIViewController {
                 if let vc = vc {
                     self.present(vc, animated: true)
                 }
-                
-                gameCenterManagar.getHighScore() {result in
-                    switch result {
-                    case .success(let score):
-                        self.scene.setScore(with: score)
-                        
-                    case .failure(let error):
-                        print("Erro: \(error.description)")
-                    }
-                }
-                
+            
             case .failure(let error):
                 print("Erro: \(error.description)")
             }
