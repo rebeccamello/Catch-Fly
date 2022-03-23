@@ -64,11 +64,12 @@ class MenuScene: SKScene {
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = String(format: NSLocalizedString(.highscore), \(playerHighscore))
+        lbl.text = String(format: NSLocalizedString(.highscore), playerHighscore)
         return lbl
     }()
     
     lazy var playerHighscore: String = {
+        //TODO: Pegar valor do gameCenter
         var score = String(2)
         return score
     }()
