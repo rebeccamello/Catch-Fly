@@ -34,7 +34,6 @@ class AudioService: AudioDelegate {
         }
     }
     
-    
     /// Muda a variável que verifica se as músicas estão ativadas ou não
     internal func toggleMusic(with button: SKButtonNode) -> Void {
         switch self.updateUserDefaults(soundType: .music) {

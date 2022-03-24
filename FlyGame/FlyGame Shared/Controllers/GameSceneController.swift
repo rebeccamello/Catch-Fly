@@ -5,9 +5,8 @@
 //  Created by Rebecca Mello on 07/03/22.
 //
 
-import Foundation
-import UIKit
 import GameplayKit
+
 
 func randomizer(min: Int, max: Int) -> Int {
     let randomizer = GKRandomDistribution(lowestValue: min, highestValue: max)
@@ -16,7 +15,6 @@ func randomizer(min: Int, max: Int) -> Int {
 }
 
 class GameSceneController {
-    
     weak var gameDelegate: GameLogicDelegate?
     var timer = Timer()
     var timeCounter = 0
@@ -34,8 +32,6 @@ class GameSceneController {
     private var timeScore: TimeInterval = 0
     private var timeSpeed: TimeInterval = 0
     var duration: CGFloat = 3
-    var soundOn: Bool = true
-    var musicOn: Bool = true
     var durationTV: CGFloat = 2
     var currentScore: Int?
     let defaults = UserDefaults.standard

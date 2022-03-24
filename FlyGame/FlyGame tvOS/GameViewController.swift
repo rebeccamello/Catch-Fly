@@ -5,37 +5,17 @@
 //  Created by Nathalia do Valle Papst on 07/03/22.
 //
 
-import UIKit
 import SpriteKit
-import GameplayKit
 
-class GameViewController: UIViewController {
+
+class GameViewController: MenuViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    /* MARK: - Atributos */
     
-    override func loadView() {
-        let scene = MenuScene.newGameScene()
-        
-        let skView = SKView()
-        skView.presentScene(scene)
-        
-        skView.ignoresSiblingOrder = true
-//        skView.showsFPS = true
-//        skView.showsNodeCount = true
-        
-        self.view = skView
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+         if let scene = (view as? SKView)?.scene {
+             return [scene]
+         }
+         return []
     }
 }
-
-extension GameViewController {
-
-      override var preferredFocusEnvironments: [UIFocusEnvironment] {
-           if let scene = (view as? SKView)?.scene {
-               return [scene]
-           }
-          
-           return []
-      }
- }

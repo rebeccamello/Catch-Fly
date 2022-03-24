@@ -5,8 +5,8 @@
 //  Created by Nathalia do Valle Papst on 07/03/22.
 //
 
-import Foundation
 import SpriteKit
+
 
 class MenuScene: SKScene {
     let tapGeneralSelection = UITapGestureRecognizer()
@@ -24,7 +24,6 @@ class MenuScene: SKScene {
     
     lazy var piano: SKSpriteNode = {
         var piano = SKSpriteNode(imageNamed: "piano")
-        piano.texture?.filteringMode = .nearest
         return piano
     }()
     
@@ -32,7 +31,6 @@ class MenuScene: SKScene {
         var bt = SKButtonNode(image: .play) {
             self.playGame()
         }
-        bt.image.texture?.filteringMode = .nearest
         return bt
     }()
     
@@ -40,7 +38,6 @@ class MenuScene: SKScene {
         var bt = SKButtonNode(image: .soundOn) {
             self.menuLogic.toggleSound()
         }
-        bt.image.texture?.filteringMode = .nearest
         return bt
     }()
     
@@ -48,12 +45,12 @@ class MenuScene: SKScene {
         var bt = SKButtonNode(image: .musicOn) {
             self.menuLogic.toggleMusic()
         }
-        bt.image.texture?.filteringMode = .nearest
         return bt
     }()
     
     lazy var gameCenterButton: SKButtonNode = {
         var bt = SKButtonNode(image: .gameCenter) {
+            self.goToGameCenter()
         }
         bt.image.texture?.filteringMode = .nearest
         return bt
@@ -64,14 +61,8 @@ class MenuScene: SKScene {
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = String(format: NSLocalizedString(.highscore), playerHighscore)
+        lbl.text = "highscore".localized() + "\(UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey))"
         return lbl
-    }()
-    
-    lazy var playerHighscore: String = {
-        //TODO: Pegar valor do gameCenter
-        var score = "0"
-        return score
     }()
     
     lazy var catAction: SKSpriteNode = {
@@ -162,20 +153,6 @@ class MenuScene: SKScene {
             self.musicButton.updateImage(with: .musicOff)
         } else {
             AudioService.shared.soundManager(with: .backgroundMusic, soundAction: .play, .loop)
-        }
-        
-        
-        // Game Center
-        
-        let gameCenterService = GameCenterService()
-        
-        gameCenterService.getHighScore() { result in
-            switch result {
-            case .success(let score):
-                self.setScore(with: score)
-            case .failure(let error):
-                print("ERRO GAME CENTER: \(error.description)")
-            }
         }
     }
     
@@ -276,12 +253,13 @@ class MenuScene: SKScene {
     
     
     public func setScore(with score: Int) -> Void {
-        self.scoreLabel.text = String(format: NSLocalizedString(.highscore), "\(score)")
+        self.scoreLabel.text = "highscore".localized() + "\(score)"
     }
 }
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
+        let _ = GameCenterService.shared.showGameCenterPage(.leaderboards)
     }
     
     func getSoundButton() -> SKButtonNode {
