@@ -13,6 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var currentTime: TimeInterval = 0
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
+    var defaults = UserDefaults.standard
+    var hideTutorial: Bool = false
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -72,6 +74,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return bug
     }()
     
+    lazy var tutorialNode: SKSpriteNode = {
+        var hand = SKSpriteNode(imageNamed: "tut1")
+        hand.zPosition = 1
+        hand.texture?.filteringMode = .nearest
+        let frames:[SKTexture] = createTexture("Tutorial")
+        hand.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
+        return hand
+    }()
+    
     class func newGameScene() -> GameScene {
         let scene = GameScene()
         scene.scaleMode = .resizeFill
@@ -84,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeAllChildren()
         removeAllActions()
         //self.view?.showsPhysics = true
+        hideTutorial = defaults.bool(forKey: "playerFirstTime")
         
 #if os(tvOS)
         self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
@@ -110,6 +124,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
+        
+        if !hideTutorial {
+            self.addChild(tutorialNode)
+        }
         
         setSwipeGesture()
         
@@ -185,7 +203,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setPhysicsObstacles(node: SKSpriteNode) {
-        
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
@@ -203,6 +220,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         pauseButton.setScale(self.size.height*0.00035)
         scoreLabel.fontSize = self.size.height/15
+        tutorialNode.position = CGPoint(x: size.width/2, y: size.height * 0.6)
+        tutorialNode.setScale(self.size.height*0.0035)
         
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
@@ -273,13 +292,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if pauseMenu.homeButton.isFocused {
             goToHome()
             
-        }else if pauseMenu.retryButton.isFocused {
+        } else if pauseMenu.retryButton.isFocused {
             restartGame()
             
-        }else if pauseMenu.soundButton.isFocused {
+        } else if pauseMenu.soundButton.isFocused {
             soundAction()
             
-        }else if pauseMenu.musicButton.isFocused {
+        } else if pauseMenu.musicButton.isFocused {
             musicAction()
         }
     }
@@ -291,14 +310,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let direction = swipeGesture.direction.direction
         else { return }
         movePlayer(direction: direction)
+        tutorialNode.isHidden = true
+        defaults.set(true, forKey: "playerFirstTime")
     }
     
     //MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
-        
-        guard let physicsBody = obstacle.physicsBody.copy() as? SKPhysicsBody else {return}
-        enemy.physicsBody = physicsBody
+        enemy.physicsBody = obstacle.physicsBody.copy() as? SKPhysicsBody
         enemy.zPosition = 2
         enemy.name = "Enemy"
         enemy.size.height = self.size.height/3 * CGFloat(obstacle.weight)

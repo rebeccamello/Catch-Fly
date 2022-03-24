@@ -37,6 +37,7 @@ class GameSceneController {
     let defaults = UserDefaults.standard
     var pausedTime: TimeInterval = 0
     
+    
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
             timeScore = currentTime
@@ -181,6 +182,12 @@ class GameSceneController {
         #endif
     }
     
+    //MARK: Primera vez do player no jogo
+    func firstTime() {
+        defaults.set(false, forKey: "playerFirstTime")
+    }
+    
+    //MARK: TearDown
     func tearDown() {
         timeCounter = 0
         timer.invalidate()
