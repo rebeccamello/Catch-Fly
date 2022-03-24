@@ -15,6 +15,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     var defaults = UserDefaults.standard
     var hideTutorial: Bool = false
+    var buttonTvOS = UITapGestureRecognizer()
+    var buttonsPause = UITapGestureRecognizer()
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
