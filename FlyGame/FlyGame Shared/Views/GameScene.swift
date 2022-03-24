@@ -7,11 +7,9 @@
 
 import SpriteKit
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
-    let buttonTvOS = UITapGestureRecognizer()
-    let buttonsPause = UITapGestureRecognizer()
     private var currentTime: TimeInterval = 0
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
@@ -465,24 +463,7 @@ extension GameScene: GameLogicDelegate {
     }
 }
 
-enum Direction {
-    case up, down
-}
 
-extension UISwipeGestureRecognizer.Direction {
-    var direction: Direction? {
-        switch self {
-        case .up:
-            return .up
-            
-        case .down:
-            return .down
-            
-        default:
-            return nil
-        }
-    }
-}
 
 #if os(tvOS)
 extension GameScene {
