@@ -127,8 +127,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
         
-        if hideTutorial {
+        if !hideTutorial {
             self.addChild(tutorialNode)
+            defaults.set(true, forKey: "platerFirstTime")
         }
         
         setSwipeGesture()
@@ -294,13 +295,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if pauseMenu.homeButton.isFocused {
             goToHome()
             
-        }else if pauseMenu.retryButton.isFocused {
+        } else if pauseMenu.retryButton.isFocused {
             restartGame()
             
-        }else if pauseMenu.soundButton.isFocused {
+        } else if pauseMenu.soundButton.isFocused {
             soundAction()
             
-        }else if pauseMenu.musicButton.isFocused {
+        } else if pauseMenu.musicButton.isFocused {
             musicAction()
         }
     }
@@ -312,6 +313,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let direction = swipeGesture.direction.direction
         else { return }
         movePlayer(direction: direction)
+        tutorialNode.isHidden = true
         defaults.set(true, forKey: "playerFirstTime")
     }
     

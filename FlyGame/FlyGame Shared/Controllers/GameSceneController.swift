@@ -188,7 +188,7 @@ class GameSceneController {
     
     //MARK: Primera vez do player no jogo
     func firstTime() {
-        defaults.set(true, forKey: "playerFirstTime")
+        defaults.set(false, forKey: "playerFirstTime")
     }
     
     //MARK: TearDown
