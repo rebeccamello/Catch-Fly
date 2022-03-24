@@ -129,7 +129,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if !hideTutorial {
             self.addChild(tutorialNode)
-            defaults.set(true, forKey: "platerFirstTime")
         }
         
         setSwipeGesture()
