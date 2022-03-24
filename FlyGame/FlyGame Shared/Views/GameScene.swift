@@ -91,6 +91,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return scene
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+      }
+    
     //MARK: - setUpScenne
     
     func setUpScene() {
@@ -262,6 +266,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+// MARK: - Funcao ao sair do App e voltar
+        
+        public override func sceneDidLoad() {
+            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        }
+
+    @objc func didBecomeActiveNotification(notification: NSNotification) {
+        self.isPaused = true
+        print("foreground: ", self.isPaused)
+    }
+    
+    @objc func didEnterBackgroundNotification(notification: NSNotification) {
+        pauseGame()
+        print("background: ", self.isPaused)
+    }
+    
     func collisionBetween(player: SKNode, enemy: SKNode) {
         gameLogic.tearDown()
         self.isGameStarted = false
@@ -430,19 +451,18 @@ extension GameScene: GameLogicDelegate {
     }
     
     func resumeGame() {
-        self.isPaused.toggle()
+        self.isPaused = false
         self.gameLogic.handlePause(isPaused: isPaused)
         pauseMenu.isHidden = true
         pauseButton.isHidden = false
     }
     
     func pauseGame() {
-        self.pauseMenu.isHidden.toggle()
-#if os(iOS)
-        self.gameLogic.handlePause(isPaused: !self.isPaused)
-#endif
-        self.isPaused.toggle()
+        self.pauseMenu.isHidden = false
+        self.isPaused = true
+        self.gameLogic.handlePause(isPaused: self.isPaused)
         
+        print("pauseGame: ", self.isPaused)
     }
     
     func gameOver() {
