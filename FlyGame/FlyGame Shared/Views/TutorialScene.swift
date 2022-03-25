@@ -44,8 +44,8 @@ class TutorialScene: SKScene {
         hand.texture?.filteringMode = .nearest
         let frames:[SKTexture] = createTexture("Tutorial")
         hand.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                        timePerFrame: TimeInterval(0.2),
-                                                        resize: false, restore: true)))
+                                                         timePerFrame: TimeInterval(0.2),
+                                                         resize: false, restore: true)))
         return hand
     }()
     
@@ -67,7 +67,7 @@ class TutorialScene: SKScene {
         self.addChild(scenarioImage)
         self.addChild(playerNode)
         self.addChild(tutorialNode)
-
+        
         setSwipeGesture()
         
         let screenSize: CGSize = .screenSize()
@@ -121,7 +121,7 @@ class TutorialScene: SKScene {
         movePlayer(direction: direction)
         shouldMoveObstacle()
         defaults.set(true, forKey: "playerFirstTime")
-        }
+    }
     
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
@@ -142,11 +142,9 @@ class TutorialScene: SKScene {
         enemy.size.width = self.size.height/3 * CGFloat(obstacle.width)
         enemy.position = CGPoint(x: size.width + enemy.size.width, y: size.height * CGFloat(obstacle.lanePosition) / 6)
         addChild(enemy)
-        
     }
+    
     override func update(_ currentTime: TimeInterval) {
-//        shouldMoveObstacle()
-        
         //MARK: Deleta nodes fora da tela
         let outOfTheScreenNodes = children.filter { node in
             if let sprite = node as? SKSpriteNode {
@@ -159,43 +157,61 @@ class TutorialScene: SKScene {
         for node in outOfTheScreenNodes {
             node.physicsBody = nil
         }
+        
+        if outOfTheScreenNodes.count >= 1 {
+            obstacleIndex += 1
+            shouldMoveObstacle()
+        }
         removeChildren(in: outOfTheScreenNodes)
     }
     
+    //MARK: should move obstacle
+    var state = 0
     func shouldMoveObstacle() {
-        if obstacleIndex == -1 {
-            print("1 if ")
+        if obstacleIndex == -1 { // piano entra
             obstacleIndex += 1
             createObstacle(obstacle: obstacles[0])
             moveObstacle()
+            state += 1
         }
         
-        else if obstacleIndex == 0 && gameLogic.currentPosition == 5 { //piano
-            print("2 if ")
+        else if obstacleIndex == 0 && gameLogic.currentPosition == 5 && state == 1 { //piano sai
             moveObstacleOffScreen()
-            obstacleIndex += 1
+            state += 1
+        }
+        
+        else if obstacleIndex == 1 && state == 2 { // entra lustre
             createObstacle(obstacle: obstacles[1])
             moveObstacle()
-        }
-        else if obstacleIndex == 1 && gameLogic.currentPosition == 3 {
-            print("3 if ")
-            moveObstacleOffScreen()
-            obstacleIndex += 1
-            createObstacle(obstacle: obstacles[2])
-            moveObstacle()
-        }
-        else if obstacleIndex == 2 && gameLogic.currentPosition == 1 {
-            print("4 if ")
-            moveObstacleOffScreen()
-            obstacleIndex += 1
+            state += 1
         }
         
+        else if obstacleIndex == 1 && gameLogic.currentPosition == 3 && state == 3 { // sair lustre
+            moveObstacleOffScreen()
+            state += 1
+        }
+        
+        else if obstacleIndex == 2 && state == 4 { // entra xicara
+            createObstacle(obstacle: obstacles[2])
+            moveObstacle()
+            state += 1
+        }
+        
+        else if obstacleIndex == 2 && gameLogic.currentPosition == 1 && state == 5 { //sai xicara
+            moveObstacleOffScreen()
+            state += 1
+        }
+        
+        else if state == 6{
+            print("SUCCESS")
+        }
     }
     
+    // MARK: move obstacles
     func moveObstacle() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
-            let moveObstAction = SKAction.moveTo(x: (self.size.width/2), duration: 3)
+            let moveObstAction = SKAction.moveTo(x: (self.size.width/2), duration: 2)
             obstacle.run(moveObstAction)
         }
     }
@@ -203,12 +219,9 @@ class TutorialScene: SKScene {
     func moveObstacleOffScreen() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
-            let moveObstAction = SKAction.moveTo(x: (-self.size.width/2), duration: 200)
-                obstacle.run(moveObstAction)
-            
+            let moveObstAction = SKAction.moveTo(x: (-10000), duration: 70)
+            obstacle.run(moveObstAction)
         }
     }
-    
-    
     
 }
