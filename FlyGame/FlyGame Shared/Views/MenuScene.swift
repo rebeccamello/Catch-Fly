@@ -10,6 +10,8 @@ import SpriteKit
 
 class MenuScene: SKScene {
     let tapGeneralSelection = UITapGestureRecognizer()
+    var hideTutorial: Bool = false
+    var defaults = UserDefaults.standard
     
     lazy var menuLogic: MenuSceneController = {
         let m = MenuSceneController()
@@ -171,11 +173,16 @@ class MenuScene: SKScene {
     }
 
     func playGame() {
-        //TODO: IF FIRST RUN VAI PRO TUTORIAL
-//        let scene = TutorialScene.newGameScene()
-        let scene = GameScene.newGameScene()
-        scene.isGameStarted = true
-        self.view?.presentScene(scene)
+        hideTutorial = defaults.bool(forKey: "playerFirstTime")
+        
+        if !hideTutorial {
+            let scene = TutorialScene.newGameScene()
+            self.view?.presentScene(scene)
+        } else {
+            let scene = GameScene.newGameScene()
+            scene.isGameStarted = true
+            self.view?.presentScene(scene)
+        }
         
 #if os(tvOS)
         scene.run(SKAction.wait(forDuration: 0.02)) {

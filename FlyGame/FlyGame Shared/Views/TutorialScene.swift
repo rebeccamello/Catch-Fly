@@ -11,6 +11,9 @@ import SpriteKit
 class TutorialScene: SKScene {
     var obstacleIndex: Int = -1
     var obstacles: [Obstacle] = []
+    var defaults = UserDefaults.standard
+    var hideTutorial: Bool = false
+    
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
         scenario = SKSpriteNode(imageNamed: "cenario")
@@ -117,6 +120,7 @@ class TutorialScene: SKScene {
         else { return }
         movePlayer(direction: direction)
         shouldMoveObstacle()
+        defaults.set(true, forKey: "playerFirstTime")
         }
     
     func movePlayer(direction: Direction) {

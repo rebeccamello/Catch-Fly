@@ -16,7 +16,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     var defaults = UserDefaults.standard
-    var hideTutorial: Bool = false
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -99,7 +98,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeAllChildren()
         removeAllActions()
         //self.view?.showsPhysics = true
-        hideTutorial = defaults.bool(forKey: "playerFirstTime")
         
 #if os(tvOS)
         self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
@@ -126,10 +124,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
-        
-        if !hideTutorial {
-            self.addChild(tutorialNode)
-        }
         
         setSwipeGesture()
         
@@ -313,7 +307,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else { return }
         movePlayer(direction: direction)
         tutorialNode.isHidden = true
-        defaults.set(true, forKey: "playerFirstTime")
     }
     
     //MARK: - Criação e movimentação de obstáculos
