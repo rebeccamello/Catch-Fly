@@ -42,6 +42,10 @@
 		C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */; };
 		C8BAAFDC27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */; };
+		C8C2044927ECF7A100507AB5 /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2044827ECF7A100507AB5 /* TutorialScene.swift */; };
+		C8C2044A27ECF7A100507AB5 /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2044827ECF7A100507AB5 /* TutorialScene.swift */; };
+		C8C2044C27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2044B27ECFADD00507AB5 /* TutorialSceneController.swift */; };
+		C8C2044D27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2044B27ECFADD00507AB5 /* TutorialSceneController.swift */; };
 		C8D2275127DFCF7B0077CEF2 /* PauseMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2275027DFCF7B0077CEF2 /* PauseMenu.swift */; };
 		C8D2275227DFCF7B0077CEF2 /* PauseMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2275027DFCF7B0077CEF2 /* PauseMenu.swift */; };
 		E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F2FE27D67B9300F965DE /* AppDelegate.swift */; };
@@ -97,6 +101,8 @@
 		9D7E402B27EB8EDA00376C51 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleFetcher.swift; sourceTree = "<group>"; };
 		C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+CGSize.swift"; sourceTree = "<group>"; };
+		C8C2044827ECF7A100507AB5 /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
+		C8C2044B27ECFADD00507AB5 /* TutorialSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSceneController.swift; sourceTree = "<group>"; };
 		C8D2275027DFCF7B0077CEF2 /* PauseMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseMenu.swift; sourceTree = "<group>"; };
 		E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9A0F2F527D67B9100F965DE /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -243,6 +249,7 @@
 				C8D2275027DFCF7B0077CEF2 /* PauseMenu.swift */,
 				E9A0F32B27D6804E00F965DE /* MenuScene.swift */,
 				E9A0F32E27D685CE00F965DE /* GameOverScene.swift */,
+				C8C2044827ECF7A100507AB5 /* TutorialScene.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +272,7 @@
 				E9A0F34027D6A59800F965DE /* MenuSceneController.swift */,
 				E9A0F34327D6A5EB00F965DE /* GameOverSceneController.swift */,
 				E9A0F34627D6A63700F965DE /* GameSceneController.swift */,
+				C8C2044B27ECFADD00507AB5 /* TutorialSceneController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -429,6 +437,8 @@
 				E9A0F34127D6A59800F965DE /* MenuSceneController.swift in Sources */,
 				2297C54B27ED04E70009FDD8 /* Direction.swift in Sources */,
 				E9A0F35927D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
+				E9A0F33827D68FE500F965DE /* GameData.swift in Sources */,
+				C8C2044927ECF7A100507AB5 /* TutorialScene.swift in Sources */,
 				E9A0F34C27D6A6BD00F965DE /* AudioService.swift in Sources */,
 				C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
@@ -438,6 +448,7 @@
 				E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */,
 				227117C827EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */,
 				E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */,
+				C8C2044C27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */,
 				E9A0F33B27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,6 +474,8 @@
 				E9A0F34227D6A59800F965DE /* MenuSceneController.swift in Sources */,
 				2297C54C27ED04E70009FDD8 /* Direction.swift in Sources */,
 				E9A0F35A27D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
+				E9A0F33927D68FE500F965DE /* GameData.swift in Sources */,
+				C8C2044A27ECF7A100507AB5 /* TutorialScene.swift in Sources */,
 				E9A0F34D27D6A6BD00F965DE /* AudioService.swift in Sources */,
 				C8BAAFDC27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
@@ -472,6 +485,7 @@
 				E9A0F31127D67B9300F965DE /* GameViewController.swift in Sources */,
 				227117C927EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */,
 				E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */,
+				C8C2044D27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */,
 				E9A0F33C27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

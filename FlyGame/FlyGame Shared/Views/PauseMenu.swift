@@ -13,7 +13,8 @@ class PauseMenu: SKNode {
     let buttonsPause = UITapGestureRecognizer()
     
     var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
-    var bg: SKSpriteNode = SKSpriteNode(color: .black, size: .screenSize())
+    var bg: SKSpriteNode = SKSpriteNode(imageNamed: "cenario")
+    let screenSize: CGSize = .screenSize()
     weak var gameDelegate: GameLogicDelegate?
     
     lazy var retryButton: SKButtonNode = {
@@ -67,6 +68,8 @@ class PauseMenu: SKNode {
         buttonsContainer.addChild(musicButton)
         buttonsContainer.addChild(resumeButton)
         
+        bg.size = screenSize
+        
         homeButton.setScale(bg.size.width * 0.00023)
         retryButton.setScale(bg.size.width * 0.00023)
         soundButton.setScale(bg.size.width * 0.00023)
@@ -85,7 +88,6 @@ class PauseMenu: SKNode {
         resumeButton.position = CGPoint(x: 0, y: buttonsContainer.frame.size.height * 0.15)
         
         bg.zPosition = 3
-        bg.alpha = 0.45
         
         homeButton.zPosition = 4
         homeButton.position = CGPoint(x: -buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
