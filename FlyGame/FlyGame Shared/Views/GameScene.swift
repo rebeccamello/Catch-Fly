@@ -29,9 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: .pause, action: {
-            self.pauseMenu.isHidden.toggle()
-            self.gameLogic.handlePause(isPaused: !self.isPaused)
-            self.isPaused.toggle()
+            self.pauseGame()
         })
         but.zPosition = 3
         return but
@@ -94,38 +92,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-      }
+    }
     
-    //MARK: - setUpScenne
+    //MARK: - setUpScene
     
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
-        //self.view?.showsPhysics = true
+        
         hideTutorial = defaults.bool(forKey: "playerFirstTime")
         
-#if os(tvOS)
-        self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
-        self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
-        self.view?.addGestureRecognizer(self.buttonTvOS)
-        
-#endif
+        #if os(tvOS)
+            addPauseActionToTV()
+        #endif
         
         self.addChild(scenarioImage)
         self.addChild(scenarioImage2)
-        scenarioImage.size.width = self.size.width * 1.2
-        scenarioImage.size.height = self.size.height
-        scenarioImage2.size.width = self.size.width * 1.2
-        scenarioImage2.size.height = self.size.height
-        
-        scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
-        scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
-        
         self.addChild(playerNode)
         
-#if os(iOS)
-        self.addChild(pauseButton)
-#endif
+        #if os(iOS)
+            self.addChild(pauseButton)
+        #endif
         
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
@@ -134,26 +121,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(tutorialNode)
         }
         
+        setNodesSize()
+        setNodesPosition()
         setSwipeGesture()
+        buttonActions()
         
         pauseMenu.isHidden = true
-        buttonActions()
     }
+    
+    func setNodesSize() {
+        scenarioImage.size = CGSize(width: self.size.width * 1.2, height: self.size.height)
+        scenarioImage2.size = CGSize(width: self.size.width * 1.2, height: self.size.height)
+    }
+    
+    func setNodesPosition() {
+        scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
+        scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
+    }
+    
+    #if os(tvOS)
+        func addPauseActionToTV() {
+            self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
+            self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+            self.view?.addGestureRecognizer(self.buttonTvOS)
+        }
+    #endif
     
     //MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
         
-#if os(tvOS)
+    #if os(tvOS)
         addTapGestureRecognizer()
+    #endif
         
-        if pauseMenu.isHidden == false {
-            self.run(SKAction.wait(forDuration: 0.02)) {
-                self.view?.window?.rootViewController?.setNeedsFocusUpdate()
-                self.view?.window?.rootViewController?.updateFocusIfNeeded()
-            }
-        }
-#endif
         if isGameStarted {
             gameLogic.startUp()
             physicsWorld.contactDelegate = self
