@@ -15,6 +15,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     var defaults = UserDefaults.standard
     var hideTutorial: Bool = false
+    var buttonTvOS = UITapGestureRecognizer()
+    var buttonsPause = UITapGestureRecognizer()
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -90,6 +92,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.scaleMode = .resizeFill
         return scene
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+      }
     
     //MARK: - setUpScenne
     
@@ -260,6 +266,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
             collisionBetween(player: nodeA, enemy: nodeB)
         }
+    }
+    
+// MARK: - Funcao ao sair do App e voltar
+        
+        public override func sceneDidLoad() {
+            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        }
+
+    @objc func didBecomeActiveNotification(notification: NSNotification) {
+        self.isPaused = true
+        print("foreground: ", self.isPaused)
+    }
+    
+    @objc func didEnterBackgroundNotification(notification: NSNotification) {
+        pauseGame()
+        print("background: ", self.isPaused)
     }
     
     func collisionBetween(player: SKNode, enemy: SKNode) {
@@ -433,19 +456,18 @@ extension GameScene: GameLogicDelegate {
     }
     
     func resumeGame() {
-        self.isPaused.toggle()
+        self.isPaused = false
         self.gameLogic.handlePause(isPaused: isPaused)
         pauseMenu.isHidden = true
         pauseButton.isHidden = false
     }
     
     func pauseGame() {
-        self.pauseMenu.isHidden.toggle()
-#if os(iOS)
-        self.gameLogic.handlePause(isPaused: !self.isPaused)
-#endif
-        self.isPaused.toggle()
+        self.pauseMenu.isHidden = false
+        self.isPaused = true
+        self.gameLogic.handlePause(isPaused: self.isPaused)
         
+        print("pauseGame: ", self.isPaused)
     }
     
     func gameOver() {
