@@ -333,9 +333,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func moveObstacle() {
-        let allObstacles = children.filter { node in node.name == "Enemy" }
+        let allObstacles = children.filter { node in node.name == "Enemy" || node.name == "Coin" }
         for obstacle in allObstacles {
-            if isPaused == true{
+            if isPaused == true {
                 obstacle.position.x -= 0
             }
             else {
@@ -349,6 +349,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    //MARK: Criação das moedas
+    func createCoin() {
+        let coin = SKSpriteNode(imageNamed: "moeda0")
+        coin.zPosition = 1
+        coin.name = "Coin"
+        coin.size.height = self.size.height/7
+        coin.size.width = self.size.height/7
+//        coin.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: self.size.height/3, height: self.size.height/3)).copy() as? SKPhysicsBody
+        coin.position = CGPoint(x: size.width + coin.size.width, y: size.height * 2 / 6)
+        setPhysicsObstacles(node: coin)
+        
+        let frames:[SKTexture] = createTexture("Moedas")
+        coin.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                        timePerFrame: TimeInterval(0.05),
+                                                        resize: false, restore: true)))
+        addChild(coin)
+    }
+    
+    //MARK: Movimento da mosca
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
