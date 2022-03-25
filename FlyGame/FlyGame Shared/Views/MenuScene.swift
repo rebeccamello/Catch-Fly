@@ -172,9 +172,9 @@ class MenuScene: SKScene {
 
     func playGame() {
         //TODO: IF FIRST RUN VAI PRO TUTORIAL
-        let scene = TutorialScene.newGameScene()
-        //let scene = GameScene.newGameScene()
-        //scene.isGameStarted = true
+//        let scene = TutorialScene.newGameScene()
+        let scene = GameScene.newGameScene()
+        scene.isGameStarted = true
         self.view?.presentScene(scene)
         
 #if os(tvOS)

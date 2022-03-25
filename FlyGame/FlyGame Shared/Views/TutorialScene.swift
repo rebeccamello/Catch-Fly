@@ -54,6 +54,7 @@ class TutorialScene: SKScene {
     
     override func didMove(to view: SKView) {
         setUpScene()
+        shouldMoveObstacle()
     }
     
     func setUpScene() {
@@ -70,9 +71,6 @@ class TutorialScene: SKScene {
         let laneHeight = screenSize.height/3
         
         obstacles = [Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "piano"), size: CGSize(width: laneHeight*2, height: laneHeight*2))), Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: laneHeight, height: laneHeight))), Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "estanteDeCha"), size: CGSize(width: laneHeight, height: laneHeight*2))) ]
-        
-        //createObstacle(obstacle: obstacles[0])
-        
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -118,6 +116,7 @@ class TutorialScene: SKScene {
             let direction = swipeGesture.direction.direction
         else { return }
         movePlayer(direction: direction)
+        shouldMoveObstacle()
         }
     
     func movePlayer(direction: Direction) {
@@ -142,8 +141,9 @@ class TutorialScene: SKScene {
         
     }
     override func update(_ currentTime: TimeInterval) {
-        shouldMoveObstacle()
+//        shouldMoveObstacle()
         
+        //MARK: Deleta nodes fora da tela
         let outOfTheScreenNodes = children.filter { node in
             if let sprite = node as? SKSpriteNode {
                 return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
@@ -155,32 +155,33 @@ class TutorialScene: SKScene {
         for node in outOfTheScreenNodes {
             node.physicsBody = nil
         }
-        
-        
-        
         removeChildren(in: outOfTheScreenNodes)
     }
     
     func shouldMoveObstacle() {
         if obstacleIndex == -1 {
+            print("1 if ")
             obstacleIndex += 1
             createObstacle(obstacle: obstacles[0])
             moveObstacle()
         }
         
-        if obstacleIndex == 0 && gameLogic.currentPosition == 5 { //piano
+        else if obstacleIndex == 0 && gameLogic.currentPosition == 5 { //piano
+            print("2 if ")
             moveObstacleOffScreen()
             obstacleIndex += 1
             createObstacle(obstacle: obstacles[1])
             moveObstacle()
         }
-        if obstacleIndex == 1 && gameLogic.currentPosition == 3 {
+        else if obstacleIndex == 1 && gameLogic.currentPosition == 3 {
+            print("3 if ")
             moveObstacleOffScreen()
             obstacleIndex += 1
             createObstacle(obstacle: obstacles[2])
             moveObstacle()
         }
-        if obstacleIndex == 2 && gameLogic.currentPosition == 1 {
+        else if obstacleIndex == 2 && gameLogic.currentPosition == 1 {
+            print("4 if ")
             moveObstacleOffScreen()
             obstacleIndex += 1
         }
@@ -198,7 +199,7 @@ class TutorialScene: SKScene {
     func moveObstacleOffScreen() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
-            let moveObstAction = SKAction.moveTo(x: (-10000), duration: 200)
+            let moveObstAction = SKAction.moveTo(x: (-self.size.width/2), duration: 200)
                 obstacle.run(moveObstAction)
             
         }
