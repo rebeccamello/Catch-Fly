@@ -49,12 +49,12 @@ class TutorialScene: SKScene {
         return hand
     }()
     
-    lazy var scoreLabel: SKLabelNode = {
+    lazy var successLabel: SKLabelNode = {
         var lbl = SKLabelNode()
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = "Sucesso"
+        lbl.text = "success".localized()
         return lbl
     }()
     
@@ -99,6 +99,8 @@ class TutorialScene: SKScene {
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         tutorialNode.position = CGPoint(x: size.width/2, y: size.height * 0.6)
         tutorialNode.setScale(self.size.height*0.0035)
+        successLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        successLabel.fontSize = self.size.height/5
     }
     
     //MARK: Create Texture
@@ -187,6 +189,7 @@ class TutorialScene: SKScene {
         else if obstacleIndex == 0 && gameLogic.currentPosition == 5 && state == 1 { //piano sai
             moveObstacleOffScreen()
             state += 1
+            tutorialNode.isHidden = true
         }
         
         else if obstacleIndex == 1 && state == 2 { // entra lustre
@@ -213,6 +216,7 @@ class TutorialScene: SKScene {
         
         else if state == 6 {
             tutorialNode.isHidden = true
+            addChild(successLabel)
             print("SUCCESS")
         }
     }
@@ -229,7 +233,7 @@ class TutorialScene: SKScene {
     func moveObstacleOffScreen() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
-            let moveObstAction = SKAction.moveTo(x: (-10000), duration: 70)
+            let moveObstAction = SKAction.moveTo(x: (-10000), duration: 40)
             obstacle.run(moveObstAction)
         }
     }
