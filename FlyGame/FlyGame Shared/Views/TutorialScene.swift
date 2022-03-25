@@ -49,6 +49,15 @@ class TutorialScene: SKScene {
         return hand
     }()
     
+    lazy var scoreLabel: SKLabelNode = {
+        var lbl = SKLabelNode()
+        lbl.numberOfLines = 0
+        lbl.fontColor = SKColor.black
+        lbl.fontName = "munro"
+        lbl.text = "Sucesso"
+        return lbl
+    }()
+    
     class func newGameScene() -> TutorialScene {
         let scene = TutorialScene()
         scene.scaleMode = .resizeFill
@@ -165,7 +174,7 @@ class TutorialScene: SKScene {
         removeChildren(in: outOfTheScreenNodes)
     }
     
-    //MARK: should move obstacle
+    //MARK: Should move obstacle
     var state = 0
     func shouldMoveObstacle() {
         if obstacleIndex == -1 { // piano entra
@@ -202,12 +211,13 @@ class TutorialScene: SKScene {
             state += 1
         }
         
-        else if state == 6{
+        else if state == 6 {
+            tutorialNode.isHidden = true
             print("SUCCESS")
         }
     }
     
-    // MARK: move obstacles
+    // MARK: Move obstacles
     func moveObstacle() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
