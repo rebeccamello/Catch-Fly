@@ -6,5 +6,5 @@
   
 */
 
-"your_score" = "Pontos: %@";
-"highscore" = "Recorde: %@";
+"your_score" = "Pontos: ";
+"highscore" = "Recorde: ";

@@ -7,15 +7,15 @@
 
 import SpriteKit
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    var moveAndRemove = SKAction()
     var isGameStarted: Bool = false
-    let buttonTvOS = UITapGestureRecognizer()
-    let buttonsPause = UITapGestureRecognizer()
     private var currentTime: TimeInterval = 0
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     var defaults = UserDefaults.standard
+    var buttonTvOS = UITapGestureRecognizer()
+    var buttonsPause = UITapGestureRecognizer()
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -80,6 +80,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.scaleMode = .resizeFill
         return scene
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+      }
     
     //MARK: - setUpScenne
     func setUpScene() {
@@ -244,6 +248,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+// MARK: - Funcao ao sair do App e voltar
+        
+        public override func sceneDidLoad() {
+            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        }
+
+    @objc func didBecomeActiveNotification(notification: NSNotification) {
+        self.isPaused = true
+        print("foreground: ", self.isPaused)
+    }
+    
+    @objc func didEnterBackgroundNotification(notification: NSNotification) {
+        pauseGame()
+        print("background: ", self.isPaused)
+    }
+    
     func collisionBetween(player: SKNode, enemy: SKNode) {
         gameLogic.tearDown()
         self.isGameStarted = false
@@ -291,7 +312,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let swipeGesture = gesture as? UISwipeGestureRecognizer,
             let direction = swipeGesture.direction.direction
         else { return }
-        movePlayer(direction: direction)
+        if !isPaused {
+            movePlayer(direction: direction)
+        }        
+        defaults.set(true, forKey: "playerFirstTime")
     }
     
     //MARK: - Criação e movimentação de obstáculos
@@ -410,19 +434,18 @@ extension GameScene: GameLogicDelegate {
     }
     
     func resumeGame() {
-        self.isPaused.toggle()
+        self.isPaused = false
         self.gameLogic.handlePause(isPaused: isPaused)
         pauseMenu.isHidden = true
         pauseButton.isHidden = false
     }
     
     func pauseGame() {
-        self.pauseMenu.isHidden.toggle()
-#if os(iOS)
-        self.gameLogic.handlePause(isPaused: !self.isPaused)
-#endif
-        self.isPaused.toggle()
+        self.pauseMenu.isHidden = false
+        self.isPaused = true
+        self.gameLogic.handlePause(isPaused: self.isPaused)
         
+        print("pauseGame: ", self.isPaused)
     }
     
     func gameOver() {
@@ -443,24 +466,7 @@ extension GameScene: GameLogicDelegate {
     }
 }
 
-enum Direction {
-    case up, down
-}
 
-extension UISwipeGestureRecognizer.Direction {
-    var direction: Direction? {
-        switch self {
-        case .up:
-            return .up
-            
-        case .down:
-            return .down
-            
-        default:
-            return nil
-        }
-    }
-}
 
 #if os(tvOS)
 extension GameScene {
