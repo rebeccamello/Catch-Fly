@@ -15,10 +15,8 @@ class AudioService: AudioDelegate {
     /// Singleton
     static let shared = AudioService()
     
-    
     /// Variável para memoization
     private lazy var loadedAudios: [String : AVAudioPlayer] = [:]
-        
         
         
     /* MARK: - Delegate */
@@ -46,15 +44,12 @@ class AudioService: AudioDelegate {
         }
     }
         
-        
-        
     /* MARK: - Métodos */
     
     /// Verifica o conteúdo da variável salva no User Defaults
     public func getUserDefaultsStatus(with key: AudioType) -> Bool {
         return UserDefaults.standard.bool(forKey: key.description)
     }
-    
     
     /// Mexe com um áudio específico
     public func soundManager(with sound: AudiosList, soundAction: AudiosAction, _ reproduction: AudioReproduction = .oneTime) -> Void {
@@ -76,7 +71,6 @@ class AudioService: AudioDelegate {
         }
     }
     
-    
     /// Atualiza a variável no UserDefaults
     private func updateUserDefaults(soundType: AudioType) -> Bool {
         var sound = UserDefaults.standard.bool(forKey: soundType.description)
@@ -85,7 +79,6 @@ class AudioService: AudioDelegate {
         
         return self.getUserDefaultsStatus(with: soundType)
     }
-    
     
     /// Pega o arquivo de áudio e tranforma na variável AVAudioPlayer para poder manusear
     private func getMusic(from music: AudiosList, reproduction: AudioReproduction) -> AVAudioPlayer? {
@@ -118,7 +111,6 @@ class AudioService: AudioDelegate {
         }
         return nil
     }
-    
     
     private func verifyAudioType(with sound: AudiosList) -> AudioType {
         if sound == .backgroundMusic {

@@ -7,7 +7,6 @@
 
 import SpriteKit
 
-
 class GameOverScene: SKScene {
     let tapGeneralSelection = UITapGestureRecognizer()
     var score: Int = 20

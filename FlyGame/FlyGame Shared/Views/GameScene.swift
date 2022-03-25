@@ -7,7 +7,6 @@
 
 import SpriteKit
 
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var isGameStarted: Bool = false
     private var currentTime: TimeInterval = 0

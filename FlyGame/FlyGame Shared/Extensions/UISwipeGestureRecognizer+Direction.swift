@@ -5,7 +5,7 @@
 //  Created by Gui Reis on 24/03/22.
 //
 
-import class UIKit.UISwipeGestureRecognizer
+import UIKit
 
 
 extension UISwipeGestureRecognizer.Direction {

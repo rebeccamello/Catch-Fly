@@ -7,7 +7,6 @@
 
 import SpriteKit
 
-
 class SKButtonNode: SKNode {
     
     var image: SKSpriteNode
@@ -62,7 +61,6 @@ class SKButtonNode: SKNode {
         AudioService.shared.soundManager(with: .button, soundAction: .play)
         self.action()
     }
-    
     
     public func updateImage(with image: Buttons) -> Void {
         self.image.texture = SKTexture(imageNamed: image.description)

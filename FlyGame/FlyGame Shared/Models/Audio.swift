@@ -22,20 +22,17 @@ enum AudiosList: CustomStringConvertible {
     }
 }
 
-
 /// Acões de um áudio
 enum AudiosAction {
     case play
     case pause
 }
 
-
 /// Quantidade de reproduções
 enum AudioReproduction: Int {
     case oneTime = 0
     case loop = -1
 }
-
 
 /// Tipos de áudio
 enum AudioType: CustomStringConvertible {

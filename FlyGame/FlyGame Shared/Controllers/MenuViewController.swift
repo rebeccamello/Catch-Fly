@@ -5,9 +5,8 @@
 //  Created by Gui Reis on 24/03/22.
 //
 
-import class UIKit.UIViewController
-import class SpriteKit.SKView
-
+import UIKit
+import SpriteKit
 
 class MenuViewController: UIViewController {
     
@@ -19,9 +18,6 @@ class MenuViewController: UIViewController {
         let skView = SKView()
         skView.ignoresSiblingOrder = true
         skView.presentScene(scene)
-        // skView.showsFPS = true
-        // skView.showsNodeCount = true
-        
         self.view = skView
     }
     
@@ -30,7 +26,10 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         
         GameCenterService.shared.setController(self)
-        
+        gameCenterVerification()
+    }
+    
+    func gameCenterVerification() {
         // Fazendo a autenticação com o Game Center
         GameCenterService.shared.autenticateUser() {vc, score, error in
             if let error = error {

@@ -7,7 +7,6 @@
 
 import SpriteKit
 
-
 class PauseMenu: SKNode {
     
     let buttonsPause = UITapGestureRecognizer()

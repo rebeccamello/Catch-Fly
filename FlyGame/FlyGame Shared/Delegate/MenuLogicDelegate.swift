@@ -9,7 +9,10 @@ import Foundation
 import SpriteKit
 
 protocol MenuLogicDelegate {
-    func goToGameCenter() -> Void
+    func goToGameCenter()
     func getMusicButton() -> SKButtonNode
     func getSoundButton() -> SKButtonNode
+    func getPlayButton() -> SKButtonNode
+    func getGameCenterButton() -> SKButtonNode
+    func playGame()
 }
