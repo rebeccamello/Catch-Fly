@@ -332,7 +332,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let swipeGesture = gesture as? UISwipeGestureRecognizer,
             let direction = swipeGesture.direction.direction
         else { return }
-        movePlayer(direction: direction)
+        if !isPaused {
+            movePlayer(direction: direction)
+        }
+        
         tutorialNode.isHidden = true
         defaults.set(true, forKey: "playerFirstTime")
     }

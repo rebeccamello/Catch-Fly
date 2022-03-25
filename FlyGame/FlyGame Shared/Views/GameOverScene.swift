@@ -106,6 +106,7 @@ class GameOverScene: SKScene {
         if currentScore > UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) {
             GameCenterService.shared.submitHighScore(score: currentScore) {error in
                 if let error = error {
+                    UserDefaults.standard.set(currentScore, forKey: GameCenterService.highscoreKey)
                     print("ERRO GAME CENTER (subindo score): \(error)")
                 }
             }
