@@ -83,7 +83,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-      }
+    }
     
     //MARK: - setUpScenne
     func setUpScene() {
@@ -187,16 +187,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        node.physicsBody?.contactTestBitMask = 1
+        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
+        node.physicsBody?.allowsRotation = false
     }
     
     func setPhysicsObstacles(node: SKSpriteNode) {
         node.physicsBody?.affectedByGravity = false
-        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        node.physicsBody?.isDynamic = false // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
         node.physicsBody?.friction = 0
         node.physicsBody?.mass = 1
-        node.physicsBody?.categoryBitMask = 1
+    }
+    
+    func setPhysicsCoins(node: SKSpriteNode) {
+        node.physicsBody?.affectedByGravity = false
+        node.physicsBody?.isDynamic = false // faz reconhecer a colisao
     }
     
     //MARK: Set Node Positions
@@ -238,23 +243,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addGestureRecognizer(swipeDown)
     }
     
-    //MARK: - Colisão
-    func didBegin(_ contact: SKPhysicsContact) {
-        guard let nodeA = contact.bodyA.node else { return }
-        guard let nodeB = contact.bodyB.node else { return }
-        
-        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
-            collisionBetween(player: nodeA, enemy: nodeB)
-        }
+    // MARK: - Funcao ao sair do App e voltar
+    
+    public override func sceneDidLoad() {
+        NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
-// MARK: - Funcao ao sair do App e voltar
-        
-        public override func sceneDidLoad() {
-            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
-        }
-
     @objc func didBecomeActiveNotification(notification: NSNotification) {
         self.isPaused = true
         print("foreground: ", self.isPaused)
@@ -265,7 +260,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print("background: ", self.isPaused)
     }
     
+    //MARK: - Colisão
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
+            collisionBetween(player: nodeA, enemy: nodeB)
+        }
+    }
+    
     func collisionBetween(player: SKNode, enemy: SKNode) {
+        if player.name == "Coin" || enemy.name == "Coin" {
+            increaseScore(player: player, enemy: enemy)
+        } else {
+            goToGameOverScene()
+        }
+    }
+    
+    //MARK: Funçoes de quando há colisão
+    func increaseScore(player: SKNode, enemy: SKNode) {
+        print("moeda")
+        gameLogic.score += 2
+        if player.name == "Coin" {
+            player.removeFromParent()
+        } else {
+            enemy.removeFromParent()
+        }
+    }
+    
+    func goToGameOverScene() {
         gameLogic.tearDown()
         self.isGameStarted = false
         let scene = GameOverScene.newGameScene()
@@ -314,7 +338,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else { return }
         if !isPaused {
             movePlayer(direction: direction)
-        }        
+        }
         defaults.set(true, forKey: "playerFirstTime")
     }
     
@@ -356,14 +380,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.name = "Coin"
         coin.size.height = self.size.height/7
         coin.size.width = self.size.height/7
-//        coin.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: self.size.height/3, height: self.size.height/3)).copy() as? SKPhysicsBody
+        coin.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: self.size.height/3, height: self.size.height/3)).copy() as? SKPhysicsBody
         coin.position = CGPoint(x: size.width + coin.size.width, y: size.height * 2 / 6)
-        setPhysicsObstacles(node: coin)
+        setPhysicsCoins(node: coin)
         
         let frames:[SKTexture] = createTexture("Moedas")
         coin.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                        timePerFrame: TimeInterval(0.05),
-                                                        resize: false, restore: true)))
+                                                         timePerFrame: TimeInterval(0.05),
+                                                         resize: false, restore: true)))
         addChild(coin)
     }
     
@@ -387,7 +411,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.isGameStarted = true
         self.view?.presentScene(scene)
     }
-        
+    
     func buttonActions() {
         pauseMenu.retryButton.action = {
             self.restartGame()
