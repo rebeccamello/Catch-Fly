@@ -389,7 +389,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let frames:[SKTexture] = createTexture("Moedas")
         coin.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                         timePerFrame: TimeInterval(0.05),
+                                                         timePerFrame: TimeInterval(0.1),
                                                          resize: false, restore: true)))
         addChild(coin)
     }

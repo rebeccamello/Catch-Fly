@@ -269,7 +269,7 @@ class TutorialScene: SKScene {
             #if os(iOS)
             let moveObstAction = SKAction.moveTo(x: (-10000), duration: 30)
             #elseif os(tvOS)
-            let moveObstAction = SKAction.moveTo(x: (-10000), duration: 20)
+            let moveObstAction = SKAction.moveTo(x: (-10000), duration: 15)
             #endif
             obstacle.run(moveObstAction)
         }

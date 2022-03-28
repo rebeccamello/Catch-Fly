@@ -134,7 +134,6 @@ class GameSceneController {
             timeSpeed = currentTime
         }
         let deltaTimeSpeed = (currentTime - timeSpeed)
-        //print(duration)
         
 #if os(iOS)
         if deltaTimeSpeed >= 1 && duration > 0.8 {
@@ -170,7 +169,6 @@ class GameSceneController {
         }
         
 #elseif os (tvOS)
-        print("delay tv \(delayTV)")
         if pastTime >= delayTV {
             let obstacles = chooseObstacle()
             obstacles.forEach {
@@ -203,7 +201,6 @@ class GameSceneController {
         }
         
         #elseif os (tvOS)
-        print("delay tv \(coinDelayTV)")
         if pastTime >= coinDelayTV {
             gameDelegate?.createCoin()
             
