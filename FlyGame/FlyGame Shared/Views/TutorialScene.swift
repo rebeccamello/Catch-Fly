@@ -38,11 +38,22 @@ class TutorialScene: SKScene {
         return bug
     }()
     
-    lazy var tutorialNode: SKSpriteNode = {
+    lazy var tutorialHandUp: SKSpriteNode = {
         var hand = SKSpriteNode(imageNamed: "tut1")
         hand.zPosition = 3
         hand.texture?.filteringMode = .nearest
         let frames:[SKTexture] = createTexture("Tutorial")
+        hand.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                         timePerFrame: TimeInterval(0.2),
+                                                         resize: false, restore: true)))
+        return hand
+    }()
+    
+    lazy var tutorialHandDown: SKSpriteNode = {
+        var hand = SKSpriteNode(imageNamed: "maoBaixo1")
+        hand.zPosition = 3
+        hand.texture?.filteringMode = .nearest
+        let frames:[SKTexture] = createTexture("TutorialDown")
         hand.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                          timePerFrame: TimeInterval(0.2),
                                                          resize: false, restore: true)))
@@ -75,7 +86,7 @@ class TutorialScene: SKScene {
         
         self.addChild(scenarioImage)
         self.addChild(playerNode)
-        self.addChild(tutorialNode)
+        self.addChild(tutorialHandUp)
         
         setSwipeGesture()
         
@@ -97,8 +108,10 @@ class TutorialScene: SKScene {
         playerNode.size.height = self.size.height/5.2
         playerNode.size.width = self.size.height/5.2
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
-        tutorialNode.position = CGPoint(x: size.width/2, y: size.height * 0.6)
-        tutorialNode.setScale(self.size.height*0.0035)
+        tutorialHandUp.position = CGPoint(x: size.width/2, y: size.height * 0.6)
+        tutorialHandUp.setScale(self.size.height*0.0035)
+        tutorialHandDown.position = CGPoint(x: size.width/2, y: size.height * 0.4)
+        tutorialHandDown.setScale(self.size.height*0.0035)
         successLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         successLabel.fontSize = self.size.height/5
     }
@@ -174,6 +187,11 @@ class TutorialScene: SKScene {
             shouldMoveObstacle()
         }
         removeChildren(in: outOfTheScreenNodes)
+        
+        if (playerNode.position.x > self.size.width + 100) { // mosquinha saiu da cena
+            state = 8
+            shouldMoveObstacle()
+        }
     }
     
     //MARK: Should move obstacle
@@ -189,35 +207,50 @@ class TutorialScene: SKScene {
         else if obstacleIndex == 0 && gameLogic.currentPosition == 5 && state == 1 { //piano sai
             moveObstacleOffScreen()
             state += 1
-            tutorialNode.isHidden = true
+            tutorialHandUp.isHidden = true
         }
         
         else if obstacleIndex == 1 && state == 2 { // entra lustre
+            self.addChild(tutorialHandDown)
             createObstacle(obstacle: obstacles[1])
             moveObstacle()
             state += 1
         }
         
-        else if obstacleIndex == 1 && gameLogic.currentPosition == 3 && state == 3 { // sair lustre
+        else if obstacleIndex == 1 && (gameLogic.currentPosition == 3 || gameLogic.currentPosition == 1) && state == 3 { // sair lustre
+            tutorialHandDown.isHidden = true
             moveObstacleOffScreen()
             state += 1
         }
         
         else if obstacleIndex == 2 && state == 4 { // entra xicara
+            tutorialHandDown.isHidden = false
             createObstacle(obstacle: obstacles[2])
             moveObstacle()
             state += 1
         }
         
         else if obstacleIndex == 2 && gameLogic.currentPosition == 1 && state == 5 { //sai xicara
+            tutorialHandDown.isHidden = true
             moveObstacleOffScreen()
             state += 1
         }
         
         else if state == 6 {
-            tutorialNode.isHidden = true
             addChild(successLabel)
-            print("SUCCESS")
+            state += 1
+            shouldMoveObstacle()
+        }
+        
+        else if state == 7 {
+            let flyFly = SKAction.moveTo(x: self.size.width + 500, duration: 3)
+            playerNode.run(flyFly)
+        }
+        
+        else if state == 8 {
+            let scene = GameScene.newGameScene()
+            scene.isGameStarted = true
+            self.view?.presentScene(scene)
         }
     }
     
@@ -225,7 +258,7 @@ class TutorialScene: SKScene {
     func moveObstacle() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
-            let moveObstAction = SKAction.moveTo(x: (self.size.width/2), duration: 2)
+            let moveObstAction = SKAction.moveTo(x: (self.size.width/2), duration: 1.5)
             obstacle.run(moveObstAction)
         }
     }
