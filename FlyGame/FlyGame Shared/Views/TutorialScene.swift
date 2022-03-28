@@ -266,7 +266,11 @@ class TutorialScene: SKScene {
     func moveObstacleOffScreen() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
+            #if os(iOS)
             let moveObstAction = SKAction.moveTo(x: (-10000), duration: 30)
+            #elseif os(tvOS)
+            let moveObstAction = SKAction.moveTo(x: (-10000), duration: 20)
+            #endif
             obstacle.run(moveObstAction)
         }
     }
