@@ -20,12 +20,14 @@ class GameSceneController {
     var timeCounter = 0
     var count: CGFloat = 10
     var fetcher = ObstacleFetcher()
-    var shouldCreateObstacle: Bool = false
     private var currentPosition: Int = 3
     private var lastObstacleTimeCreated: TimeInterval = 3
+    private var lastCoinTimeCreated: TimeInterval = 3
     private var newSpeed: CGFloat = 1
     var delayIOS: TimeInterval = 2.8
     var delayTV: TimeInterval = 3.5
+    var coinDelayIOS: TimeInterval = 10
+    var coinDelayTV: TimeInterval = 7
     private var minimumDelay: CGFloat = 1.1
     var initialPosition: CGFloat { 3 }
     var score: Int = 0
@@ -67,7 +69,7 @@ class GameSceneController {
     }
     
     func startUp() {
-
+        
     }
     
     func handlePause(isPaused: Bool) {
@@ -80,7 +82,7 @@ class GameSceneController {
             print(lastObstacleTimeCreated)
         }
     }
-
+    
     
     func chooseObstacle() -> [Obstacle] {
         /*
@@ -120,6 +122,7 @@ class GameSceneController {
     
     func update(currentTime: TimeInterval) {
         calculateDelay(currentTime: currentTime)
+        calculateCoinDelay(currentTime: currentTime)
         calculateScore(currentTime: currentTime)
         calculateDuration(currentTime: currentTime)
         currentScore = score
@@ -131,19 +134,18 @@ class GameSceneController {
             timeSpeed = currentTime
         }
         let deltaTimeSpeed = (currentTime - timeSpeed)
-        //print(duration)
         
-        #if os(iOS)
+#if os(iOS)
         if deltaTimeSpeed >= 1 && duration > 0.8 {
             duration -= 0.04
             timeSpeed = currentTime
         }
-        #elseif os(tvOS)
+#elseif os(tvOS)
         if deltaTimeSpeed >= 0.8 && durationTV > 0.4 {
             durationTV -= 0.015
             timeSpeed = currentTime
         }
-        #endif
+#endif
     }
     
     //MARK: Calculo de Delay
@@ -153,7 +155,7 @@ class GameSceneController {
         }
         let pastTime = (currentTime - lastObstacleTimeCreated)
         
-        #if os(iOS)
+#if os(iOS)
         if pastTime >= delayIOS {
             let obstacles = chooseObstacle()
             obstacles.forEach {
@@ -166,8 +168,7 @@ class GameSceneController {
             }
         }
         
-        #elseif os (tvOS)
-        print("delay tv \(delayTV)")
+#elseif os (tvOS)
         if pastTime >= delayTV {
             let obstacles = chooseObstacle()
             obstacles.forEach {
@@ -177,6 +178,36 @@ class GameSceneController {
             
             if delayTV > 1 { // limite minimo do delay
                 delayTV -= 0.085 // cada vez que o update é chamado diminui o delay
+            }
+        }
+#endif
+    }
+    
+    private func calculateCoinDelay(currentTime: TimeInterval) {
+        if lastCoinTimeCreated == 0 {
+            lastCoinTimeCreated = currentTime
+        }
+        let pastTime = (currentTime - lastCoinTimeCreated)
+        
+        #if os(iOS)
+        if pastTime >= coinDelayIOS {
+            gameDelegate?.createCoin()
+            
+            lastCoinTimeCreated = currentTime
+            
+            if coinDelayIOS > 1.5 { // limite minimo do delay
+                coinDelayIOS -= 0.05 // cada vez que o update é chamado diminui o delay
+            }
+        }
+        
+        #elseif os (tvOS)
+        if pastTime >= coinDelayTV {
+            gameDelegate?.createCoin()
+            
+            lastCoinTimeCreated = currentTime
+            
+            if coinDelayTV > 4 { // limite minimo do delay
+                coinDelayTV -= 0.085 // cada vez que o update é chamado diminui o delay
             }
         }
         #endif
@@ -195,5 +226,3 @@ class GameSceneController {
         score = 0
     }
 }
-
-

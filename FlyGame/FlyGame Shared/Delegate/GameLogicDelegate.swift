@@ -20,6 +20,8 @@ protocol GameLogicDelegate: AnyObject {
     func musicAction() -> Void
     
     func createObstacle(obstacle: Obstacle)
+    
+    func createCoin()
 }
 
 
