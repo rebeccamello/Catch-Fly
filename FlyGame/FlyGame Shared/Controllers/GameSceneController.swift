@@ -26,7 +26,7 @@ class GameSceneController {
     private var newSpeed: CGFloat = 1
     var delayIOS: TimeInterval = 2.8
     var delayTV: TimeInterval = 3.5
-    var coinDelayIOS: TimeInterval = 5
+    var coinDelayIOS: TimeInterval = 10
     var coinDelayTV: TimeInterval = 7
     private var minimumDelay: CGFloat = 1.1
     var initialPosition: CGFloat { 3 }
