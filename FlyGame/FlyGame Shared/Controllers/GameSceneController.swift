@@ -229,5 +229,3 @@ class GameSceneController {
         score = 0
     }
 }
-
-

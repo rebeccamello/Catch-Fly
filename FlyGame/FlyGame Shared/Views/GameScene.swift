@@ -370,7 +370,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Movimento da mosca
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.05)
         moveAction.timingMode = .easeOut
         playerNode.run(moveAction)
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)
