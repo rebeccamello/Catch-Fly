@@ -227,7 +227,7 @@ extension MenuScene: MenuLogicDelegate {
     
     func playGame() {
         let scene = GameScene.newGameScene()
-        scene.isGameStarted = true
+        scene.gameLogic.isGameStarted = true
         self.view?.presentScene(scene)
         
         #if os(tvOS)

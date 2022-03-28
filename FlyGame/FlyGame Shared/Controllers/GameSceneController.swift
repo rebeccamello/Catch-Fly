@@ -14,7 +14,8 @@ func randomizer(min: Int, max: Int) -> Int {
     return randomIndex
 }
 
-class GameSceneController {
+class GameSceneController: NSObject, SKPhysicsContactDelegate {
+    var isGameStarted: Bool = false
     weak var gameDelegate: GameLogicDelegate?
     var timer = Timer()
     var timeCounter = 0
@@ -66,10 +67,6 @@ class GameSceneController {
         return CGFloat(newPosition)
     }
     
-    func startUp() {
-
-    }
-    
     func handlePause(isPaused: Bool) {
         if isPaused {
             pausedTime = Date().timeIntervalSince1970
@@ -78,6 +75,15 @@ class GameSceneController {
             print(timeDifference, lastObstacleTimeCreated)
             lastObstacleTimeCreated += timeDifference
             print(lastObstacleTimeCreated)
+        }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
+            gameDelegate?.collisionBetween(player: nodeA, enemy: nodeB)
         }
     }
 
@@ -180,6 +186,12 @@ class GameSceneController {
             }
         }
         #endif
+    }
+    
+    func gameStarted() {
+        if isGameStarted {
+            gameDelegate?.setPhysicsWorldDelegate()
+        }
     }
     
     //MARK: Primera vez do player no jogo

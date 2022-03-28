@@ -186,7 +186,7 @@ class GameOverScene: SKScene {
 extension GameOverScene: GameOverLogicDelegate {
     func restartGame() {
         let scene = GameScene.newGameScene()
-        scene.isGameStarted = true
+        scene.gameLogic.isGameStarted = true
         self.view?.presentScene(scene)
     }
 }

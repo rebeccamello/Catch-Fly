@@ -20,6 +20,10 @@ protocol GameLogicDelegate: AnyObject {
     func musicAction()
     
     func createObstacle(obstacle: Obstacle)
+    
+    func setPhysicsWorldDelegate()
+    
+    func collisionBetween(player: SKNode, enemy: SKNode) 
 }
 
 

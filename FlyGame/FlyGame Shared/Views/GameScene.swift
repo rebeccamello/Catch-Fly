@@ -8,7 +8,6 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    var isGameStarted: Bool = false
     private var currentTime: TimeInterval = 0
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
@@ -154,11 +153,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     #if os(tvOS)
         addTapGestureRecognizer()
     #endif
-        
-        if isGameStarted {
-            gameLogic.startUp()
-            physicsWorld.contactDelegate = self
-        }
+
+        gameLogic.gameStarted()
         
         // Verifica se os áudios já estavam inativos
         if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
@@ -216,7 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.mass = 1
         node.physicsBody?.categoryBitMask = 1
     }
-    
+  
     //MARK: Set Node Positions
     func setNodePosition() {
         playerNode.size.height = self.size.height/5.2
@@ -258,15 +254,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addGestureRecognizer(swipeDown)
     }
     
-    //MARK: - Colisão
-    func didBegin(_ contact: SKPhysicsContact) {
-        guard let nodeA = contact.bodyA.node else { return }
-        guard let nodeB = contact.bodyB.node else { return }
-        
-        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
-            collisionBetween(player: nodeA, enemy: nodeB)
-        }
-    }
     
 // MARK: - Funcao ao sair do App e voltar
         
@@ -285,22 +272,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print("background: ", self.isPaused)
     }
     
-    func collisionBetween(player: SKNode, enemy: SKNode) {
-        gameLogic.tearDown()
-        self.isGameStarted = false
-        let scene = GameOverScene.newGameScene()
-        scene.score = gameLogic.score
-        AudioService.shared.soundManager(with: .colision, soundAction: .play)
-        view?.presentScene(scene)
-        
-#if os(tvOS)
-        scene.run(SKAction.wait(forDuration: 0.02)) {
-            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-        }
-#endif
-    }
-    
+
     //MARK: Gesture Recognizer
 #if os(tvOS)
     func addTapGestureRecognizer(){
@@ -387,7 +359,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func restartGame() {
         let scene = GameScene.newGameScene()
-        scene.isGameStarted = true
+        scene.gameLogic.isGameStarted = true
         self.view?.presentScene(scene)
     }
         
@@ -486,6 +458,27 @@ extension GameScene: GameLogicDelegate {
     func soundAction() -> Void {
         AudioService.shared.toggleSound(with: self.pauseMenu.soundButton)
     }
+    
+    func setPhysicsWorldDelegate() {
+        physicsWorld.contactDelegate = gameLogic
+    }
+    
+    func collisionBetween(player: SKNode, enemy: SKNode) {
+        gameLogic.tearDown()
+        gameLogic.isGameStarted = false
+        let scene = GameOverScene.newGameScene()
+        scene.score = gameLogic.score
+        AudioService.shared.soundManager(with: .colision, soundAction: .play)
+        view?.presentScene(scene)
+        
+#if os(tvOS)
+        scene.run(SKAction.wait(forDuration: 0.02)) {
+            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+        }
+#endif
+    }
+    
 }
 
 
