@@ -375,13 +375,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: Criação das moedas
     func createCoin() {
+        var coinPosition: [CGFloat] = [1, 3, 5]
+        coinPosition.shuffle()
+        
         let coin = SKSpriteNode(imageNamed: "moeda0")
         coin.zPosition = 1
         coin.name = "Coin"
         coin.size.height = self.size.height/7
         coin.size.width = self.size.height/7
         coin.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: self.size.height/3, height: self.size.height/3)).copy() as? SKPhysicsBody
-        coin.position = CGPoint(x: size.width + coin.size.width, y: size.height * 2 / 6)
+        coin.position = CGPoint(x: size.width + coin.size.width, y: size.height * coinPosition[0] / 6)
         setPhysicsCoins(node: coin)
         
         let frames:[SKTexture] = createTexture("Moedas")
