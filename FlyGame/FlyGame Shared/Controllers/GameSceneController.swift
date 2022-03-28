@@ -38,6 +38,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     var currentScore: Int?
     let defaults = UserDefaults.standard
     var pausedTime: TimeInterval = 0
+    var buttonsPause = UITapGestureRecognizer()
+    var buttonTvOS = UITapGestureRecognizer()
     
     
     private func calculateScore(currentTime: TimeInterval) {
@@ -105,6 +107,132 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             } else {
                 return false
             }
+    }
+
+    func setSwipeGesture() -> [UISwipeGestureRecognizer] {
+        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeUp.direction = .up
+        
+        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = .down
+        
+        return [swipeUp, swipeDown]
+    }
+    
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        guard
+            let swipeGesture = gesture as? UISwipeGestureRecognizer,
+            let direction = swipeGesture.direction.direction
+        else { return }
+        if gameDelegate?.pausedStatus() == false {
+            gameDelegate?.movePlayer(direction: direction)
+        }
+        
+        defaults.set(true, forKey: "playerFirstTime")
+    }
+    
+    #if os(tvOS)
+        func addTargetToTapGestureRecognizer() -> UITapGestureRecognizer {
+            buttonsPause.addTarget(self, action: #selector(clicked))
+            
+            return buttonsPause
+        }
+        
+        @objc func clicked() {
+            if gameDelegate?.getResumeButton().isFocused == true {
+                gameDelegate?.resumeGame()
+                
+            } else if gameDelegate?.getHomeButton().isFocused == true {
+                gameDelegate?.goToHome()
+                
+            } else if gameDelegate?.getRestartButton().isFocused == true {
+                gameDelegate?.restartGame()
+                
+            } else if gameDelegate?.getSoundButton().isFocused == true {
+                gameDelegate?.soundAction()
+                
+            } else if gameDelegate?.getMusicButton().isFocused == true {
+                gameDelegate?.musicAction()
+            }
+        }
+    #endif
+    
+    func calculateObstacleMovement(allObstacles: [SKNode]) {
+        for obstacle in allObstacles {
+            if gameDelegate?.pausedStatus() == true{
+                obstacle.position.x -= 0
+            }
+            else {
+                #if os(iOS)
+                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: duration*100)
+                #elseif os(tvOS)
+                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: durationTV*100)
+                #endif
+                
+                obstacle.run(moveObstAction)
+            }
+        }
+    }
+    
+    #if os(tvOS)
+        func addTargetToPauseActionToTV() -> UITapGestureRecognizer {
+            self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
+            self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+            
+            return buttonTvOS
+        }
+    #endif
+    
+    //MARK: - Função de clicar no botão com tvRemote
+    @objc private func tvOSAction() {
+        gameDelegate?.pauseGame()
+    }
+    
+    func buttonActions() {
+        gameDelegate?.getRestartButton().action = {
+            self.gameDelegate?.restartGame()
+        }
+        
+        gameDelegate?.getHomeButton().action = {
+            self.gameDelegate?.goToHome()
+        }
+        
+        gameDelegate?.getResumeButton().action = {
+            self.gameDelegate?.resumeGame()
+        }
+        
+        gameDelegate?.getSoundButton().action = {
+            self.gameDelegate?.soundAction()
+        }
+        
+        gameDelegate?.getMusicButton().action = {
+            self.gameDelegate?.musicAction()
+        }
+    }
+    
+    func moveBackground() {
+        gameDelegate?.getScenario().position.x -= (1.5+(CGFloat(score/15)))
+        gameDelegate?.getScenario2().position.x -= (1.5+(CGFloat(score/15)))
+        
+        if gameDelegate?.getScenario().position.x <= -gameDelegate?.getScenario().size.width/2 {
+            gameDelegate?.getScenario().position.x = gameDelegate?.getScenario().size.width/2 + gameDelegate?.getScenario2().position.x*2
+            
+            if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
+                gameDelegate?.getScenario().texture = blueScenarioTexture
+            } else {
+                gameDelegate?.getScenario().texture = greenScenarioTexture
+            }
+        }
+        
+        if gameDelegate?.getScenario2().position.x <= -gameDelegate?.getScenario2().size.width/2 {
+            gameDelegate?.getScenario2().position.x = gameDelegate?.getScenario2().size.width/2 + gameDelegate?.getScenario().position.x*2
+            
+            if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
+                gameDelegate?.getScenario2().texture = blueScenarioTexture
+            } else {
+                gameDelegate?.getScenario2().texture = greenScenarioTexture
+            }
+        }
     }
 
     

@@ -13,8 +13,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     var defaults = UserDefaults.standard
     var hideTutorial: Bool = false
-    var buttonTvOS = UITapGestureRecognizer()
-    var buttonsPause = UITapGestureRecognizer()
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -102,7 +100,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hideTutorial = defaults.bool(forKey: "playerFirstTime")
         
         #if os(tvOS)
-            addPauseActionToTV()
+            addPauseActionGesture()
         #endif
         
         self.addChild(scenarioImage)
@@ -122,29 +120,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         setNodesSize()
         setNodesPosition()
-        setSwipeGesture()
-        buttonActions()
+        addSwipeGestures()
+        gameLogic.buttonActions()
         
         pauseMenu.isHidden = true
     }
     
     func setNodesSize() {
+        playerNode.size = CGSize(width: self.size.height/5.2, height: self.size.height/5.2)
         scenarioImage.size = CGSize(width: self.size.width * 1.2, height: self.size.height)
         scenarioImage2.size = CGSize(width: self.size.width * 1.2, height: self.size.height)
+        
+        pauseButton.setScale(self.size.height*0.00035)
+        tutorialNode.setScale(self.size.height*0.0035)
+        
+        scoreLabel.fontSize = self.size.height/15
     }
     
     func setNodesPosition() {
+        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
+        tutorialNode.position = CGPoint(x: size.width/2, y: size.height * 0.6)
+        
+#if os(iOS)
+        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+#elseif os(tvOS)
+        scoreLabel.position = pauseButton.position
+#endif
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
     }
-    
-    #if os(tvOS)
-        func addPauseActionToTV() {
-            self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
-            self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
-            self.view?.addGestureRecognizer(self.buttonTvOS)
-        }
-    #endif
     
     //MARK: - didMove
     override func didMove(to view: SKView) {
@@ -156,13 +162,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         gameLogic.gameStarted()
         gameLogic.audioVerification()
-
     }
     
     //MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
-        self.setNodePosition()
         
         setPhysics(node: playerNode)
     }
@@ -172,11 +176,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
             gameLogic.passedObstacles(node: node)
-//            if let sprite = node as? SKSpriteNode {
-//                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
-//            } else {
-//                return false
-//            }
        }
         
         for node in outOfTheScreenNodes {
@@ -205,25 +204,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.mass = 1
         node.physicsBody?.categoryBitMask = 1
     }
-  
-    //MARK: Set Node Positions
-    func setNodePosition() {
-        playerNode.size.height = self.size.height/5.2
-        playerNode.size.width = self.size.height/5.2
-        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
-        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
-        pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
-        pauseButton.setScale(self.size.height*0.00035)
-        scoreLabel.fontSize = self.size.height/15
-        tutorialNode.position = CGPoint(x: size.width/2, y: size.height * 0.6)
-        tutorialNode.setScale(self.size.height*0.0035)
-        
-#if os(iOS)
-        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
-#elseif os(tvOS)
-        scoreLabel.position = pauseButton.position
-#endif
-    }
     
     //MARK: Create Texture
     func createTexture(_ name:String) -> [SKTexture] {
@@ -235,75 +215,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return frames
     }
     
-    //MARK: Gesture
-    func setSwipeGesture() {
-        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeUp.direction = .up
-        
-        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = .down
-        
-        self.view?.addGestureRecognizer(swipeUp)
-        self.view?.addGestureRecognizer(swipeDown)
+    func addSwipeGestures() {
+        self.view?.addGestureRecognizer(gameLogic.setSwipeGesture()[0])
+        self.view?.addGestureRecognizer(gameLogic.setSwipeGesture()[1])
     }
-    
     
 // MARK: - Funcao ao sair do App e voltar
         
-        public override func sceneDidLoad() {
-            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(GameScene.didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
-        }
+    public override func sceneDidLoad() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+    }
 
     @objc func didBecomeActiveNotification(notification: NSNotification) {
         self.isPaused = true
-        print("foreground: ", self.isPaused)
     }
     
     @objc func didEnterBackgroundNotification(notification: NSNotification) {
         pauseGame()
-        print("background: ", self.isPaused)
     }
     
-
-    //MARK: Gesture Recognizer
-#if os(tvOS)
-    func addTapGestureRecognizer(){
-        buttonsPause.addTarget(self, action: #selector(clicked))
-        self.view?.addGestureRecognizer(buttonsPause)
-    }
-    
-    @objc func clicked() {
-        if pauseMenu.resumeButton.isFocused {
-            resumeGame()
-            
-        } else if pauseMenu.homeButton.isFocused {
-            goToHome()
-            
-        } else if pauseMenu.retryButton.isFocused {
-            restartGame()
-            
-        } else if pauseMenu.soundButton.isFocused {
-            soundAction()
-            
-        } else if pauseMenu.musicButton.isFocused {
-            musicAction()
+    #if os(tvOS)
+        func addTapGestureRecognizer() {
+            self.view?.addGestureRecognizer(gameLogic.addTargetToTapGestureRecognizer())
         }
-    }
-#endif
-    
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        guard
-            let swipeGesture = gesture as? UISwipeGestureRecognizer,
-            let direction = swipeGesture.direction.direction
-        else { return }
-        if !isPaused {
-            movePlayer(direction: direction)
-        }
-        
-        tutorialNode.isHidden = true
-        defaults.set(true, forKey: "playerFirstTime")
-    }
+    #endif
     
     //MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
@@ -321,88 +257,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func moveObstacle() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
-        for obstacle in allObstacles {
-            if isPaused == true{
-                obstacle.position.x -= 0
-            }
-            else {
-#if os(iOS)
-                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.duration*100)
-#elseif os(tvOS)
-                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.durationTV*100)
-#endif
-                obstacle.run(moveObstAction)
-            }
-        }
+        
+        gameLogic.calculateObstacleMovement(allObstacles: allObstacles)
     }
     
-    func movePlayer(direction: Direction) {
-        let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
-        moveAction.timingMode = .easeOut
-        playerNode.run(moveAction)
-        AudioService.shared.soundManager(with: .swipe, soundAction: .play)
-    }
-    
-    
-    //MARK: - Função de clicar no botão com tvRemote
-    @objc private func tvOSAction() {
-        self.pauseGame()
-    }
-    
-    func restartGame() {
-        let scene = GameScene.newGameScene()
-        scene.gameLogic.isGameStarted = true
-        self.view?.presentScene(scene)
-    }
-        
-    func buttonActions() {
-        pauseMenu.retryButton.action = {
-            self.restartGame()
-        }
-        
-        pauseMenu.homeButton.action = {
-            self.goToHome()
-        }
-        
-        pauseMenu.resumeButton.action = {
-            self.resumeGame()
-        }
-        
-        pauseMenu.soundButton.action = {
-            self.soundAction()
-        }
-        
-        pauseMenu.musicButton.action = {
-            self.musicAction()
-        }
+    func addPauseActionGesture() {
+        self.view?.addGestureRecognizer(gameLogic.addTargetToPauseActionToTV())
     }
     
     //MARK: Parallax Background
-    func moveBackground() {
-        scenarioImage.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
-        scenarioImage2.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
-        
-        if scenarioImage.position.x <= -scenarioImage.size.width/2 {
-            scenarioImage.position.x = scenarioImage.size.width/2 + scenarioImage2.position.x*2
-            
-            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
-                scenarioImage.texture = blueScenarioTexture
-            } else {
-                scenarioImage.texture = greenScenarioTexture
-            }
-        }
-        
-        if scenarioImage2.position.x <= -scenarioImage2.size.width/2 {
-            scenarioImage2.position.x = scenarioImage2.size.width/2 + scenarioImage.position.x*2
-            
-            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
-                scenarioImage2.texture = blueScenarioTexture
-            } else {
-                scenarioImage2.texture = greenScenarioTexture
-            }
-        }
-    }
+//    func moveBackground() {
+//        scenarioImage.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
+//        scenarioImage2.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
+//        
+//        if scenarioImage.position.x <= -scenarioImage.size.width/2 {
+//            scenarioImage.position.x = scenarioImage.size.width/2 + scenarioImage2.position.x*2
+//            
+//            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
+//                scenarioImage.texture = blueScenarioTexture
+//            } else {
+//                scenarioImage.texture = greenScenarioTexture
+//            }
+//        }
+//        
+//        if scenarioImage2.position.x <= -scenarioImage2.size.width/2 {
+//            scenarioImage2.position.x = scenarioImage2.size.width/2 + scenarioImage.position.x*2
+//            
+//            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
+//                scenarioImage2.texture = blueScenarioTexture
+//            } else {
+//                scenarioImage2.texture = greenScenarioTexture
+//            }
+//        }
+//    }
 }
 
 
@@ -431,8 +318,6 @@ extension GameScene: GameLogicDelegate {
         self.pauseMenu.isHidden = false
         self.isPaused = true
         self.gameLogic.handlePause(isPaused: self.isPaused)
-        
-        print("pauseGame: ", self.isPaused)
     }
     
     func gameOver() {
@@ -464,23 +349,60 @@ extension GameScene: GameLogicDelegate {
         AudioService.shared.soundManager(with: .colision, soundAction: .play)
         view?.presentScene(scene)
         
-#if os(tvOS)
-        scene.run(SKAction.wait(forDuration: 0.02)) {
+        #if os(tvOS)
+            scene.run(SKAction.wait(forDuration: 0.02)) {
             scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
             scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
-#endif
+        #endif
     }
     
+    func movePlayer(direction: Direction) {
+        let position = gameLogic.movePlayer(direction: direction)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
+        moveAction.timingMode = .easeOut
+        playerNode.run(moveAction)
+        AudioService.shared.soundManager(with: .swipe, soundAction: .play)
+    }
+    
+    func pausedStatus() -> Bool {
+        return isPaused
+    }
+    
+    func getResumeButton() -> SKButtonNode {
+        return pauseMenu.resumeButton
+    }
+    
+    func getHomeButton() -> SKButtonNode {
+        return pauseMenu.homeButton
+    }
+    
+    func getRestartButton() -> SKButtonNode {
+        return pauseMenu.retryButton
+    }
+    
+    func restartGame() {
+        let scene = GameScene.newGameScene()
+        scene.gameLogic.isGameStarted = true
+        self.view?.presentScene(scene)
+    }
+    
+    func getScenario() -> SKSpriteNode {
+        return scenarioImage
+    }
+    
+    func getScenario2() -> SKSpriteNode {
+        return scenarioImage2
+    }
 }
 
 
 
 #if os(tvOS)
-extension GameScene {
-    override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        return [pauseMenu.resumeButton]
+    extension GameScene {
+        override var preferredFocusEnvironments: [UIFocusEnvironment] {
+            return [pauseMenu.resumeButton]
+        }
     }
-}
 #endif
 

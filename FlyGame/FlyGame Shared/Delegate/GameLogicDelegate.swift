@@ -15,6 +15,8 @@ protocol GameLogicDelegate: AnyObject {
     
     func resumeGame()
     
+    func pauseGame()
+    
     func drawScore(score: Int)
     
     func goToHome()
@@ -27,7 +29,23 @@ protocol GameLogicDelegate: AnyObject {
     
     func setPhysicsWorldDelegate()
     
-    func collisionBetween(player: SKNode, enemy: SKNode) 
+    func collisionBetween(player: SKNode, enemy: SKNode)
+    
+    func movePlayer(direction: Direction)
+    
+    func pausedStatus() -> Bool
+    
+    func getResumeButton() -> SKButtonNode
+    
+    func getHomeButton() -> SKButtonNode
+    
+    func getRestartButton() -> SKButtonNode
+    
+    func restartGame()
+    
+    func getScenario() -> SKSpriteNode
+    
+    func getScenario2() -> SKSpriteNode
 }
 
 
