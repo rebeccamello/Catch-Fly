@@ -9,6 +9,10 @@ import Foundation
 import SpriteKit
 
 protocol GameLogicDelegate: AnyObject {
+    func getSoundButton() -> SKButtonNode
+    
+    func getMusicButton() -> SKButtonNode
+    
     func resumeGame()
     
     func drawScore(score: Int)

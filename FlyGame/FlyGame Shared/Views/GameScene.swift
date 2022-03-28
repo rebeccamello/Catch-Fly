@@ -155,15 +155,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     #endif
 
         gameLogic.gameStarted()
-        
-        // Verifica se os áudios já estavam inativos
-        if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
-            self.pauseMenu.soundButton.updateImage(with: .soundOff)
-        }
-        
-        if !AudioService.shared.getUserDefaultsStatus(with: .music) {
-            self.pauseMenu.musicButton.updateImage(with: .musicOff)
-        }
+        gameLogic.audioVerification()
+
     }
     
     //MARK: didChangeSize
@@ -178,12 +171,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
-            if let sprite = node as? SKSpriteNode {
-                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
-            } else {
-                return false
-            }
-        }
+            gameLogic.passedObstacles(node: node)
+//            if let sprite = node as? SKSpriteNode {
+//                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+//            } else {
+//                return false
+//            }
+       }
         
         for node in outOfTheScreenNodes {
             node.physicsBody = nil
@@ -191,7 +185,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         moveObstacle()
         moveBackground()
-        
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
     }
@@ -414,11 +407,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 
 extension GameScene: GameLogicDelegate {
-    func toggleSound() -> SKButtonNode {
+    func getSoundButton() -> SKButtonNode {
         return pauseMenu.soundButton
     }
     
-    func toggleMusic() -> SKButtonNode {
+    func getMusicButton() -> SKButtonNode {
         return pauseMenu.musicButton
     }
     

@@ -6,6 +6,7 @@
 //
 
 import GameplayKit
+import SpriteKit
 
 
 func randomizer(min: Int, max: Int) -> Int {
@@ -85,6 +86,25 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
             gameDelegate?.collisionBetween(player: nodeA, enemy: nodeB)
         }
+    }
+    
+    func audioVerification() {
+        // Verifica se os áudios já estavam inativos
+        if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
+            gameDelegate?.getSoundButton().updateImage(with: .soundOff)
+        }
+        
+        if !AudioService.shared.getUserDefaultsStatus(with: .music) {
+            gameDelegate?.getMusicButton().updateImage(with: .musicOff)
+        }
+    }
+    
+    func passedObstacles(node: SKNode) -> Bool {
+            if let sprite = node as? SKSpriteNode {
+                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+            } else {
+                return false
+            }
     }
 
     
