@@ -40,9 +40,6 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     var pausedTime: TimeInterval = 0
     var buttonsPause = UITapGestureRecognizer()
     var buttonTvOS = UITapGestureRecognizer()
-    var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
-    var greenScenarioTexture = SKTexture(imageNamed: "cenario")
-    
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -224,7 +221,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             return
         }
         
-        guard var scenario2XPosition = gameDelegate?.getScenario2().position.x else {
+        guard let scenario2XPosition = gameDelegate?.getScenario2().position.x else {
             return
         }
         
@@ -236,19 +233,19 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             gameDelegate?.getScenario().position.x = scenarioWidth/2 + scenario2XPosition*2
             
             if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
-                gameDelegate?.getScenario().texture = blueScenarioTexture
+                gameDelegate?.getScenario().texture = gameDelegate?.getScenarioTextures()[1]
             } else {
-                gameDelegate?.getScenario().texture = greenScenarioTexture
+                gameDelegate?.getScenario().texture = gameDelegate?.getScenarioTextures()[0]
             }
         }
         
         if scenario2XPosition <= -scenario2Width/2 {
-            scenario2XPosition = scenario2Width/2 + scenarioXPosition*2
+            gameDelegate?.getScenario2().position.x = scenario2Width/2 + scenarioXPosition*2
             
             if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
-                gameDelegate?.getScenario2().texture = blueScenarioTexture
+                gameDelegate?.getScenario2().texture = gameDelegate?.getScenarioTextures()[1]
             } else {
-                gameDelegate?.getScenario2().texture = greenScenarioTexture
+                gameDelegate?.getScenario2().texture = gameDelegate?.getScenarioTextures()[0]
             }
         }
     }

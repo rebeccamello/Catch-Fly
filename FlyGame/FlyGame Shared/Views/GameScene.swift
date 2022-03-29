@@ -266,32 +266,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.addGestureRecognizer(gameLogic.addTargetToPauseActionToTV())
         }
     #endif
-    
-    //MARK: Parallax Background
-//    func moveBackground() {
-//        scenarioImage.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
-//        scenarioImage2.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
-//        
-//        if scenarioImage.position.x <= -scenarioImage.size.width/2 {
-//            scenarioImage.position.x = scenarioImage.size.width/2 + scenarioImage2.position.x*2
-//            
-//            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
-//                scenarioImage.texture = blueScenarioTexture
-//            } else {
-//                scenarioImage.texture = greenScenarioTexture
-//            }
-//        }
-//        
-//        if scenarioImage2.position.x <= -scenarioImage2.size.width/2 {
-//            scenarioImage2.position.x = scenarioImage2.size.width/2 + scenarioImage.position.x*2
-//            
-//            if gameLogic.score >= 30 && gameLogic.score <= 50 || gameLogic.score >= 80 && gameLogic.score <= 100 {
-//                scenarioImage2.texture = blueScenarioTexture
-//            } else {
-//                scenarioImage2.texture = greenScenarioTexture
-//            }
-//        }
-//    }
 }
 
 
@@ -320,10 +294,6 @@ extension GameScene: GameLogicDelegate {
         self.pauseMenu.isHidden = false
         self.isPaused = true
         self.gameLogic.handlePause(isPaused: self.isPaused)
-    }
-    
-    func gameOver() {
-        
     }
     
     func goToHome() {
