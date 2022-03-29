@@ -40,6 +40,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     var pausedTime: TimeInterval = 0
     var buttonsPause = UITapGestureRecognizer()
     var buttonTvOS = UITapGestureRecognizer()
+    var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
+    var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     
     
     private func calculateScore(currentTime: TimeInterval) {
@@ -214,8 +216,24 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         gameDelegate?.getScenario().position.x -= (1.5+(CGFloat(score/15)))
         gameDelegate?.getScenario2().position.x -= (1.5+(CGFloat(score/15)))
         
-        if gameDelegate?.getScenario().position.x <= -gameDelegate?.getScenario().size.width/2 {
-            gameDelegate?.getScenario().position.x = gameDelegate?.getScenario().size.width/2 + gameDelegate?.getScenario2().position.x*2
+        guard let scenarioWidth = gameDelegate?.getScenario().size.width else {
+            return
+        }
+        
+        guard let scenarioXPosition = gameDelegate?.getScenario().position.x else {
+            return
+        }
+        
+        guard var scenario2XPosition = gameDelegate?.getScenario2().position.x else {
+            return
+        }
+        
+        guard let scenario2Width = gameDelegate?.getScenario2().size.width else {
+            return
+        }
+        
+        if scenarioXPosition <= -scenarioWidth/2 {
+            gameDelegate?.getScenario().position.x = scenarioWidth/2 + scenario2XPosition*2
             
             if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
                 gameDelegate?.getScenario().texture = blueScenarioTexture
@@ -224,8 +242,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             }
         }
         
-        if gameDelegate?.getScenario2().position.x <= -gameDelegate?.getScenario2().size.width/2 {
-            gameDelegate?.getScenario2().position.x = gameDelegate?.getScenario2().size.width/2 + gameDelegate?.getScenario().position.x*2
+        if scenario2XPosition <= -scenario2Width/2 {
+            scenario2XPosition = scenario2Width/2 + scenarioXPosition*2
             
             if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
                 gameDelegate?.getScenario2().texture = blueScenarioTexture
@@ -235,7 +253,6 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     }
 
-    
     func chooseObstacle() -> [Obstacle] {
         /*
          1. decidir peso

@@ -46,6 +46,8 @@ protocol GameLogicDelegate: AnyObject {
     func getScenario() -> SKSpriteNode
     
     func getScenario2() -> SKSpriteNode
+    
+    func getScenarioTextures() -> [SKTexture]
 }
 
 
