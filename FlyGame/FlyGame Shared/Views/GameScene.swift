@@ -76,16 +76,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }()
     
     lazy var catAttack: SKSpriteNode = {
-        var cat = SKSpriteNode(imageNamed: "patinhaGato0")
+        var cat = SKSpriteNode(imageNamed: "patinhaGato")
         cat.zPosition = 1
         cat.texture?.filteringMode = .nearest
         let frames:[SKTexture] = createTexture("CatAttack")
         cat.run(SKAction.repeat(SKAction.animate(with: frames,
-                                                 timePerFrame: TimeInterval(0.05),
+                                                 timePerFrame: TimeInterval(0.5),
                                                  resize: false, restore: true), count: 1))
-//        cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
-//                                                        timePerFrame: TimeInterval(0.05),
-//                                                        resize: false, restore: true)))
         return cat
     }()
     
@@ -235,8 +232,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         pauseButton.setScale(self.size.height*0.00035)
         scoreLabel.fontSize = self.size.height/15
-        catAttack.position = CGPoint(x: size.width*0.06, y: size.height*0.1)
-        catAttack.setScale(self.size.height*0.35)
+        catAttack.position = CGPoint(x: size.width*0.2, y: size.height*0.06)
+        catAttack.setScale(self.size.height*0.003)
         
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
