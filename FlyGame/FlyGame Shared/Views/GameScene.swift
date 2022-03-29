@@ -186,8 +186,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        node.physicsBody?.contactTestBitMask = node.physicsBody!.collisionBitMask
         node.physicsBody?.allowsRotation = false
+        node.physicsBody?.categoryBitMask = CollisionBitMask.flyCategory
+        node.physicsBody?.collisionBitMask = CollisionBitMask.obstaclesCategory
+        node.physicsBody?.contactTestBitMask = CollisionBitMask.coinCategory | CollisionBitMask.obstaclesCategory
     }
     
     func setPhysicsObstacles(node: SKSpriteNode) {
@@ -195,12 +197,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.isDynamic = false // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
         node.physicsBody?.friction = 0
-        node.physicsBody?.mass = 1
+        node.physicsBody?.categoryBitMask = CollisionBitMask.obstaclesCategory
+        node.physicsBody?.collisionBitMask = CollisionBitMask.flyCategory
+        node.physicsBody?.contactTestBitMask = CollisionBitMask.flyCategory
     }
     
     func setPhysicsCoins(node: SKSpriteNode) {
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = false // faz reconhecer a colisao
+        node.physicsBody?.categoryBitMask = CollisionBitMask.coinCategory
+        node.physicsBody?.collisionBitMask = 0
+        node.physicsBody?.contactTestBitMask = CollisionBitMask.flyCategory
     }
     
     // MARK: Set Node Positions
