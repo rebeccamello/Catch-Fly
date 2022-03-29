@@ -26,6 +26,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return lbl
     }()
     
+    lazy var plusTwo: SKLabelNode = {
+       var lbl = SKLabelNode()
+        lbl.numberOfLines = 0
+        lbl.fontColor = SKColor.black
+        lbl.zPosition = 3
+        lbl.fontName = "munro"
+        lbl.text = "+2"
+        return lbl
+    }()
+    
     lazy var pauseButton: SKButtonNode = {
         let but = SKButtonNode(image: .pause, action: {
             self.pauseMenu.isHidden.toggle()
@@ -108,6 +118,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
         
         self.addChild(playerNode)
+        self.addChild(plusTwo)
+        plusTwo.isHidden = true
         
 #if os(iOS)
         self.addChild(pauseButton)
@@ -219,6 +231,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         pauseButton.setScale(self.size.height*0.00035)
         scoreLabel.fontSize = self.size.height/15
+        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 20, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        plusTwo.fontSize = self.size.height/15
+        
         
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
@@ -286,12 +301,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: Funçoes de quando há colisão
     func increaseScore(player: SKNode, enemy: SKNode) {
-        print("moeda")
         gameLogic.score += 2
+        let wait = SKAction.wait(forDuration: 1)
+        let hide = SKAction.run {
+            self.plusTwo.isHidden = true
+        }
+        let sequence = SKAction.sequence([wait, hide])
+        
         if player.name == "Coin" {
             player.removeFromParent()
+            plusTwo.isHidden = false
+            plusTwo.run(sequence)
+
         } else {
             enemy.removeFromParent()
+            plusTwo.isHidden = false
+            plusTwo.run(sequence)
         }
     }
     
