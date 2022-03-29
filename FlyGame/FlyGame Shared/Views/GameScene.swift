@@ -231,14 +231,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         pauseButton.setScale(self.size.height*0.00035)
         scoreLabel.fontSize = self.size.height/15
-        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 20, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
         plusTwo.fontSize = self.size.height/15
-        
         
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 20, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
 #elseif os(tvOS)
         scoreLabel.position = pauseButton.position
+        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 50, y: scoreLabel.position.y)
 #endif
     }
     
