@@ -183,7 +183,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         moveObstacle()
-        moveBackground()
+        gameLogic.moveBackground()
         removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
     }
@@ -261,9 +261,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLogic.calculateObstacleMovement(allObstacles: allObstacles)
     }
     
+    #if os(tvOS)
     func addPauseActionGesture() {
         self.view?.addGestureRecognizer(gameLogic.addTargetToPauseActionToTV())
     }
+    #endif
     
     //MARK: Parallax Background
 //    func moveBackground() {
