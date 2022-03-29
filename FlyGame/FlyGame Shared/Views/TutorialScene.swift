@@ -20,18 +20,16 @@ class TutorialScene: SKScene {
         scenario.zPosition = -1
         return scenario
     }()
-    
     lazy var gameLogic: TutorialSceneController = {
-        let g = TutorialSceneController()
-        return g
+        let game = TutorialSceneController()
+        return game
     }()
-    
     lazy var playerNode: SKSpriteNode = {
         var bug = SKSpriteNode(imageNamed: "mosca")
         bug.zPosition = 1
         bug.name = "Fly"
         bug.texture?.filteringMode = .nearest
-        let frames:[SKTexture] = createTexture("Mosca")
+        let frames: [SKTexture] = createTexture("Mosca")
         bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.05),
                                                         resize: false, restore: true)))
@@ -42,7 +40,7 @@ class TutorialScene: SKScene {
         var hand = SKSpriteNode(imageNamed: "tut1")
         hand.zPosition = 3
         hand.texture?.filteringMode = .nearest
-        let frames:[SKTexture] = createTexture("Tutorial")
+        let frames: [SKTexture] = createTexture("Tutorial")
         hand.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                          timePerFrame: TimeInterval(0.2),
                                                          resize: false, restore: true)))
@@ -53,7 +51,7 @@ class TutorialScene: SKScene {
         var hand = SKSpriteNode(imageNamed: "maoBaixo1")
         hand.zPosition = 3
         hand.texture?.filteringMode = .nearest
-        let frames:[SKTexture] = createTexture("TutorialDown")
+        let frames: [SKTexture] = createTexture("TutorialDown")
         hand.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                          timePerFrame: TimeInterval(0.2),
                                                          resize: false, restore: true)))
@@ -79,28 +77,31 @@ class TutorialScene: SKScene {
         setUpScene()
         shouldMoveObstacle()
     }
-    
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
-        
         self.addChild(scenarioImage)
         self.addChild(playerNode)
         self.addChild(tutorialHandUp)
-        
         setSwipeGesture()
-        
         let screenSize: CGSize = .screenSize()
         let laneHeight = screenSize.height/3
-        
-        obstacles = [Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "piano"), size: CGSize(width: laneHeight*2, height: laneHeight*2))), Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: laneHeight, height: laneHeight))), Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "estanteDeCha"), size: CGSize(width: laneHeight, height: laneHeight*2))) ]
+        obstacles = [Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano",
+                              physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "piano"),
+                                                         size: CGSize(width: laneHeight*2,
+                                                                      height: laneHeight*2))),
+                     Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre",
+                              physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"),
+                                                         size: CGSize(width: laneHeight,
+                                                                      height: laneHeight))),
+                     Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha",
+                              physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "estanteDeCha"),
+                                                         size: CGSize(width: laneHeight, height: laneHeight*2))) ]
     }
-    
     override func didChangeSize(_ oldSize: CGSize) {
         setUpScene()
         setNodePosition()
     }
-    
     func setNodePosition() {
         scenarioImage.size.width = self.size.width * 1.2
         scenarioImage.size.height = self.size.height
@@ -115,22 +116,21 @@ class TutorialScene: SKScene {
         successLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         successLabel.fontSize = self.size.height/5
     }
-    
-    //MARK: Create Texture
-    func createTexture(_ name:String) -> [SKTexture] {
+    // MARK: Create Texture
+    func createTexture(_ name: String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
         var frames = [SKTexture]()
-        for i in 1...textureAtlas.textureNames.count - 1 {
-            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
+        for index in 1...textureAtlas.textureNames.count - 1 {
+            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[index]))
         }
         return frames
     }
-    
     func setSwipeGesture() {
-        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self,
+                                                                         action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
-        
-        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self,
+                                                                           action: #selector(self.respondToSwipeGesture))
         swipeDown.direction = .down
         
         self.view?.addGestureRecognizer(swipeUp)
@@ -155,7 +155,7 @@ class TutorialScene: SKScene {
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
     
-    //MARK: - Criação e movimentação de obstáculos
+    // MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.physicsBody = obstacle.physicsBody.copy() as? SKPhysicsBody
@@ -169,7 +169,7 @@ class TutorialScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        //MARK: Deleta nodes fora da tela
+        // MARK: Deleta nodes fora da tela
         let outOfTheScreenNodes = children.filter { node in
             if let sprite = node as? SKSpriteNode {
                 return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
@@ -194,7 +194,7 @@ class TutorialScene: SKScene {
         }
     }
     
-    //MARK: Should move obstacle
+    // MARK: Should move obstacle
     var state = 0
     func shouldMoveObstacle() {
         if obstacleIndex == -1 { // piano entra
@@ -203,20 +203,17 @@ class TutorialScene: SKScene {
             moveObstacle()
             state += 1
         }
-        
-        else if obstacleIndex == 0 && gameLogic.currentPosition == 5 && state == 1 { //piano sai
+        else if obstacleIndex == 0 && gameLogic.currentPosition == 5 && state == 1 { // piano sai
             moveObstacleOffScreen()
             state += 1
             tutorialHandUp.isHidden = true
         }
-        
         else if obstacleIndex == 1 && state == 2 { // entra lustre
             self.addChild(tutorialHandDown)
             createObstacle(obstacle: obstacles[1])
             moveObstacle()
             state += 1
         }
-        
         else if obstacleIndex == 1 && (gameLogic.currentPosition == 3 || gameLogic.currentPosition == 1) && state == 3 { // sair lustre
             tutorialHandDown.isHidden = true
             moveObstacleOffScreen()
@@ -230,7 +227,7 @@ class TutorialScene: SKScene {
             state += 1
         }
         
-        else if obstacleIndex == 2 && gameLogic.currentPosition == 1 && state == 5 { //sai xicara
+        else if obstacleIndex == 2 && gameLogic.currentPosition == 1 && state == 5 { // sai xicara
             tutorialHandDown.isHidden = true
             moveObstacleOffScreen()
             state += 1

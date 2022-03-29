@@ -15,16 +15,12 @@ class AudioService: AudioDelegate {
     /// Singleton
     static let shared = AudioService()
     
-    
     /// Variável para memoization
-    private lazy var loadedAudios: [String : AVAudioPlayer] = [:]
-        
-        
-        
+    private lazy var loadedAudios: [String: AVAudioPlayer] = [:]
     /* MARK: - Delegate */
     
     /// Muda a variável que verifica se os sons estão ativados ou não
-    internal func toggleSound(with button: SKButtonNode) -> Void {
+    internal func toggleSound(with button: SKButtonNode) {
         switch self.updateUserDefaults(soundType: .sound) {
         case true:
             button.updateImage(with: .soundOn)
@@ -35,7 +31,7 @@ class AudioService: AudioDelegate {
     }
     
     /// Muda a variável que verifica se as músicas estão ativadas ou não
-    internal func toggleMusic(with button: SKButtonNode) -> Void {
+    internal func toggleMusic(with button: SKButtonNode) {
         switch self.updateUserDefaults(soundType: .music) {
         case true:
             self.soundManager(with: .backgroundMusic, soundAction: .play, .loop)
@@ -46,8 +42,6 @@ class AudioService: AudioDelegate {
         }
     }
         
-        
-        
     /* MARK: - Métodos */
     
     /// Verifica o conteúdo da variável salva no User Defaults
@@ -55,9 +49,8 @@ class AudioService: AudioDelegate {
         return UserDefaults.standard.bool(forKey: key.description)
     }
     
-    
     /// Mexe com um áudio específico
-    public func soundManager(with sound: AudiosList, soundAction: AudiosAction, _ reproduction: AudioReproduction = .oneTime) -> Void {
+    public func soundManager(with sound: AudiosList, soundAction: AudiosAction, _ reproduction: AudioReproduction = .oneTime) {
         
         let userDefaultsKey = self.verifyAudioType(with: sound).description
         
@@ -76,7 +69,6 @@ class AudioService: AudioDelegate {
         }
     }
     
-    
     /// Atualiza a variável no UserDefaults
     private func updateUserDefaults(soundType: AudioType) -> Bool {
         var sound = UserDefaults.standard.bool(forKey: soundType.description)
@@ -85,8 +77,7 @@ class AudioService: AudioDelegate {
         
         return self.getUserDefaultsStatus(with: soundType)
     }
-    
-    
+        
     /// Pega o arquivo de áudio e tranforma na variável AVAudioPlayer para poder manusear
     private func getMusic(from music: AudiosList, reproduction: AudioReproduction) -> AVAudioPlayer? {
         
@@ -118,7 +109,6 @@ class AudioService: AudioDelegate {
         }
         return nil
     }
-    
     
     private func verifyAudioType(with sound: AudiosList) -> AudioType {
         if sound == .backgroundMusic {

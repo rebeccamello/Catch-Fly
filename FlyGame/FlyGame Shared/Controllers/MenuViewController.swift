@@ -8,9 +8,7 @@
 import class UIKit.UIViewController
 import class SpriteKit.SKView
 
-
 class MenuViewController: UIViewController {
-    
     /* MARK: - Ciclo de Vida */
     
     override func loadView() {
@@ -21,34 +19,25 @@ class MenuViewController: UIViewController {
         skView.presentScene(scene)
         // skView.showsFPS = true
         // skView.showsNodeCount = true
-        
         self.view = skView
     }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         GameCenterService.shared.setController(self)
-        
         // Fazendo a autenticação com o Game Center
-        GameCenterService.shared.autenticateUser() {vc, score, error in
+        GameCenterService.shared.autenticateUser {vct, score, error in
             if let error = error {
                 print("ERRO GAME CENTER: \(error.description)")
                 return
             }
-            
-            if let vc = vc {
-                self.present(vc, animated: true)
+            if let vct = vct {
+                self.present(vct, animated: true)
                 return
             }
-            
             if let score = score {
                 guard let scene = (self.view as? SKView)?.scene as? MenuScene else {return}
-                
                 scene.setScore(with: score)
             }
         }
     }
 }
-

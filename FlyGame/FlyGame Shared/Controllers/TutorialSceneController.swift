@@ -10,9 +10,8 @@ import SpriteKit
 
 class TutorialSceneController {
      var currentPosition: Int = 3
-    func movePlayer(direction: Direction) -> CGFloat{
+    func movePlayer(direction: Direction) -> CGFloat {
         var newPosition = currentPosition
-        
         if direction == .up {
             if currentPosition != 5 {
                 newPosition += 2

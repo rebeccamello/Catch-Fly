@@ -7,11 +7,8 @@
 
 import SpriteKit
 
-
 class GameViewController: MenuViewController {
-    
     /* MARK: - Atributos */
-    
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         return UIRectEdge.bottom
     }

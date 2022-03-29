@@ -7,7 +7,6 @@
 
 import GameKit
 
-
 class GameCenterService: GKGameCenterViewController {
     
     /* MARK: - Atributos */
@@ -22,11 +21,10 @@ class GameCenterService: GKGameCenterViewController {
     
     private var gameCenterProtocol = GameCenterDelegate()
     
-    
     /* MARK: - Métodos */
     
     /// Faz a autenticação do usuário
-    public func autenticateUser(_ completionHandler: @escaping (_ vc: UIViewController?, _ score: Int?, _ error: ErrorHandler?) -> Void) -> Void {
+    public func autenticateUser(_ completionHandler: @escaping (_ vc: UIViewController?, _ score: Int?, _ error: ErrorHandler?) -> Void) {
         GKLocalPlayer.local.authenticateHandler = {vc, error in
             
             // Se tiver algum erro
@@ -42,7 +40,7 @@ class GameCenterService: GKGameCenterViewController {
             }
             
             // Pega o Score do GameCenter
-            self.getHighScore() { result in
+            self.getHighScore { result in
                 switch result {
                 case .success(let score):
                     completionHandler(nil, score, nil)
@@ -53,13 +51,11 @@ class GameCenterService: GKGameCenterViewController {
         }
     }
     
-    
     /// Pega o score salvo no Game Center
-    public func getHighScore(_ completionHandler: @escaping (Result<Int, ErrorHandler>) -> Void) -> Void {
+    public func getHighScore(_ completionHandler: @escaping (Result<Int, ErrorHandler>) -> Void) {
         if (GKLocalPlayer.local.isAuthenticated) {
             GKLeaderboard.loadLeaderboards(IDs: [GameCenterService.leaderboardID]) {leaderboards, _ in
-                leaderboards?[0].loadEntries(for: [GKLocalPlayer.local], timeScope: .allTime) {
-                    player, _, error in
+                leaderboards?[0].loadEntries(for: [GKLocalPlayer.local], timeScope: .allTime) { player, _, error in
                     
                     // Verifica se tem algum erro
                     if let _ = error {
@@ -86,9 +82,8 @@ class GameCenterService: GKGameCenterViewController {
         completionHandler(.failure(.noAuthenticaded))
     }
     
-    
     /// Define o score no Game Center
-    public func submitHighScore(score: Int, _ completionHandler: @escaping (_ error: ErrorHandler?) -> Void ) -> Void {
+    public func submitHighScore(score: Int, _ completionHandler: @escaping (_ error: ErrorHandler?) -> Void ) {
         if (GKLocalPlayer.local.isAuthenticated) {
             // Define no highscore
             UserDefaults.standard.set(score, forKey: GameCenterService.highscoreKey)
@@ -106,9 +101,8 @@ class GameCenterService: GKGameCenterViewController {
         completionHandler(.noAuthenticaded)
     }
     
-    
     /// Abre a página do game center
-    public func showGameCenterPage(_ state: GKGameCenterViewControllerState = .leaderboards) -> Void {
+    public func showGameCenterPage(_ state: GKGameCenterViewControllerState = .leaderboards) {
         if (GKLocalPlayer.local.isAuthenticated) {
             let vc = GKGameCenterViewController(state: state)
             vc.gameCenterDelegate = self.gameCenterProtocol
@@ -117,10 +111,8 @@ class GameCenterService: GKGameCenterViewController {
         }
     }
     
-    
     /// Define a ViewController que vai mostrar as telas
-    public func setController(_ vc: UIViewController) -> Void {
+    public func setController(_ vc: UIViewController) {
         self.controller = vc
     }
 }
-
