@@ -8,6 +8,6 @@
 import Foundation
 
 protocol AudioDelegate: AnyObject {
-    func toggleSound(with button: SKButtonNode) -> Void
-    func toggleMusic(with button: SKButtonNode) -> Void
+    func toggleSound(with button: SKButtonNode)
+    func toggleMusic(with button: SKButtonNode)
 }

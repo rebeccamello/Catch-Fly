@@ -7,12 +7,9 @@
 
 import GameKit
 
-
 class GameCenterDelegate: NSObject, GKGameCenterControllerDelegate {
-    
     /* MARK: - Delegate */
-    
-    public func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) -> Void {
+    public func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }

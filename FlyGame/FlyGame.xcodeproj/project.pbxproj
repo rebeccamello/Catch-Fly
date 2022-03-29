@@ -38,6 +38,8 @@
 		9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
 		9D7E401F27EB8DAE00376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
 		9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
+		C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
+		C82E700027F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
 		C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */; };
@@ -99,6 +101,7 @@
 		9921B89427DBC66500E3AD23 /* SKButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKButtonNode.swift; sourceTree = "<group>"; };
 		9D7E402027EB8DAE00376C51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D7E402B27EB8EDA00376C51 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C82E6FFE27F3829100E17834 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleFetcher.swift; sourceTree = "<group>"; };
 		C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+CGSize.swift"; sourceTree = "<group>"; };
 		C8C2044827ECF7A100507AB5 /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
@@ -208,6 +211,7 @@
 				E9A0F32827D6800D00F965DE /* Views */,
 				9D7E402127EB8DAE00376C51 /* Localizable.strings */,
 				E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */,
+				C82E6FFE27F3829100E17834 /* .swiftlint.yml */,
 			);
 			path = "FlyGame Shared";
 			sourceTree = "<group>";
@@ -315,6 +319,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9A0F32227D67B9300F965DE /* Build configuration list for PBXNativeTarget "FlyGame iOS" */;
 			buildPhases = (
+				C82E6FFD27F37DEB00E17834 /* Run SwiftLint */,
 				E9A0F2F727D67B9300F965DE /* Sources */,
 				E9A0F2F827D67B9300F965DE /* Frameworks */,
 				E9A0F2F927D67B9300F965DE /* Resources */,
@@ -388,6 +393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */,
 				E9A0F31E27D67B9300F965DE /* Assets.xcassets in Resources */,
 				9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */,
 				22C1060727E8F9ED0095EB3E /* Som-Botao.mp3 in Resources */,
@@ -403,6 +409,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C82E700027F3829100E17834 /* .swiftlint.yml in Resources */,
 				22C1060827E8F9ED0095EB3E /* Som-Botao.mp3 in Resources */,
 				22C1060627E8F9ED0095EB3E /* Som-Colisao.mp3 in Resources */,
 				E9A99EDC27DBE6C6004D86FF /* Assets.xcassets in Resources */,
@@ -414,6 +421,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C82E6FFD27F37DEB00E17834 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E9A0F2F727D67B9300F965DE /* Sources */ = {
