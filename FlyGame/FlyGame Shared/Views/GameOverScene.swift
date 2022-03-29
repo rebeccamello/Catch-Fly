@@ -68,6 +68,11 @@ class GameOverScene: SKScene {
         return g
     }()
     
+    lazy var gameOver: GameOverSceneController = {
+        let g = GameOverSceneController()
+        return g
+    }()
+    
     class func newGameScene() -> GameOverScene {
         let scene = GameOverScene()
         scene.scaleMode = .resizeFill
@@ -95,21 +100,20 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
-        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
-        scoreLabel.text = "your_score".localized() + "\(currentScore)"
-        
+        currentScore()
+
         #if os(tvOS)
         addTapGestureRecognizer()
         #endif
         
-        if currentScore > UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) {
-            GameCenterService.shared.submitHighScore(score: currentScore) {error in
-                if let error = error {
-                    UserDefaults.standard.set(currentScore, forKey: GameCenterService.highscoreKey)
-                    print("ERRO GAME CENTER (subindo score): \(error)")
-                }
-            }
-        }
+       
+    }
+    #warning("Tem q concertar")
+
+    func currentScore() {
+        //criar resto da func na controller e chamar ela
+        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
+        scoreLabel.text = "your_score".localized() + "\(currentScore)"
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -189,6 +193,7 @@ extension GameOverScene: GameOverLogicDelegate {
         scene.gameLogic.isGameStarted = true
         self.view?.presentScene(scene)
     }
+    
 }
 
 #if os(tvOS)
