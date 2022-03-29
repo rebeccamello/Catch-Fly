@@ -7,11 +7,8 @@
 
 import SpriteKit
 
-
 class GameViewController: MenuViewController {
-    
     /* MARK: - Atributos */
-    
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
          if let scene = (view as? SKView)?.scene {
              return [scene]

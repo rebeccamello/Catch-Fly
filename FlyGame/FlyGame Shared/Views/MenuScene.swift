@@ -7,7 +7,6 @@
 
 import SpriteKit
 
-
 class MenuScene: SKScene {
     let tapGeneralSelection = UITapGestureRecognizer()
     var hideTutorial: Bool = false
@@ -71,7 +70,7 @@ class MenuScene: SKScene {
         var cat = SKSpriteNode(imageNamed: "gato0")
         cat.texture?.filteringMode = .nearest
         
-        let frames:[SKTexture] = createTexture("GatoHome")
+        let frames: [SKTexture] = createTexture("GatoHome")
         cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.2),
                                                         resize: false, restore: true)))
@@ -93,7 +92,7 @@ class MenuScene: SKScene {
     lazy var flyAction: SKSpriteNode = {
         var fly = SKSpriteNode(imageNamed: "mosca")
         
-        let frames:[SKTexture] = createTexture("Mosca")
+        let frames: [SKTexture] = createTexture("Mosca")
         fly.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.2),
                                                         resize: false, restore: true)))
@@ -121,7 +120,7 @@ class MenuScene: SKScene {
         self.addChild(flyAction)
     }
     
-    func createTexture(_ name:String) -> [SKTexture] {
+    func createTexture(_ name: String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
         var frames = [SKTexture]()
         for i in 1...textureAtlas.textureNames.count - 1 {
@@ -136,7 +135,6 @@ class MenuScene: SKScene {
         #if os(tvOS)
         addTapGestureRecognizer()
         #endif
-        
         
         // Verifica se é a primeira vez que está entrando no app
         if !UserDefaults.standard.bool(forKey: "firstTimeOpenApp") {
@@ -181,7 +179,6 @@ class MenuScene: SKScene {
 #endif
         }
         
-
     }
     
     private func setupNodesSize() {
@@ -239,7 +236,7 @@ class MenuScene: SKScene {
     }
 
 #if os(tvOS)
-    func addTapGestureRecognizer(){
+    func addTapGestureRecognizer() {
         tapGeneralSelection.addTarget(self, action: #selector(clicked))
         self.view?.addGestureRecognizer(tapGeneralSelection)
     }
@@ -261,15 +258,14 @@ class MenuScene: SKScene {
     }
 #endif
     
-    
-    public func setScore(with score: Int) -> Void {
+    public func setScore(with score: Int) {
         self.scoreLabel.text = "highscore".localized() + "\(score)"
     }
 }
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
-        let _ = GameCenterService.shared.showGameCenterPage(.leaderboards)
+        GameCenterService.shared.showGameCenterPage(.leaderboards)
     }
     
     func getSoundButton() -> SKButtonNode {
@@ -288,21 +284,3 @@ extension MenuScene {
     }
 }
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

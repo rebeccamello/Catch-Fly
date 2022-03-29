@@ -7,12 +7,13 @@
 
 import SpriteKit
 
-
 class PauseMenu: SKNode {
     
     let buttonsPause = UITapGestureRecognizer()
     
-    var buttonsContainer: SKShapeNode = SKShapeNode(rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8), cornerRadius: 20)
+    var buttonsContainer: SKShapeNode = SKShapeNode(
+        rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8),
+        cornerRadius: 20)
     var bg: SKSpriteNode = SKSpriteNode(imageNamed: "cenario")
     let screenSize: CGSize = .screenSize()
     weak var gameDelegate: GameLogicDelegate?
@@ -51,12 +52,10 @@ class PauseMenu: SKNode {
         return but
     }()
     
-    
     override var isUserInteractionEnabled: Bool {
-        set {}
         get {return true}
+        set {}
     }
-    
     
     override init() {
         super.init()
@@ -82,7 +81,6 @@ class PauseMenu: SKNode {
     
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
-    
     func setPositions() {
         resumeButton.zPosition = 4
         resumeButton.position = CGPoint(x: 0, y: buttonsContainer.frame.size.height * 0.15)
@@ -90,16 +88,20 @@ class PauseMenu: SKNode {
         bg.zPosition = 3
         
         homeButton.zPosition = 4
-        homeButton.position = CGPoint(x: -buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
+        homeButton.position = CGPoint(x: -buttonsContainer.frame.size.width/3,
+                                      y: -resumeButton.position.y*1.4)
         
         retryButton.zPosition = 4
-        retryButton.position = CGPoint(x: -buttonsContainer.frame.size.width/9, y: -resumeButton.position.y*1.4)
+        retryButton.position = CGPoint(x: -buttonsContainer.frame.size.width/9,
+                                       y: -resumeButton.position.y*1.4)
         
         soundButton.zPosition = 4
-        soundButton.position = CGPoint(x: buttonsContainer.frame.size.width/9, y: -resumeButton.position.y*1.4)
+        soundButton.position = CGPoint(x: buttonsContainer.frame.size.width/9,
+                                       y: -resumeButton.position.y*1.4)
         
         musicButton.zPosition = 4
-        musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3, y: -resumeButton.position.y*1.4)
+        musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3,
+                                       y: -resumeButton.position.y*1.4)
     }
 }
 

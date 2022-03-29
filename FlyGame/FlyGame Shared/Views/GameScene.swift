@@ -7,7 +7,6 @@
 
 import SpriteKit
 
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var isGameStarted: Bool = false
     private var currentTime: TimeInterval = 0
@@ -78,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.zPosition = 1
         bug.name = "Fly"
         bug.texture?.filteringMode = .nearest
-        let frames:[SKTexture] = createTexture("Mosca")
+        let frames: [SKTexture] = createTexture("Mosca")
         bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.05),
                                                         resize: false, restore: true)))
@@ -95,11 +94,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    //MARK: - setUpScenne
+    // MARK: - setUpScenne
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
-        //self.view?.showsPhysics = true
+        // self.view?.showsPhysics = true
         
 #if os(tvOS)
         self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
@@ -135,7 +134,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonActions()
     }
     
-    //MARK: - didMove
+    // MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
         
@@ -164,7 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //MARK: didChangeSize
+    // MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
         self.setNodePosition()
@@ -172,7 +171,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysics(node: playerNode)
     }
     
-    //MARK: Update
+    // MARK: Update
     override func update(_ currentTime: TimeInterval) {
         self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
@@ -194,7 +193,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLogic.update(currentTime: currentTime)
     }
     
-    //MARK: Set Physics
+    // MARK: Set Physics
     func setPhysics(node: SKSpriteNode) {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
         node.physicsBody?.affectedByGravity = false
@@ -223,7 +222,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.contactTestBitMask = CollisionBitMask.flyCategory
     }
     
-    //MARK: Set Node Positions
+    // MARK: Set Node Positions
     func setNodePosition() {
         playerNode.size.height = self.size.height/5.2
         playerNode.size.width = self.size.height/5.2
@@ -243,8 +242,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #endif
     }
     
-    //MARK: Create Texture
-    func createTexture(_ name:String) -> [SKTexture] {
+    // MARK: Create Texture
+    func createTexture(_ name: String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
         var frames = [SKTexture]()
         for i in 1...textureAtlas.textureNames.count - 1 {
@@ -253,9 +252,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return frames
     }
     
-    //MARK: Gesture
+    // MARK: Gesture
     func setSwipeGesture() {
-        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
         
         let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
@@ -282,7 +281,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print("background: ", self.isPaused)
     }
     
-    //MARK: - Colisão
+    // MARK: - Colisão
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
@@ -300,7 +299,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //MARK: Funçoes de quando há colisão
+    // MARK: Funçoes de quando há colisão
     func increaseScore(player: SKNode, enemy: SKNode) {
         gameLogic.score += 2
         let wait = SKAction.wait(forDuration: 1)
@@ -337,9 +336,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #endif
     }
     
-    //MARK: Gesture Recognizer
+    // MARK: Gesture Recognizer
 #if os(tvOS)
-    func addTapGestureRecognizer(){
+    func addTapGestureRecognizer() {
         buttonsPause.addTarget(self, action: #selector(clicked))
         self.view?.addGestureRecognizer(buttonsPause)
     }
@@ -374,7 +373,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         defaults.set(true, forKey: "playerFirstTime")
     }
     
-    //MARK: - Criação e movimentação de obstáculos
+    // MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.physicsBody = obstacle.physicsBody.copy() as? SKPhysicsBody
@@ -405,7 +404,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //MARK: Criação das moedas
+    // MARK: Criação das moedas
     func createCoin() {
         var coinPosition: [CGFloat] = [1, 3, 5]
         coinPosition.shuffle()
@@ -419,14 +418,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.position = CGPoint(x: size.width + coin.size.width, y: size.height * coinPosition[0] / 6)
         setPhysicsCoins(node: coin)
         
-        let frames:[SKTexture] = createTexture("Moedas")
+        let frames: [SKTexture] = createTexture("Moedas")
         coin.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                          timePerFrame: TimeInterval(0.1),
                                                          resize: false, restore: true)))
         addChild(coin)
     }
     
-    //MARK: Movimento da mosca
+    // MARK: Movimento da mosca
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.05)
@@ -435,8 +434,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
     
-    
-    //MARK: - Função de clicar no botão com tvRemote
+    // MARK: - Função de clicar no botão com tvRemote
     @objc private func tvOSAction() {
         self.pauseGame()
     }
@@ -469,7 +467,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //MARK: Parallax Background
+    // MARK: Parallax Background
     func moveBackground() {
         scenarioImage.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
         scenarioImage2.position.x -= (1.5+(CGFloat(gameLogic.score/15)))
@@ -495,7 +493,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 }
-
 
 extension GameScene: GameLogicDelegate {
     func toggleSound() -> SKButtonNode {
@@ -534,16 +531,14 @@ extension GameScene: GameLogicDelegate {
         view?.presentScene(scene)
     }
     
-    func musicAction() -> Void {
+    func musicAction() {
         AudioService.shared.toggleMusic(with: self.pauseMenu.musicButton)
     }
     
-    func soundAction() -> Void {
+    func soundAction() {
         AudioService.shared.toggleSound(with: self.pauseMenu.soundButton)
     }
 }
-
-
 
 #if os(tvOS)
 extension GameScene {
@@ -552,4 +547,3 @@ extension GameScene {
     }
 }
 #endif
-

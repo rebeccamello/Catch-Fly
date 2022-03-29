@@ -10,18 +10,10 @@ import SpriteKit
 
 protocol GameLogicDelegate: AnyObject {
     func resumeGame()
-    
     func drawScore(score: Int)
-    
     func goToHome()
-    
-    func soundAction() -> Void
-    
-    func musicAction() -> Void
-    
+    func soundAction()
+    func musicAction()
     func createObstacle(obstacle: Obstacle)
-    
     func createCoin()
 }
-
-

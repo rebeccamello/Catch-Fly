@@ -7,7 +7,6 @@
 
 import struct Foundation.URLError
 
-
 /**
     Classe responsável pelo tratamento dos erros que podem acontecer na API.
  
