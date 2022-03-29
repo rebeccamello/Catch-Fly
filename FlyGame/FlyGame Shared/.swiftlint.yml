@@ -33,7 +33,7 @@ force_try:
 line_length: 250
 # they can set both implicitly with an array
 type_body_length:
-  - 300 # warning
+  - 350 # warning
   - 400 # error
 # or they can set both explicitly
 file_length:
