@@ -236,7 +236,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         catAttack.setScale(self.size.height*0.003)
         
 #if os(iOS)
-        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 80, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
 #elseif os(tvOS)
         scoreLabel.position = pauseButton.position
 #endif
@@ -497,7 +497,7 @@ extension GameScene: GameLogicDelegate {
     
     
     func drawScore(score: Int) {
-        scoreLabel.text = String(score)
+        scoreLabel.text = String(score) + " " + "points".localized()
     }
     
     func resumeGame() {

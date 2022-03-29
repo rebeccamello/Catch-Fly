@@ -8,4 +8,5 @@
 
 "your_score" = "Your Score: ";
 "highscore" = "Highscore: ";
-"success"= "Success!";
+"success" = "Success!";
+"points" = "points";
