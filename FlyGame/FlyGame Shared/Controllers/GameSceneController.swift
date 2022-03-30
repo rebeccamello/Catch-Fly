@@ -137,7 +137,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     }
 
     func setSwipeGesture() -> [UISwipeGestureRecognizer] {
-        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
         
         let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
@@ -186,7 +186,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     
     func calculateObstacleMovement(allObstacles: [SKNode]) {
         for obstacle in allObstacles {
-            if gameDelegate?.pausedStatus() == true{
+            if gameDelegate?.pausedStatus() == true {
                 obstacle.position.x -= 0
             }
             else {
@@ -210,7 +210,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     #endif
     
-    //MARK: - Função de clicar no botão com tvRemote
+    // MARK: - Função de clicar no botão com tvRemote
     @objc private func tvOSAction() {
         gameDelegate?.pauseGame()
     }

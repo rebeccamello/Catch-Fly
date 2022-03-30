@@ -16,7 +16,7 @@ class AudioService: AudioDelegate {
     static let shared = AudioService()
     
     /// Variável para memoization
-    private lazy var loadedAudios: [String : AVAudioPlayer] = [:]
+    private lazy var loadedAudios: [String: AVAudioPlayer] = [:]
         
     /* MARK: - Delegate */
     

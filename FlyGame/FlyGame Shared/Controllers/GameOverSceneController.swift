@@ -30,9 +30,9 @@ class GameOverSceneController {
     }
     
     @objc func clicked() {
-        if gameOverDelegate?.getButtons()[0].isFocused == true{
+        if gameOverDelegate?.getButtons()[0].isFocused == true {
             gameOverDelegate?.goToMenu()
-        } else if gameOverDelegate?.getButtons()[1].isFocused == true{
+        } else if gameOverDelegate?.getButtons()[1].isFocused == true {
            gameOverDelegate?.restartGame()
         }
     }

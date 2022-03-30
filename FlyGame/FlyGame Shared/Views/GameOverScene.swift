@@ -118,8 +118,6 @@ class GameOverScene: SKScene {
         setupNodesSize()
     }
     
-    
-    
     private func setupNodesPosition() {
         scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         scenarioImage.zPosition = 0

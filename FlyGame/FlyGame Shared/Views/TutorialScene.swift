@@ -9,11 +9,8 @@ import Foundation
 import SpriteKit
 
 class TutorialScene: SKScene {
-    var obstacleIndex: Int = -1
-    var obstacles: [Obstacle] = []
-    var defaults = UserDefaults.standard
-    var hideTutorial: Bool = false
     
+    var hideTutorial: Bool = false
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
         scenario = SKSpriteNode(imageNamed: "cenario")
@@ -75,7 +72,7 @@ class TutorialScene: SKScene {
     
     override func didMove(to view: SKView) {
         setUpScene()
-        shouldMoveObstacle()
+        gameLogic.shouldMoveObstacle()
     }
     func setUpScene() {
         removeAllChildren()
@@ -83,25 +80,30 @@ class TutorialScene: SKScene {
         self.addChild(scenarioImage)
         self.addChild(playerNode)
         self.addChild(tutorialHandUp)
-        setSwipeGesture()
+        addSwipeGesture()
         let screenSize: CGSize = .screenSize()
         let laneHeight = screenSize.height/3
-        obstacles = [Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano",
-                              physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "piano"),
-                                                         size: CGSize(width: laneHeight*2,
-                                                                      height: laneHeight*2))),
-                     Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre",
-                              physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"),
-                                                         size: CGSize(width: laneHeight,
-                                                                      height: laneHeight))),
-                     Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha",
-                              physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "estanteDeCha"),
-                                                         size: CGSize(width: laneHeight, height: laneHeight*2))) ]
+        gameLogic.obstacles = [Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano",
+                                        physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "piano"),
+                                                                   size: CGSize(width: laneHeight*2,
+                                                                                height: laneHeight*2))),
+                               Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre",
+                                        physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"),
+                                                                   size: CGSize(width: laneHeight,
+                                                                                height: laneHeight))),
+                               Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha",
+                                        physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "estanteDeCha"),
+                                                                   size: CGSize(width: laneHeight, height: laneHeight*2))) ]
     }
     override func didChangeSize(_ oldSize: CGSize) {
         setUpScene()
         setNodePosition()
     }
+    func addSwipeGesture() {
+        self.view?.addGestureRecognizer(gameLogic.setSwipeGesture()[0])
+        self.view?.addGestureRecognizer(gameLogic.setSwipeGesture()[1])
+    }
+    
     func setNodePosition() {
         scenarioImage.size.width = self.size.width * 1.2
         scenarioImage.size.height = self.size.height
@@ -116,6 +118,7 @@ class TutorialScene: SKScene {
         successLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         successLabel.fontSize = self.size.height/5
     }
+    
     // MARK: Create Texture
     func createTexture(_ name: String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
@@ -125,28 +128,33 @@ class TutorialScene: SKScene {
         }
         return frames
     }
-    func setSwipeGesture() {
-        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self,
-                                                                         action: #selector(self.respondToSwipeGesture))
-        swipeUp.direction = .up
-        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self,
-                                                                           action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = .down
+    
+    override func update(_ currentTime: TimeInterval) {
+        // MARK: Deleta nodes fora da tela
+        removeObstacles()
+    }
+    
+    func removeObstacles() {
+        let outOfTheScreenNodes = children.filter { node in
+            gameLogic.passedObstacles(node: node)
+        }
         
-        self.view?.addGestureRecognizer(swipeUp)
-        self.view?.addGestureRecognizer(swipeDown)
+        for node in outOfTheScreenNodes {
+            node.physicsBody = nil
+        }
+        if outOfTheScreenNodes.count >= 1 {
+            gameLogic.obstacleIndex += 1
+            gameLogic.shouldMoveObstacle()
+        }
+        removeChildren(in: outOfTheScreenNodes)
+        if (playerNode.position.x > self.size.width + 100) { // mosquinha saiu da cena
+            gameLogic.state = 8
+            gameLogic.shouldMoveObstacle()
+        }
     }
-    
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        guard
-            let swipeGesture = gesture as? UISwipeGestureRecognizer,
-            let direction = swipeGesture.direction.direction
-        else { return }
-        movePlayer(direction: direction)
-        shouldMoveObstacle()
-        defaults.set(true, forKey: "playerFirstTime")
-    }
-    
+}
+
+extension TutorialScene: TutorialDelegate {
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
         let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
@@ -168,89 +176,6 @@ class TutorialScene: SKScene {
         addChild(enemy)
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        // MARK: Deleta nodes fora da tela
-        let outOfTheScreenNodes = children.filter { node in
-            if let sprite = node as? SKSpriteNode {
-                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
-            } else {
-                return false
-            }
-        }
-        
-        for node in outOfTheScreenNodes {
-            node.physicsBody = nil
-        }
-        
-        if outOfTheScreenNodes.count >= 1 {
-            obstacleIndex += 1
-            shouldMoveObstacle()
-        }
-        removeChildren(in: outOfTheScreenNodes)
-        
-        if (playerNode.position.x > self.size.width + 100) { // mosquinha saiu da cena
-            state = 8
-            shouldMoveObstacle()
-        }
-    }
-    
-    // MARK: Should move obstacle
-    var state = 0
-    func shouldMoveObstacle() {
-        if obstacleIndex == -1 { // piano entra
-            obstacleIndex += 1
-            createObstacle(obstacle: obstacles[0])
-            moveObstacle()
-            state += 1
-        }
-        else if obstacleIndex == 0 && gameLogic.currentPosition == 5 && state == 1 { // piano sai
-            moveObstacleOffScreen()
-            state += 1
-            tutorialHandUp.isHidden = true
-        }
-        else if obstacleIndex == 1 && state == 2 { // entra lustre
-            self.addChild(tutorialHandDown)
-            createObstacle(obstacle: obstacles[1])
-            moveObstacle()
-            state += 1
-        }
-        else if obstacleIndex == 1 && (gameLogic.currentPosition == 3 || gameLogic.currentPosition == 1) && state == 3 { // sair lustre
-            tutorialHandDown.isHidden = true
-            moveObstacleOffScreen()
-            state += 1
-        }
-        
-        else if obstacleIndex == 2 && state == 4 { // entra xicara
-            tutorialHandDown.isHidden = false
-            createObstacle(obstacle: obstacles[2])
-            moveObstacle()
-            state += 1
-        }
-        
-        else if obstacleIndex == 2 && gameLogic.currentPosition == 1 && state == 5 { // sai xicara
-            tutorialHandDown.isHidden = true
-            moveObstacleOffScreen()
-            state += 1
-        }
-        
-        else if state == 6 {
-            addChild(successLabel)
-            state += 1
-            shouldMoveObstacle()
-        }
-        
-        else if state == 7 {
-            let flyFly = SKAction.moveTo(x: self.size.width + 500, duration: 3)
-            playerNode.run(flyFly)
-        }
-        
-        else if state == 8 {
-            let scene = GameScene.newGameScene()
-            scene.gameLogic.isGameStarted = true
-            self.view?.presentScene(scene)
-        }
-    }
-    
     // MARK: Move obstacles
     func moveObstacle() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
@@ -263,13 +188,32 @@ class TutorialScene: SKScene {
     func moveObstacleOffScreen() {
         let allObstacles = children.filter { node in node.name == "Enemy" }
         for obstacle in allObstacles {
-            #if os(iOS)
+    #if os(iOS)
             let moveObstAction = SKAction.moveTo(x: (-10000), duration: 30)
-            #elseif os(tvOS)
+    #elseif os(tvOS)
             let moveObstAction = SKAction.moveTo(x: (-10000), duration: 15)
-            #endif
+    #endif
             obstacle.run(moveObstAction)
         }
     }
     
+    func getNodes() -> [SKSpriteNode] {
+        return [tutorialHandUp, tutorialHandDown, playerNode]
+    }
+    
+    func addNode(node: SKSpriteNode) {
+        addChild(node)
+    }
+    
+    func getLabelNode() -> SKLabelNode {
+        return successLabel
+    }
+    
+    func addLabelNode(label: SKLabelNode) {
+        addChild(label)
+    }
+    
+    func getScreenSize() -> CGSize {
+        return self.size
+    }
 }
