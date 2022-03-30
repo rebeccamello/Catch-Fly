@@ -11,12 +11,9 @@ import Foundation
 class GameOverSceneController {
     
     weak var gameOverDelegate: GameOverLogicDelegate?
+    let tapGeneralSelection = UITapGestureRecognizer()
     
-    func currentScore() {
-        
-       // let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
-        //gameOverDelegate?.getScoreLabel().text = "your_score".localized() + "\(currentScore)"
-        
+    func currentScore(currentScore: Int) {
         if currentScore > UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) {
             GameCenterService.shared.submitHighScore(score: currentScore) {error in
                 if error == error {
@@ -25,4 +22,20 @@ class GameOverSceneController {
             }
         }
     }
+    
+    #if os(tvOS)
+    func addTargetToGestureRecognizer() -> UITapGestureRecognizer {
+        tapGeneralSelection.addTarget(self, action: #selector(clicked))
+        return tapGeneralSelection
+    }
+    
+    @objc func clicked() {
+        if gameOverDelegate?.getButtons()[0].isFocused == true{
+            gameOverDelegate?.goToMenu()
+        } else if gameOverDelegate?.getButtons()[1].isFocused == true{
+           gameOverDelegate?.restartGame()
+        }
+    }
+    #endif
+    
 }
