@@ -291,6 +291,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(player: SKNode, enemy: SKNode) {
         if player.name == "Coin" || enemy.name == "Coin" {
+            AudioService.shared.soundManager(with: .coin, soundAction: .play)
             increaseScore(player: player, enemy: enemy)
         } else {
             goToGameOverScene()
