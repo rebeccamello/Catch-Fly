@@ -33,15 +33,17 @@
 		22C1060C27E8F9ED0095EB3E /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22C1060427E8F9ED0095EB3E /* Musica-Fundo.mp3 */; };
 		22C1060E27E903490095EB3E /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C1060D27E903490095EB3E /* Buttons.swift */; };
 		22C1060F27E903490095EB3E /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C1060D27E903490095EB3E /* Buttons.swift */; };
+		953ED78D27F4C81800449FBF /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 953ED78C27F4C81800449FBF /* Stickers.xcassets */; };
+		953ED79127F4C81800449FBF /* Catch Fly Stickers Pack.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 953ED78A27F4C81600449FBF /* Catch Fly Stickers Pack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9921B89527DBC66500E3AD23 /* SKButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921B89427DBC66500E3AD23 /* SKButtonNode.swift */; };
 		9921B89627DBC66500E3AD23 /* SKButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921B89427DBC66500E3AD23 /* SKButtonNode.swift */; };
 		9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */; };
 		9D7E401F27EB8DAE00376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
 		9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
-		C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
-		C82E700027F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
 		9DCF1DE227F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
 		9DCF1DE327F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
+		C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
+		C82E700027F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
 		C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
 		C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */; };
@@ -86,6 +88,30 @@
 		E9A99EDC27DBE6C6004D86FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A0F2F627D67B9300F965DE /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		953ED78F27F4C81800449FBF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E9A0F2EE27D67B9100F965DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 953ED78927F4C81600449FBF;
+			remoteInfo = "Catch Fly Stickers Pack";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		953ED79527F4C81800449FBF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				953ED79127F4C81800449FBF /* Catch Fly Stickers Pack.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		227117C127EBA93E0083C7E8 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterDelegate.swift; sourceTree = "<group>"; };
@@ -100,11 +126,14 @@
 		22C1060327E8F9EC0095EB3E /* Som-Swipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Som-Swipe.mp3"; sourceTree = "<group>"; };
 		22C1060427E8F9ED0095EB3E /* Musica-Fundo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Musica-Fundo.mp3"; sourceTree = "<group>"; };
 		22C1060D27E903490095EB3E /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		953ED78A27F4C81600449FBF /* Catch Fly Stickers Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Catch Fly Stickers Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		953ED78C27F4C81800449FBF /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		953ED78E27F4C81800449FBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9921B89427DBC66500E3AD23 /* SKButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKButtonNode.swift; sourceTree = "<group>"; };
 		9D7E402027EB8DAE00376C51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D7E402B27EB8EDA00376C51 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		C82E6FFE27F3829100E17834 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionBitMask.swift; sourceTree = "<group>"; };
+		C82E6FFE27F3829100E17834 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleFetcher.swift; sourceTree = "<group>"; };
 		C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+CGSize.swift"; sourceTree = "<group>"; };
 		C8C2044827ECF7A100507AB5 /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
@@ -184,6 +213,15 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		953ED78B27F4C81600449FBF /* Catch Fly Stickers Pack */ = {
+			isa = PBXGroup;
+			children = (
+				953ED78C27F4C81800449FBF /* Stickers.xcassets */,
+				953ED78E27F4C81800449FBF /* Info.plist */,
+			);
+			path = "Catch Fly Stickers Pack";
+			sourceTree = "<group>";
+		};
 		9921B89327DBC63F00E3AD23 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +236,7 @@
 				E9A0F2F227D67B9100F965DE /* FlyGame Shared */,
 				E9A0F2FD27D67B9300F965DE /* FlyGame iOS */,
 				E9A0F30D27D67B9300F965DE /* FlyGame tvOS */,
+				953ED78B27F4C81600449FBF /* Catch Fly Stickers Pack */,
 				E9A0F2FC27D67B9300F965DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -224,6 +263,7 @@
 			children = (
 				E9A0F2FB27D67B9300F965DE /* FlyGame.app */,
 				E9A0F30C27D67B9300F965DE /* FlyGame.app */,
+				953ED78A27F4C81600449FBF /* Catch Fly Stickers Pack.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -319,6 +359,21 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		953ED78927F4C81600449FBF /* Catch Fly Stickers Pack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 953ED79227F4C81800449FBF /* Build configuration list for PBXNativeTarget "Catch Fly Stickers Pack" */;
+			buildPhases = (
+				953ED78827F4C81600449FBF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Catch Fly Stickers Pack";
+			productName = "Catch Fly Stickers Pack";
+			productReference = 953ED78A27F4C81600449FBF /* Catch Fly Stickers Pack.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
 		E9A0F2FA27D67B9300F965DE /* FlyGame iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9A0F32227D67B9300F965DE /* Build configuration list for PBXNativeTarget "FlyGame iOS" */;
@@ -327,10 +382,12 @@
 				E9A0F2F727D67B9300F965DE /* Sources */,
 				E9A0F2F827D67B9300F965DE /* Frameworks */,
 				E9A0F2F927D67B9300F965DE /* Resources */,
+				953ED79527F4C81800449FBF /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				953ED79027F4C81800449FBF /* PBXTargetDependency */,
 			);
 			name = "FlyGame iOS";
 			productName = "FlyGame iOS";
@@ -364,6 +421,9 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					953ED78927F4C81600449FBF = {
+						CreatedOnToolsVersion = 13.0;
+					};
 					E9A0F2FA27D67B9300F965DE = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -388,11 +448,20 @@
 			targets = (
 				E9A0F2FA27D67B9300F965DE /* FlyGame iOS */,
 				E9A0F30B27D67B9300F965DE /* FlyGame tvOS */,
+				953ED78927F4C81600449FBF /* Catch Fly Stickers Pack */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		953ED78827F4C81600449FBF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				953ED78D27F4C81800449FBF /* Stickers.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E9A0F2F927D67B9300F965DE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -524,6 +593,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		953ED79027F4C81800449FBF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 953ED78927F4C81600449FBF /* Catch Fly Stickers Pack */;
+			targetProxy = 953ED78F27F4C81800449FBF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		9D7E402127EB8DAE00376C51 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -537,6 +614,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		953ED79327F4C81800449FBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZXA7534U3Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Catch Fly Stickers Pack/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Fly Stickers";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "singleplayer.catchfly.Catch-Fly-Stickers-Pack";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		953ED79427F4C81800449FBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZXA7534U3Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Catch Fly Stickers Pack/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Fly Stickers";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "singleplayer.catchfly.Catch-Fly-Stickers-Pack";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		E9A0F32027D67B9300F965DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -657,7 +777,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = ZXA7534U3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -689,7 +809,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = ZXA7534U3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -722,7 +842,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = ZXA7534U3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -749,7 +869,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = R36LU3NVAA;
+				DEVELOPMENT_TEAM = ZXA7534U3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -773,6 +893,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		953ED79227F4C81800449FBF /* Build configuration list for PBXNativeTarget "Catch Fly Stickers Pack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				953ED79327F4C81800449FBF /* Debug */,
+				953ED79427F4C81800449FBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E9A0F2F127D67B9100F965DE /* Build configuration list for PBXProject "FlyGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
