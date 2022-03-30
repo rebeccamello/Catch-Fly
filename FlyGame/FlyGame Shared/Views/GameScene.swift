@@ -273,12 +273,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @objc func didBecomeActiveNotification(notification: NSNotification) {
         self.isPaused = true
-        print("foreground: ", self.isPaused)
     }
     
     @objc func didEnterBackgroundNotification(notification: NSNotification) {
         pauseGame()
-        print("background: ", self.isPaused)
     }
     
     // MARK: - Colisão
@@ -518,8 +516,6 @@ extension GameScene: GameLogicDelegate {
         self.pauseMenu.isHidden = false
         self.isPaused = true
         self.gameLogic.handlePause(isPaused: self.isPaused)
-        
-        print("pauseGame: ", self.isPaused)
     }
     
     func gameOver() {
