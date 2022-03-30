@@ -239,37 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
-            collisionBetween(player: nodeA, enemy: nodeB)
-        }
-    }
-    
-    func increaseScore(player: SKNode, enemy: SKNode) {
-        gameLogic.score += 2
-           let wait = SKAction.wait(forDuration: 1)
-           let hide = SKAction.run {
-               self.plusTwo.isHidden = true
-           }
-           let sequence = SKAction.sequence([wait, hide])
-   
-           if player.name == "Coin" {
-               player.removeFromParent()
-               self.plusTwo.isHidden = false
-               self.plusTwo.run(sequence)
-   
-           } else {
-               enemy.removeFromParent()
-               self.plusTwo.isHidden = false
-               self.plusTwo.run(sequence)
-           }
-       }
-    
-    func collisionBetween(player: SKNode, enemy: SKNode) {
-        if player.name == "Coin" || enemy.name == "Coin" {
-            increaseScore(player: player, enemy: enemy)
-        } else {
-            goToGameOverScene()
-        }
+        gameLogic.contact(contact: contact, nodeA: nodeA, nodeB: nodeB)
     }
     
     // MARK: Create Texture

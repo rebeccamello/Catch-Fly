@@ -397,4 +397,38 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         defaults.set(score, forKey: "currentScore")
         score = 0
     }
+    
+    func contact(contact: SKPhysicsContact, nodeA: SKNode, nodeB: SKNode) {
+        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
+            collisionBetween(player: nodeA, enemy: nodeB)
+        }
+    }
+    
+    func increaseScore(player: SKNode, enemy: SKNode) {
+        score += 2
+        let wait = SKAction.wait(forDuration: 1)
+        let hide = SKAction.run {
+            self.gameDelegate?.getPlusTwoLabel().isHidden = true
+        }
+        let sequence = SKAction.sequence([wait, hide])
+        
+        if player.name == "Coin" {
+            player.removeFromParent()
+            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+            
+        } else {
+            enemy.removeFromParent()
+            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+        }
+    }
+    
+    func collisionBetween(player: SKNode, enemy: SKNode) {
+        if player.name == "Coin" || enemy.name == "Coin" {
+            increaseScore(player: player, enemy: enemy)
+        } else {
+            gameDelegate?.goToGameOverScene()
+        }
+    }
 }
