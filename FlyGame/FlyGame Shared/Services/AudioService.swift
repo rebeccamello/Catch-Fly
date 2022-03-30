@@ -18,11 +18,10 @@ class AudioService: AudioDelegate {
     /// Variável para memoization
     private lazy var loadedAudios: [String : AVAudioPlayer] = [:]
         
-        
     /* MARK: - Delegate */
     
     /// Muda a variável que verifica se os sons estão ativados ou não
-    internal func toggleSound(with button: SKButtonNode) -> Void {
+    internal func toggleSound(with button: SKButtonNode) {
         switch self.updateUserDefaults(soundType: .sound) {
         case true:
             button.updateImage(with: .soundOn)
@@ -33,7 +32,7 @@ class AudioService: AudioDelegate {
     }
     
     /// Muda a variável que verifica se as músicas estão ativadas ou não
-    internal func toggleMusic(with button: SKButtonNode) -> Void {
+    internal func toggleMusic(with button: SKButtonNode) {
         switch self.updateUserDefaults(soundType: .music) {
         case true:
             self.soundManager(with: .backgroundMusic, soundAction: .play, .loop)
@@ -52,7 +51,7 @@ class AudioService: AudioDelegate {
     }
     
     /// Mexe com um áudio específico
-    public func soundManager(with sound: AudiosList, soundAction: AudiosAction, _ reproduction: AudioReproduction = .oneTime) -> Void {
+    public func soundManager(with sound: AudiosList, soundAction: AudiosAction, _ reproduction: AudioReproduction = .oneTime) {
         
         let userDefaultsKey = self.verifyAudioType(with: sound).description
         
@@ -63,6 +62,10 @@ class AudioService: AudioDelegate {
             switch soundAction {
             case .play:
                 if UserDefaults.standard.bool(forKey: userDefaultsKey) {
+                    if audio.isPlaying && self.verifyAudioType(with: sound) != .music {
+                        audio.pause()
+                        audio.currentTime = 0
+                    }
                     audio.play()
                 }
             case .pause:

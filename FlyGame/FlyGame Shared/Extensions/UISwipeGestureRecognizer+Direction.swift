@@ -7,16 +7,13 @@
 
 import UIKit
 
-
 extension UISwipeGestureRecognizer.Direction {
     var direction: Direction? {
         switch self {
         case .up:
             return .up
-            
         case .down:
             return .down
-            
         default:
             return nil
         }

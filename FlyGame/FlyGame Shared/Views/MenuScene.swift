@@ -7,8 +7,9 @@
 
 import SpriteKit
 
-
 class MenuScene: SKScene {
+    var hideTutorial: Bool = false
+    var defaults = UserDefaults.standard
     
     lazy var menuLogic: MenuSceneController = {
         let m = MenuSceneController()
@@ -68,7 +69,7 @@ class MenuScene: SKScene {
         var cat = SKSpriteNode(imageNamed: "gato0")
         cat.texture?.filteringMode = .nearest
         
-        let frames:[SKTexture] = createTexture("GatoHome")
+        let frames: [SKTexture] = createTexture("GatoHome")
         cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.2),
                                                         resize: false, restore: true)))
@@ -90,7 +91,7 @@ class MenuScene: SKScene {
     lazy var flyAction: SKSpriteNode = {
         var fly = SKSpriteNode(imageNamed: "mosca")
         
-        let frames:[SKTexture] = createTexture("Mosca")
+        let frames: [SKTexture] = createTexture("Mosca")
         fly.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.2),
                                                         resize: false, restore: true)))
@@ -118,6 +119,15 @@ class MenuScene: SKScene {
         self.addChild(flyAction)
     }
     
+    func createTexture(_ name: String) -> [SKTexture] {
+        let textureAtlas = SKTextureAtlas(named: name)
+        var frames = [SKTexture]()
+        for i in 1...textureAtlas.textureNames.count - 1 {
+            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
+        }
+        return frames
+    }
+    
     override func didMove(to view: SKView) {
         self.setUpScene()
         
@@ -132,14 +142,18 @@ class MenuScene: SKScene {
         setupNodesPosition()
         setupNodesSize()
     }
-    
-    func createTexture(_ name:String) -> [SKTexture] {
-        let textureAtlas = SKTextureAtlas(named: name)
-        var frames = [SKTexture]()
-        for i in 1...textureAtlas.textureNames.count - 1 {
-            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
+
+    func playGame() {
+        hideTutorial = defaults.bool(forKey: "playerFirstTime")
+        
+        if !hideTutorial {
+            let scene = TutorialScene.newGameScene()
+            self.view?.presentScene(scene)
+        } else {
+            let scene = GameScene.newGameScene()
+            scene.isGameStarted = true
+            self.view?.presentScene(scene)
         }
-        return frames
     }
     
     private func setupNodesSize() {
@@ -206,7 +220,7 @@ class MenuScene: SKScene {
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
-        let _ = GameCenterService.shared.showGameCenterPage(.leaderboards)
+        GameCenterService.shared.showGameCenterPage(.leaderboards)
     }
     
     func getSoundButton() -> SKButtonNode {
@@ -246,21 +260,3 @@ extension MenuScene {
     }
 }
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

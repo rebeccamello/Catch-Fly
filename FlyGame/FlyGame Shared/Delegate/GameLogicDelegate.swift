@@ -18,7 +18,6 @@ protocol GameLogicDelegate: AnyObject {
     func pauseGame()
     
     func drawScore(score: Int)
-    
     func goToHome()
     
     func soundAction()
@@ -48,6 +47,6 @@ protocol GameLogicDelegate: AnyObject {
     func getScenario2() -> SKSpriteNode
     
     func getScenarioTextures() -> [SKTexture]
+ 
+    func createCoin()
 }
-
-

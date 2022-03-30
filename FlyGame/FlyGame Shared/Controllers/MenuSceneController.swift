@@ -18,7 +18,6 @@ class MenuSceneController {
             self.audioService.toggleSound(with: node)
         }
     }
-    
     func toggleMusic() {
         if let node = menuDelegate?.getMusicButton() {
             self.audioService.toggleMusic(with: node)

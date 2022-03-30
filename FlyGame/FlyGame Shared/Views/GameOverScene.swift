@@ -24,7 +24,7 @@ class GameOverScene: SKScene {
         var cat = SKSpriteNode(imageNamed: "gatoMosca0")
         cat.texture?.filteringMode = .nearest
         
-        let frames:[SKTexture] = createTexture("GatoMosca")
+        let frames: [SKTexture] = createTexture("GatoMosca")
         cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.2),
                                                         resize: false, restore: true)))
@@ -88,7 +88,7 @@ class GameOverScene: SKScene {
         self.addChild(retryButton)
     }
     
-    func createTexture(_ name:String) -> [SKTexture] {
+    func createTexture(_ name: String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
         var frames = [SKTexture]()
         for i in 1...textureAtlas.textureNames.count - 1 {
@@ -196,4 +196,3 @@ extension GameOverScene {
     }
 }
 #endif
-

@@ -62,7 +62,7 @@ class SKButtonNode: SKNode {
         self.action()
     }
     
-    public func updateImage(with image: Buttons) -> Void {
+    public func updateImage(with image: Buttons) {
         self.image.texture = SKTexture(imageNamed: image.description)
     }
 }

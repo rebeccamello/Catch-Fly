@@ -11,7 +11,6 @@ enum AudiosList: CustomStringConvertible {
     case button
     case swipe
     case colision
-    
     var description: String {
         switch self {
         case .backgroundMusic: return "Musica-Fundo.mp3"
@@ -38,7 +37,6 @@ enum AudioReproduction: Int {
 enum AudioType: CustomStringConvertible {
     case sound
     case music
-    
     /// Chave do UserDefaults
     var description: String {
         switch self {

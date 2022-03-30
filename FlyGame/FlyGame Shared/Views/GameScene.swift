@@ -12,7 +12,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     var defaults = UserDefaults.standard
-    var hideTutorial: Bool = false
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -21,6 +20,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lbl.zPosition = 3
         lbl.fontName = "munro"
         lbl.text = "0"
+        return lbl
+    }()
+    
+    lazy var plusTwo: SKLabelNode = {
+       var lbl = SKLabelNode()
+        lbl.numberOfLines = 0
+        lbl.fontColor = SKColor.black
+        lbl.zPosition = 3
+        lbl.fontName = "munro"
+        lbl.text = "+2"
         return lbl
     }()
     
@@ -63,22 +72,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bug.zPosition = 1
         bug.name = "Fly"
         bug.texture?.filteringMode = .nearest
-        let frames:[SKTexture] = createTexture("Mosca")
+        let frames: [SKTexture] = createTexture("Mosca")
         bug.run(SKAction.repeatForever(SKAction.animate(with: frames,
                                                         timePerFrame: TimeInterval(0.05),
                                                         resize: false, restore: true)))
         return bug
-    }()
-    
-    lazy var tutorialNode: SKSpriteNode = {
-        var hand = SKSpriteNode(imageNamed: "tut1")
-        hand.zPosition = 1
-        hand.texture?.filteringMode = .nearest
-        let frames:[SKTexture] = createTexture("Tutorial")
-        hand.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                        timePerFrame: TimeInterval(0.2),
-                                                        resize: false, restore: true)))
-        return hand
     }()
     
     class func newGameScene() -> GameScene {
@@ -91,13 +89,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    //MARK: - setUpScene
-    
+    // MARK: - setUpScenne
     func setUpScene() {
         removeAllChildren()
         removeAllActions()
-        
-        hideTutorial = defaults.bool(forKey: "playerFirstTime")
         
         #if os(tvOS)
             addPauseActionGesture()
@@ -106,6 +101,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(scenarioImage)
         self.addChild(scenarioImage2)
         self.addChild(playerNode)
+        self.addChild(plusTwo)
+        plusTwo.isHidden = true
         
         #if os(iOS)
             self.addChild(pauseButton)
@@ -114,14 +111,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
         
-        if !hideTutorial {
-            self.addChild(tutorialNode)
-        }
-        
         setNodesSize()
         setNodesPosition()
         addSwipeGestures()
         gameLogic.buttonActions()
+        setSwipeGesture()
         
         pauseMenu.isHidden = true
     }
@@ -135,6 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tutorialNode.setScale(self.size.height*0.0035)
         
         scoreLabel.fontSize = self.size.height/15
+        plusTwo.fontSize = self.size.height/15
     }
     
     func setNodesPosition() {
@@ -145,14 +140,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 20, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+
 #elseif os(tvOS)
         scoreLabel.position = pauseButton.position
+        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 50, y: scoreLabel.position.y)
 #endif
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
     }
     
-    //MARK: - didMove
+    // MARK: - didMove
     override func didMove(to view: SKView) {
         self.setUpScene()
         
@@ -164,14 +162,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLogic.audioVerification()
     }
     
-    //MARK: didChangeSize
+    // MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
         self.setUpScene()
         
         setPhysics(node: playerNode)
     }
     
-    //MARK: Update
+    // MARK: Update
     override func update(_ currentTime: TimeInterval) {
         self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
@@ -188,25 +186,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLogic.update(currentTime: currentTime)
     }
     
-    //MARK: Set Physics
+    // MARK: Set Physics
     func setPhysics(node: SKSpriteNode) {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = true // faz reconhecer a colisao
-        node.physicsBody?.contactTestBitMask = 1
+        node.physicsBody?.allowsRotation = false
+        node.physicsBody?.categoryBitMask = CollisionBitMask.flyCategory
+        node.physicsBody?.collisionBitMask = CollisionBitMask.obstaclesCategory
+        node.physicsBody?.contactTestBitMask = CollisionBitMask.coinCategory | CollisionBitMask.obstaclesCategory
     }
     
     func setPhysicsObstacles(node: SKSpriteNode) {
         node.physicsBody?.affectedByGravity = false
-        node.physicsBody?.isDynamic = true // faz reconhecer a colisao
+        node.physicsBody?.isDynamic = false // faz reconhecer a colisao
         node.physicsBody?.linearDamping = 0
         node.physicsBody?.friction = 0
-        node.physicsBody?.mass = 1
-        node.physicsBody?.categoryBitMask = 1
+        node.physicsBody?.categoryBitMask = CollisionBitMask.obstaclesCategory
+        node.physicsBody?.collisionBitMask = CollisionBitMask.flyCategory
+        node.physicsBody?.contactTestBitMask = CollisionBitMask.flyCategory
     }
     
-    //MARK: Create Texture
-    func createTexture(_ name:String) -> [SKTexture] {
+    func setPhysicsCoins(node: SKSpriteNode) {
+        node.physicsBody?.affectedByGravity = false
+        node.physicsBody?.isDynamic = false // faz reconhecer a colisao
+        node.physicsBody?.categoryBitMask = CollisionBitMask.coinCategory
+        node.physicsBody?.collisionBitMask = 0
+        node.physicsBody?.contactTestBitMask = CollisionBitMask.flyCategory
+    }
+    
+    // MARK: Set Node Positions
+    func setNodePosition() {
+        playerNode.size.height = self.size.height/5.2
+        playerNode.size.width = self.size.height/5.2
+        playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
+        pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
+        pauseButton.setScale(self.size.height*0.00035)
+        scoreLabel.fontSize = self.size.height/15
+        plusTwo.fontSize = self.size.height/15
+        
+#if os(iOS)
+        scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 20, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+#elseif os(tvOS)
+        scoreLabel.position = pauseButton.position
+        plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 50, y: scoreLabel.position.y)
+#endif
+    }
+    
+    // MARK: Create Texture
+    func createTexture(_ name: String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
         var frames = [SKTexture]()
         for i in 1...textureAtlas.textureNames.count - 1 {
@@ -235,13 +265,61 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseGame()
     }
     
+    func collisionBetween(player: SKNode, enemy: SKNode) {
+        if player.name == "Coin" || enemy.name == "Coin" {
+            increaseScore(player: player, enemy: enemy)
+        } else {
+            goToGameOverScene()
+        }
+    }
+    
+    // MARK: Funçoes de quando há colisão
+    func increaseScore(player: SKNode, enemy: SKNode) {
+        gameLogic.score += 2
+        let wait = SKAction.wait(forDuration: 1)
+        let hide = SKAction.run {
+            self.plusTwo.isHidden = true
+        }
+        let sequence = SKAction.sequence([wait, hide])
+        
+        if player.name == "Coin" {
+            player.removeFromParent()
+            plusTwo.isHidden = false
+            plusTwo.run(sequence)
+
+        } else {
+            enemy.removeFromParent()
+            plusTwo.isHidden = false
+            plusTwo.run(sequence)
+        }
+    }
+    
+    func goToGameOverScene() {
+        gameLogic.tearDown()
+        self.isGameStarted = false
+        let scene = GameOverScene.newGameScene()
+        scene.score = gameLogic.score
+        AudioService.shared.soundManager(with: .colision, soundAction: .play)
+        view?.presentScene(scene)
+        
+#if os(tvOS)
+        scene.run(SKAction.wait(forDuration: 0.02)) {
+            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+        }
+#endif
+    }
+    
     #if os(tvOS)
         func addTapGestureRecognizer() {
             self.view?.addGestureRecognizer(gameLogic.addTargetToTapGestureRecognizer())
         }
     #endif
     
-    //MARK: - Criação e movimentação de obstáculos
+        defaults.set(true, forKey: "playerFirstTime")
+    }
+    
+    // MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.physicsBody = obstacle.physicsBody.copy() as? SKPhysicsBody
@@ -256,9 +334,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func moveObstacle() {
-        let allObstacles = children.filter { node in node.name == "Enemy" }
+        let allObstacles = children.filter { node in node.name == "Enemy" || node.name == "Coin" }
+        for obstacle in allObstacles {
+            if isPaused == true {
+                obstacle.position.x -= 0
+            }
+            else {
+#if os(iOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.duration*100)
+#elseif os(tvOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.durationTV*100)
+#endif
+                obstacle.run(moveObstAction)
+            }
+        }
+    }
+    
+    // MARK: Criação das moedas
+    func createCoin() {
+        var coinPosition: [CGFloat] = [1, 3, 5]
+        coinPosition.shuffle()
         
-        gameLogic.calculateObstacleMovement(allObstacles: allObstacles)
+        let coin = SKSpriteNode(imageNamed: "moeda0")
+        coin.zPosition = 1
+        coin.name = "Coin"
+        coin.size.height = self.size.height/7
+        coin.size.width = self.size.height/7
+        coin.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: self.size.height/3, height: self.size.height/3)).copy() as? SKPhysicsBody
+        coin.position = CGPoint(x: size.width + coin.size.width, y: size.height * coinPosition[0] / 6)
+        setPhysicsCoins(node: coin)
+        
+        let frames: [SKTexture] = createTexture("Moedas")
+        coin.run(SKAction.repeatForever(SKAction.animate(with: frames,
+                                                         timePerFrame: TimeInterval(0.1),
+                                                         resize: false, restore: true)))
+        addChild(coin)
+    }
+    
+    // MARK: Movimento da mosca
+    func movePlayer(direction: Direction) {
+        let position = gameLogic.movePlayer(direction: direction)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.05)
+        moveAction.timingMode = .easeOut
+        playerNode.run(moveAction)
+        AudioService.shared.soundManager(with: .swipe, soundAction: .play)
     }
     
     #if os(tvOS)
@@ -268,7 +387,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     #endif
 }
 
-
 extension GameScene: GameLogicDelegate {
     func getSoundButton() -> SKButtonNode {
         return pauseMenu.soundButton
@@ -277,7 +395,6 @@ extension GameScene: GameLogicDelegate {
     func getMusicButton() -> SKButtonNode {
         return pauseMenu.musicButton
     }
-    
     
     func drawScore(score: Int) {
         scoreLabel.text = String(score)
@@ -301,11 +418,11 @@ extension GameScene: GameLogicDelegate {
         view?.presentScene(scene)
     }
     
-    func musicAction() -> Void {
+    func musicAction() {
         AudioService.shared.toggleMusic(with: self.pauseMenu.musicButton)
     }
     
-    func soundAction() -> Void {
+    func soundAction() {
         AudioService.shared.toggleSound(with: self.pauseMenu.soundButton)
     }
     
@@ -372,8 +489,6 @@ extension GameScene: GameLogicDelegate {
     }
 }
 
-
-
 #if os(tvOS)
     extension GameScene {
         override var preferredFocusEnvironments: [UIFocusEnvironment] {
@@ -381,4 +496,3 @@ extension GameScene: GameLogicDelegate {
         }
     }
 #endif
-
