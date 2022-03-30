@@ -28,7 +28,7 @@ protocol GameLogicDelegate: AnyObject {
     
     func setPhysicsWorldDelegate()
     
-    func collisionBetween(player: SKNode, enemy: SKNode)
+    func goToGameOverScene()
     
     func movePlayer(direction: Direction)
     
@@ -49,4 +49,6 @@ protocol GameLogicDelegate: AnyObject {
     func getScenarioTextures() -> [SKTexture]
  
     func createCoin()
+    
+    func getPlusTwoLabel() -> SKLabelNode
 }

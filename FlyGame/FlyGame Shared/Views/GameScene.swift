@@ -115,7 +115,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setNodesPosition()
         addSwipeGestures()
         gameLogic.buttonActions()
-        setSwipeGesture()
         
         pauseMenu.isHidden = true
     }
@@ -126,7 +125,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage2.size = CGSize(width: self.size.width * 1.2, height: self.size.height)
         
         pauseButton.setScale(self.size.height*0.00035)
-        tutorialNode.setScale(self.size.height*0.0035)
         
         scoreLabel.fontSize = self.size.height/15
         plusTwo.fontSize = self.size.height/15
@@ -136,7 +134,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
-        tutorialNode.position = CGPoint(x: size.width/2, y: size.height * 0.6)
         
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
@@ -157,9 +154,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     #if os(tvOS)
         addTapGestureRecognizer()
     #endif
-
-        gameLogic.gameStarted()
+        
         gameLogic.audioVerification()
+        
+        if gameLogic.isGameStarted {
+            physicsWorld.contactDelegate = self
+        }
     }
     
     // MARK: didChangeSize
@@ -235,6 +235,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #endif
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
+            collisionBetween(player: nodeA, enemy: nodeB)
+        }
+    }
+    
+    func increaseScore(player: SKNode, enemy: SKNode) {
+        gameLogic.score += 2
+           let wait = SKAction.wait(forDuration: 1)
+           let hide = SKAction.run {
+               self.plusTwo.isHidden = true
+           }
+           let sequence = SKAction.sequence([wait, hide])
+   
+           if player.name == "Coin" {
+               player.removeFromParent()
+               self.plusTwo.isHidden = false
+               self.plusTwo.run(sequence)
+   
+           } else {
+               enemy.removeFromParent()
+               self.plusTwo.isHidden = false
+               self.plusTwo.run(sequence)
+           }
+       }
+    
+    func collisionBetween(player: SKNode, enemy: SKNode) {
+        if player.name == "Coin" || enemy.name == "Coin" {
+            increaseScore(player: player, enemy: enemy)
+        } else {
+            goToGameOverScene()
+        }
+    }
+    
     // MARK: Create Texture
     func createTexture(_ name: String) -> [SKTexture] {
         let textureAtlas = SKTextureAtlas(named: name)
@@ -265,59 +302,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseGame()
     }
     
-    func collisionBetween(player: SKNode, enemy: SKNode) {
-        if player.name == "Coin" || enemy.name == "Coin" {
-            increaseScore(player: player, enemy: enemy)
-        } else {
-            goToGameOverScene()
-        }
-    }
-    
-    // MARK: Funçoes de quando há colisão
-    func increaseScore(player: SKNode, enemy: SKNode) {
-        gameLogic.score += 2
-        let wait = SKAction.wait(forDuration: 1)
-        let hide = SKAction.run {
-            self.plusTwo.isHidden = true
-        }
-        let sequence = SKAction.sequence([wait, hide])
-        
-        if player.name == "Coin" {
-            player.removeFromParent()
-            plusTwo.isHidden = false
-            plusTwo.run(sequence)
-
-        } else {
-            enemy.removeFromParent()
-            plusTwo.isHidden = false
-            plusTwo.run(sequence)
-        }
-    }
-    
-    func goToGameOverScene() {
-        gameLogic.tearDown()
-        self.isGameStarted = false
-        let scene = GameOverScene.newGameScene()
-        scene.score = gameLogic.score
-        AudioService.shared.soundManager(with: .colision, soundAction: .play)
-        view?.presentScene(scene)
-        
-#if os(tvOS)
-        scene.run(SKAction.wait(forDuration: 0.02)) {
-            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-        }
-#endif
-    }
-    
     #if os(tvOS)
         func addTapGestureRecognizer() {
             self.view?.addGestureRecognizer(gameLogic.addTargetToTapGestureRecognizer())
         }
     #endif
-    
-        defaults.set(true, forKey: "playerFirstTime")
-    }
     
     // MARK: - Criação e movimentação de obstáculos
     func createObstacle(obstacle: Obstacle) {
@@ -360,7 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.name = "Coin"
         coin.size.height = self.size.height/7
         coin.size.width = self.size.height/7
-        coin.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: self.size.height/3, height: self.size.height/3)).copy() as? SKPhysicsBody
+        coin.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "moeda0"), size: CGSize(width: self.size.height/3, height: self.size.height/3)).copy() as? SKPhysicsBody
         coin.position = CGPoint(x: size.width + coin.size.width, y: size.height * coinPosition[0] / 6)
         setPhysicsCoins(node: coin)
         
@@ -371,15 +360,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(coin)
     }
     
-    // MARK: Movimento da mosca
-    func movePlayer(direction: Direction) {
-        let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.05)
-        moveAction.timingMode = .easeOut
-        playerNode.run(moveAction)
-        AudioService.shared.soundManager(with: .swipe, soundAction: .play)
-    }
-    
     #if os(tvOS)
         func addPauseActionGesture() {
             self.view?.addGestureRecognizer(gameLogic.addTargetToPauseActionToTV())
@@ -388,6 +368,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 }
 
 extension GameScene: GameLogicDelegate {
+    func getPlusTwoLabel() -> SKLabelNode {
+        return plusTwo
+    }
+    
     func getSoundButton() -> SKButtonNode {
         return pauseMenu.soundButton
     }
@@ -430,13 +414,13 @@ extension GameScene: GameLogicDelegate {
         physicsWorld.contactDelegate = gameLogic
     }
     
-    func collisionBetween(player: SKNode, enemy: SKNode) {
+    func goToGameOverScene() {
         gameLogic.tearDown()
         gameLogic.isGameStarted = false
         let scene = GameOverScene.newGameScene()
         scene.score = gameLogic.score
         AudioService.shared.soundManager(with: .colision, soundAction: .play)
-        view?.presentScene(scene)
+        self.view?.presentScene(scene)
         
         #if os(tvOS)
             scene.run(SKAction.wait(forDuration: 0.02)) {
@@ -448,7 +432,7 @@ extension GameScene: GameLogicDelegate {
     
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.05)
         moveAction.timingMode = .easeOut
         playerNode.run(moveAction)
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)

@@ -29,7 +29,7 @@ class MenuScene: SKScene {
     
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: .play) {
-            self.playGame()
+            self.goToGameScene()
         }
         return bt
     }()
@@ -143,17 +143,9 @@ class MenuScene: SKScene {
         setupNodesSize()
     }
 
-    func playGame() {
+    func goToGameScene() {
         hideTutorial = defaults.bool(forKey: "playerFirstTime")
-        
-        if !hideTutorial {
-            let scene = TutorialScene.newGameScene()
-            self.view?.presentScene(scene)
-        } else {
-            let scene = GameScene.newGameScene()
-            scene.isGameStarted = true
-            self.view?.presentScene(scene)
-        }
+        menuLogic.playGame()
     }
     
     private func setupNodesSize() {
@@ -239,18 +231,26 @@ extension MenuScene: MenuLogicDelegate {
         return gameCenterButton
     }
     
-    func playGame() {
-        let scene = GameScene.newGameScene()
-        scene.gameLogic.isGameStarted = true
-        self.view?.presentScene(scene)
-        
-        #if os(tvOS)
-            scene.run(SKAction.wait(forDuration: 0.02)) {
-            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-            }
-        #endif
+    func getTutorialStatus() -> Bool {
+        return hideTutorial
     }
+    
+    func presentScene(scene: SKScene) {
+        self.view?.presentScene(scene)
+    }
+    
+//    func playGame() {
+//        let scene = GameScene.newGameScene()
+//        scene.gameLogic.isGameStarted = true
+//        self.view?.presentScene(scene)
+//
+//        #if os(tvOS)
+//            scene.run(SKAction.wait(forDuration: 0.02)) {
+//            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+//            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+//            }
+//        #endif
+//    }
 }
 
 #if os(tvOS)

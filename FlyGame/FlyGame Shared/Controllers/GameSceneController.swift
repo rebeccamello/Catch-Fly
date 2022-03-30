@@ -79,14 +79,22 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     }
     
-    func didBegin(_ contact: SKPhysicsContact) {
-        guard let nodeA = contact.bodyA.node else { return }
-        guard let nodeB = contact.bodyB.node else { return }
-        
-        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
-            gameDelegate?.collisionBetween(player: nodeA, enemy: nodeB)
-        }
-    }
+//    func didBegin(_ contact: SKPhysicsContact) {
+//        guard let nodeA = contact.bodyA.node else { return }
+//        guard let nodeB = contact.bodyB.node else { return }
+//        
+//        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
+//            collisionBetween(player: nodeA, enemy: nodeB)
+//        }
+//    }
+    
+//    func collisionBetween(player: SKNode, enemy: SKNode) {
+//        if player.name == "Coin" || enemy.name == "Coin" {
+//            increaseScore(player: player, enemy: enemy)
+//        } else {
+//            gameDelegate?.goToGameOverScene()
+//        }
+//    }
     
     func audioVerification() {
         // Verifica se os áudios já estavam inativos
@@ -98,6 +106,27 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             gameDelegate?.getMusicButton().updateImage(with: .musicOff)
         }
     }
+    
+    // MARK: Funçoes de quando há colisão
+//    func increaseScore(player: SKNode, enemy: SKNode) {
+//        score += 2
+//        let wait = SKAction.wait(forDuration: 1)
+//        let hide = SKAction.run {
+//            self.gameDelegate?.getPlusTwoLabel().isHidden = true
+//        }
+//        let sequence = SKAction.sequence([wait, hide])
+//        
+//        if player.name == "Coin" {
+//            player.removeFromParent()
+//            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+//            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+//
+//        } else {
+//            enemy.removeFromParent()
+//            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+//            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+//        }
+//    }
     
     func passedObstacles(node: SKNode) -> Bool {
             if let sprite = node as? SKSpriteNode {

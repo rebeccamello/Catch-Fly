@@ -60,7 +60,7 @@ class MenuSceneController {
     @objc func clicked() {
         
         if ((menuDelegate?.getPlayButton().isFocused) == true) {
-            menuDelegate?.playGame()
+            playGame()
             
         } else if (menuDelegate?.getSoundButton().isFocused) == true {
             toggleSound()
@@ -70,6 +70,18 @@ class MenuSceneController {
             
         } else if (menuDelegate?.getGameCenterButton().isFocused) == true {
             menuDelegate?.goToGameCenter()
+        }
+    }
+    
+    func playGame() {
+        if menuDelegate?.getTutorialStatus() == false {
+            let scene = TutorialScene.newGameScene()
+            menuDelegate?.presentScene(scene: scene)
+        } else {
+            let scene = GameScene.newGameScene()
+            scene.gameLogic.isGameStarted = true
+            menuDelegate?.presentScene(scene: scene)
+            
         }
     }
 }

@@ -14,5 +14,6 @@ protocol MenuLogicDelegate {
     func getSoundButton() -> SKButtonNode
     func getPlayButton() -> SKButtonNode
     func getGameCenterButton() -> SKButtonNode
-    func playGame()
+    func getTutorialStatus() -> Bool
+    func presentScene(scene: SKScene)
 }
