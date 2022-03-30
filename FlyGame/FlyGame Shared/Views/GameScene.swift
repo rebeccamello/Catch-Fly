@@ -273,12 +273,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     @objc func didBecomeActiveNotification(notification: NSNotification) {
         self.isPaused = true
-        print("foreground: ", self.isPaused)
     }
     
     @objc func didEnterBackgroundNotification(notification: NSNotification) {
         pauseGame()
-        print("background: ", self.isPaused)
     }
     
     // MARK: - Colisão
@@ -293,6 +291,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(player: SKNode, enemy: SKNode) {
         if player.name == "Coin" || enemy.name == "Coin" {
+            AudioService.shared.soundManager(with: .coin, soundAction: .play)
             increaseScore(player: player, enemy: enemy)
         } else {
             goToGameOverScene()
@@ -518,8 +517,6 @@ extension GameScene: GameLogicDelegate {
         self.pauseMenu.isHidden = false
         self.isPaused = true
         self.gameLogic.handlePause(isPaused: self.isPaused)
-        
-        print("pauseGame: ", self.isPaused)
     }
     
     func gameOver() {
