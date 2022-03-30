@@ -32,11 +32,10 @@ class TutorialSceneController {
     }
     
     func setSwipeGesture() -> [UISwipeGestureRecognizer] {
-        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self,
-                                                                         action: #selector(self.respondToSwipeGesture))
+        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
-        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self,
-                                                                           action: #selector(self.respondToSwipeGesture))
+        
+        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeDown.direction = .down
         
         return [swipeUp, swipeDown]
@@ -48,6 +47,7 @@ class TutorialSceneController {
             let swipeGesture = gesture as? UISwipeGestureRecognizer,
             let direction = swipeGesture.direction.direction
         else { return }
+        
         tutorialDelegate?.movePlayer(direction: direction)
         shouldMoveObstacle()
         defaults.set(true, forKey: "playerFirstTime")
