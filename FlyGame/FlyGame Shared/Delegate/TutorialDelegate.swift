@@ -26,5 +26,7 @@ protocol TutorialDelegate: AnyObject {
     
     func addLabelNode(label: SKLabelNode)
     
-    func getScreenSize() -> CGSize 
+    func getScreenSize() -> CGSize
+    
+    func presentScene(scene: SKScene)
 }

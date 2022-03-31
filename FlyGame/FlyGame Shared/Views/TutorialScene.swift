@@ -19,6 +19,7 @@ class TutorialScene: SKScene {
     }()
     lazy var gameLogic: TutorialSceneController = {
         let game = TutorialSceneController()
+        game.tutorialDelegate = self
         return game
     }()
     lazy var playerNode: SKSpriteNode = {
@@ -157,7 +158,7 @@ class TutorialScene: SKScene {
 extension TutorialScene: TutorialDelegate {
     func movePlayer(direction: Direction) {
         let position = gameLogic.movePlayer(direction: direction)
-        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.05)
+        let moveAction = SKAction.moveTo(y: position * (size.height / 6), duration: 0.1)
         moveAction.timingMode = .easeOut
         playerNode.run(moveAction)
         AudioService.shared.soundManager(with: .swipe, soundAction: .play)
@@ -215,5 +216,9 @@ extension TutorialScene: TutorialDelegate {
     
     func getScreenSize() -> CGSize {
         return self.size
+    }
+    
+    func presentScene(scene: SKScene) {
+        self.view?.presentScene(scene)
     }
 }

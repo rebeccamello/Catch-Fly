@@ -118,6 +118,7 @@ class TutorialSceneController {
         else if state == 8 {
             let scene = GameScene.newGameScene()
             scene.gameLogic.isGameStarted = true
+            tutorialDelegate?.presentScene(scene: scene)
         }
     }
     
