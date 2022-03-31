@@ -17,6 +17,7 @@ class AudioService: AudioDelegate {
     
     /// Variável para memoization
     private lazy var loadedAudios: [String: AVAudioPlayer] = [:]
+        
     /* MARK: - Delegate */
     
     /// Muda a variável que verifica se os sons estão ativados ou não
@@ -81,7 +82,7 @@ class AudioService: AudioDelegate {
         
         return self.getUserDefaultsStatus(with: soundType)
     }
-        
+    
     /// Pega o arquivo de áudio e tranforma na variável AVAudioPlayer para poder manusear
     private func getMusic(from music: AudiosList, reproduction: AudioReproduction) -> AVAudioPlayer? {
         

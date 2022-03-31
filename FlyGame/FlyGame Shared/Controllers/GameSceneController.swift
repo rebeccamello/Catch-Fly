@@ -6,6 +6,7 @@
 //
 
 import GameplayKit
+import SpriteKit
 
 func randomizer(min: Int, max: Int) -> Int {
     let randomizer = GKRandomDistribution(lowestValue: min, highestValue: max)
@@ -13,7 +14,8 @@ func randomizer(min: Int, max: Int) -> Int {
     return randomIndex
 }
 
-class GameSceneController {
+class GameSceneController: NSObject, SKPhysicsContactDelegate {
+    var isGameStarted: Bool = false
     weak var gameDelegate: GameLogicDelegate?
     var timer = Timer()
     var timeCounter = 0
@@ -37,6 +39,9 @@ class GameSceneController {
     var currentScore: Int?
     let defaults = UserDefaults.standard
     var pausedTime: TimeInterval = 0
+    var buttonsPause = UITapGestureRecognizer()
+    var buttonTvOS = UITapGestureRecognizer()
+    
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
             timeScore = currentTime
@@ -62,8 +67,7 @@ class GameSceneController {
         currentPosition = newPosition
         return CGFloat(newPosition)
     }
-    func startUp() {
-    }
+    
     func handlePause(isPaused: Bool) {
         if isPaused {
             pausedTime = Date().timeIntervalSince1970
@@ -72,6 +76,206 @@ class GameSceneController {
             lastObstacleTimeCreated += timeDifference
         }
     }
+    
+//    func didBegin(_ contact: SKPhysicsContact) {
+//        guard let nodeA = contact.bodyA.node else { return }
+//        guard let nodeB = contact.bodyB.node else { return }
+//        
+//        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
+//            collisionBetween(player: nodeA, enemy: nodeB)
+//        }
+//    }
+    
+//    func collisionBetween(player: SKNode, enemy: SKNode) {
+//        if player.name == "Coin" || enemy.name == "Coin" {
+//            increaseScore(player: player, enemy: enemy)
+//        } else {
+//            gameDelegate?.goToGameOverScene()
+//        }
+//    }
+    
+    func audioVerification() {
+        // Verifica se os áudios já estavam inativos
+        if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
+            gameDelegate?.getSoundButton().updateImage(with: .soundOff)
+        }
+        
+        if !AudioService.shared.getUserDefaultsStatus(with: .music) {
+            gameDelegate?.getMusicButton().updateImage(with: .musicOff)
+        }
+    }
+    
+    // MARK: Funçoes de quando há colisão
+//    func increaseScore(player: SKNode, enemy: SKNode) {
+//        score += 2
+//        let wait = SKAction.wait(forDuration: 1)
+//        let hide = SKAction.run {
+//            self.gameDelegate?.getPlusTwoLabel().isHidden = true
+//        }
+//        let sequence = SKAction.sequence([wait, hide])
+//        
+//        if player.name == "Coin" {
+//            player.removeFromParent()
+//            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+//            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+//
+//        } else {
+//            enemy.removeFromParent()
+//            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+//            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+//        }
+//    }
+    
+    func passedObstacles(node: SKNode) -> Bool {
+            if let sprite = node as? SKSpriteNode {
+                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+            } else {
+                return false
+            }
+    }
+
+    func setSwipeGesture() -> [UISwipeGestureRecognizer] {
+        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeUp.direction = .up
+        
+        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = .down
+        
+        return [swipeUp, swipeDown]
+    }
+    
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        guard
+            let swipeGesture = gesture as? UISwipeGestureRecognizer,
+            let direction = swipeGesture.direction.direction
+        else { return }
+        if gameDelegate?.pausedStatus() == false {
+            gameDelegate?.movePlayer(direction: direction)
+        }
+        
+        defaults.set(true, forKey: "playerFirstTime")
+    }
+    
+    #if os(tvOS)
+        func addTargetToTapGestureRecognizer() -> UITapGestureRecognizer {
+            buttonsPause.addTarget(self, action: #selector(clicked))
+            
+            return buttonsPause
+        }
+        
+        @objc func clicked() {
+            if gameDelegate?.getResumeButton().isFocused == true {
+                gameDelegate?.resumeGame()
+                
+            } else if gameDelegate?.getHomeButton().isFocused == true {
+                gameDelegate?.goToHome()
+                
+            } else if gameDelegate?.getRestartButton().isFocused == true {
+                gameDelegate?.restartGame()
+                
+            } else if gameDelegate?.getSoundButton().isFocused == true {
+                gameDelegate?.soundAction()
+                
+            } else if gameDelegate?.getMusicButton().isFocused == true {
+                gameDelegate?.musicAction()
+            }
+        }
+    #endif
+    
+    func calculateObstacleMovement(allObstacles: [SKNode]) {
+        for obstacle in allObstacles {
+            if gameDelegate?.pausedStatus() == true {
+                obstacle.position.x -= 0
+            }
+            else {
+                #if os(iOS)
+                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: duration*100)
+                #elseif os(tvOS)
+                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: durationTV*100)
+                #endif
+                
+                obstacle.run(moveObstAction)
+            }
+        }
+    }
+    
+    #if os(tvOS)
+        func addTargetToPauseActionToTV() -> UITapGestureRecognizer {
+            self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
+            self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+            
+            return buttonTvOS
+        }
+    #endif
+    
+    // MARK: - Função de clicar no botão com tvRemote
+    @objc private func tvOSAction() {
+        gameDelegate?.pauseGame()
+    }
+    
+    func buttonActions() {
+        gameDelegate?.getRestartButton().action = {
+            self.gameDelegate?.restartGame()
+        }
+        
+        gameDelegate?.getHomeButton().action = {
+            self.gameDelegate?.goToHome()
+        }
+        
+        gameDelegate?.getResumeButton().action = {
+            self.gameDelegate?.resumeGame()
+        }
+        
+        gameDelegate?.getSoundButton().action = {
+            self.gameDelegate?.soundAction()
+        }
+        
+        gameDelegate?.getMusicButton().action = {
+            self.gameDelegate?.musicAction()
+        }
+    }
+    
+    func moveBackground() {
+        gameDelegate?.getScenario().position.x -= (1.5+(CGFloat(score/15)))
+        gameDelegate?.getScenario2().position.x -= (1.5+(CGFloat(score/15)))
+        
+        guard let scenarioWidth = gameDelegate?.getScenario().size.width else {
+            return
+        }
+        
+        guard let scenarioXPosition = gameDelegate?.getScenario().position.x else {
+            return
+        }
+        
+        guard let scenario2XPosition = gameDelegate?.getScenario2().position.x else {
+            return
+        }
+        
+        guard let scenario2Width = gameDelegate?.getScenario2().size.width else {
+            return
+        }
+        
+        if scenarioXPosition <= -scenarioWidth/2 {
+            gameDelegate?.getScenario().position.x = scenarioWidth/2 + scenario2XPosition*2
+            
+            if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
+                gameDelegate?.getScenario().texture = gameDelegate?.getScenarioTextures()[1]
+            } else {
+                gameDelegate?.getScenario().texture = gameDelegate?.getScenarioTextures()[0]
+            }
+        }
+        
+        if scenario2XPosition <= -scenario2Width/2 {
+            gameDelegate?.getScenario2().position.x = scenario2Width/2 + scenarioXPosition*2
+            
+            if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
+                gameDelegate?.getScenario2().texture = gameDelegate?.getScenarioTextures()[1]
+            } else {
+                gameDelegate?.getScenario2().texture = gameDelegate?.getScenarioTextures()[0]
+            }
+        }
+    }
+
     func chooseObstacle() -> [Obstacle] {
         /*
          1. decidir peso
@@ -190,5 +394,39 @@ class GameSceneController {
         timer.invalidate()
         defaults.set(score, forKey: "currentScore")
         score = 0
+    }
+    
+    func contact(contact: SKPhysicsContact, nodeA: SKNode, nodeB: SKNode) {
+        if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
+            collisionBetween(player: nodeA, enemy: nodeB)
+        }
+    }
+    
+    func increaseScore(player: SKNode, enemy: SKNode) {
+        score += 2
+        let wait = SKAction.wait(forDuration: 1)
+        let hide = SKAction.run {
+            self.gameDelegate?.getPlusTwoLabel().isHidden = true
+        }
+        let sequence = SKAction.sequence([wait, hide])
+        
+        if player.name == "Coin" {
+            player.removeFromParent()
+            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+            
+        } else {
+            enemy.removeFromParent()
+            self.gameDelegate?.getPlusTwoLabel().isHidden = false
+            self.gameDelegate?.getPlusTwoLabel().run(sequence)
+        }
+    }
+    
+    func collisionBetween(player: SKNode, enemy: SKNode) {
+        if player.name == "Coin" || enemy.name == "Coin" {
+            increaseScore(player: player, enemy: enemy)
+        } else {
+            gameDelegate?.goToGameOverScene()
+        }
     }
 }

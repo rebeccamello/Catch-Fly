@@ -8,7 +8,6 @@
 import SpriteKit
 
 class GameOverScene: SKScene {
-    let tapGeneralSelection = UITapGestureRecognizer()
     var score: Int = 20
     
     lazy var scenarioImage: SKSpriteNode = {
@@ -27,8 +26,8 @@ class GameOverScene: SKScene {
         
         let frames: [SKTexture] = createTexture("GatoMosca")
         cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                            timePerFrame: TimeInterval(0.2),
-                                                            resize: false, restore: true)))
+                                                        timePerFrame: TimeInterval(0.2),
+                                                        resize: false, restore: true)))
         return cat
     }()
     
@@ -68,6 +67,11 @@ class GameOverScene: SKScene {
         return g
     }()
     
+    lazy var gameOver: GameOverSceneController = {
+        let g = GameOverSceneController()
+        return g
+    }()
+    
     class func newGameScene() -> GameOverScene {
         let scene = GameOverScene()
         scene.scaleMode = .resizeFill
@@ -95,38 +99,23 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.setUpScene()
+        currentScore()
+        
+#if os(tvOS)
+        addTapGestureRecognizer()
+#endif
+        
+    }
+    
+    func currentScore() {
         let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
         scoreLabel.text = "your_score".localized() + "\(currentScore)"
-        
-        #if os(tvOS)
-        addTapGestureRecognizer()
-        #endif
-        
-        if currentScore > UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) {
-            GameCenterService.shared.submitHighScore(score: currentScore) {error in
-                if let error = error {
-                    UserDefaults.standard.set(currentScore, forKey: GameCenterService.highscoreKey)
-                    print("ERRO GAME CENTER (subindo score): \(error)")
-                }
-            }
-        }
+        gameOver.currentScore(currentScore: currentScore)
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
         setupNodesPosition()
         setupNodesSize()
-    }
-    
-    func goToMenu() {
-        let scene = MenuScene.newGameScene()
-        self.view?.presentScene(scene)
-        
-        #if os(tvOS)
-        scene.run(SKAction.wait(forDuration: 0.02)) {
-            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-        }
-        #endif
     }
     
     private func setupNodesPosition() {
@@ -167,27 +156,34 @@ class GameOverScene: SKScene {
         retryButton.setScale(self.size.width * 0.00021)
     }
     
-    #if os(tvOS)
+#if os(tvOS)
     func addTapGestureRecognizer() {
-        tapGeneralSelection.addTarget(self, action: #selector(clicked))
-        self.view?.addGestureRecognizer(tapGeneralSelection)
+        self.view?.addGestureRecognizer(gameOver.addTargetToGestureRecognizer())
     }
-    
-    @objc func clicked() {
-        if homeButton.isFocused {
-            self.goToMenu()
-        } else if retryButton.isFocused {
-            self.restartGame()
-        }
-    }
-    #endif
+#endif
 }
 
 extension GameOverScene: GameOverLogicDelegate {
     func restartGame() {
         let scene = GameScene.newGameScene()
-        scene.isGameStarted = true
+        scene.gameLogic.isGameStarted = true
         self.view?.presentScene(scene)
+    }
+    
+    func getButtons() -> [SKButtonNode] {
+        return [homeButton, retryButton]
+    }
+    
+    func goToMenu() {
+        let scene = MenuScene.newGameScene()
+        self.view?.presentScene(scene)
+        
+#if os(tvOS)
+        scene.run(SKAction.wait(forDuration: 0.02)) {
+            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+        }
+#endif
     }
 }
 

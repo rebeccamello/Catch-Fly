@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import SpriteKit
 
 protocol GameOverLogicDelegate: AnyObject {
     func restartGame()
+    func getButtons() -> [SKButtonNode]
+    func goToMenu() 
 }

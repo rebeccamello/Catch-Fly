@@ -8,7 +8,6 @@
 import SpriteKit
 
 class MenuScene: SKScene {
-    let tapGeneralSelection = UITapGestureRecognizer()
     var hideTutorial: Bool = false
     var defaults = UserDefaults.standard
     
@@ -30,7 +29,7 @@ class MenuScene: SKScene {
     
     lazy var playButton: SKButtonNode = {
         var bt = SKButtonNode(image: .play) {
-            self.playGame()
+            self.goToGameScene()
         }
         return bt
     }()
@@ -133,27 +132,10 @@ class MenuScene: SKScene {
         self.setUpScene()
         
         #if os(tvOS)
-        addTapGestureRecognizer()
+            presentGesture()
         #endif
         
-        // Verifica se é a primeira vez que está entrando no app
-        if !UserDefaults.standard.bool(forKey: "firstTimeOpenApp") {
-            AudioService.shared.toggleSound(with: self.soundButton)
-            AudioService.shared.toggleMusic(with: self.musicButton)
-            
-            UserDefaults.standard.set(true, forKey: "firstTimeOpenApp")
-        }
-        
-        // Verifica se os áudios já estavam inativos
-        if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
-            self.soundButton.updateImage(with: .soundOff)
-        }
-        
-        if !AudioService.shared.getUserDefaultsStatus(with: .music) {
-            self.musicButton.updateImage(with: .musicOff)
-        } else {
-            AudioService.shared.soundManager(with: .backgroundMusic, soundAction: .play, .loop)
-        }
+        menuLogic.audioVerification()
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -161,24 +143,9 @@ class MenuScene: SKScene {
         setupNodesSize()
     }
 
-    func playGame() {
+    func goToGameScene() {
         hideTutorial = defaults.bool(forKey: "playerFirstTime")
-        
-        if !hideTutorial {
-            let scene = TutorialScene.newGameScene()
-            self.view?.presentScene(scene)
-        } else {
-            let scene = GameScene.newGameScene()
-            scene.isGameStarted = true
-            self.view?.presentScene(scene)
-#if os(tvOS)
-        scene.run(SKAction.wait(forDuration: 0.02)) {
-        scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-        scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-        }
-#endif
-        }
-        
+        menuLogic.playGame()
     }
     
     private func setupNodesSize() {
@@ -232,33 +199,13 @@ class MenuScene: SKScene {
         flyAction.zPosition = 1
     }
     
-    override func update(_ currentTime: TimeInterval) {
-    }
-
-#if os(tvOS)
-    func addTapGestureRecognizer() {
-        tapGeneralSelection.addTarget(self, action: #selector(clicked))
-        self.view?.addGestureRecognizer(tapGeneralSelection)
-    }
-    
-    @objc func clicked() {
-        
-        if playButton.isFocused {
-            playGame()
-            
-        } else if soundButton.isFocused {
-            self.menuLogic.toggleSound()
-            
-        } else if musicButton.isFocused {
-            self.menuLogic.toggleMusic()
-            
-        } else if gameCenterButton.isFocused {
-            
+    #if os(tvOS)
+        func presentGesture() {
+            self.view?.addGestureRecognizer(menuLogic.addTapGestureRecognizer())
         }
-    }
-#endif
+    #endif
     
-    public func setScore(with score: Int) {
+    public func setScore(with score: Int)-> Void {
         self.scoreLabel.text = "highscore".localized() + "\(score)"
     }
 }
@@ -275,6 +222,35 @@ extension MenuScene: MenuLogicDelegate {
     func getMusicButton() -> SKButtonNode {
         return musicButton
     }
+    
+    func getPlayButton() -> SKButtonNode {
+        return playButton
+    }
+    
+    func getGameCenterButton() -> SKButtonNode {
+        return gameCenterButton
+    }
+    
+    func getTutorialStatus() -> Bool {
+        return hideTutorial
+    }
+    
+    func presentScene(scene: SKScene) {
+        self.view?.presentScene(scene)
+    }
+    
+//    func playGame() {
+//        let scene = GameScene.newGameScene()
+//        scene.gameLogic.isGameStarted = true
+//        self.view?.presentScene(scene)
+//
+//        #if os(tvOS)
+//            scene.run(SKAction.wait(forDuration: 0.02)) {
+//            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
+//            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
+//            }
+//        #endif
+//    }
 }
 
 #if os(tvOS)
