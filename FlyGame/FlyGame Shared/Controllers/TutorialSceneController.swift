@@ -53,6 +53,8 @@ class TutorialSceneController {
         defaults.set(true, forKey: "playerFirstTime")
     }
     
+    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
     // MARK: Should move obstacle
     func shouldMoveObstacle() {
         if obstacleIndex == -1 { // piano entra
@@ -75,27 +77,23 @@ class TutorialSceneController {
             } else {
                 return
             }
-            
         }
         else if obstacleIndex == 1 && (currentPosition == 3 || currentPosition == 1) && state == 3 { // sair lustre
             tutorialDelegate?.getNodes()[1].isHidden = true
             tutorialDelegate?.moveObstacleOffScreen()
             state += 1
         }
-        
         else if obstacleIndex == 2 && state == 4 { // entra xicara
             tutorialDelegate?.getNodes()[1].isHidden = false
             tutorialDelegate?.createObstacle(obstacle: obstacles[2])
             tutorialDelegate?.moveObstacle()
             state += 1
         }
-        
         else if obstacleIndex == 2 && currentPosition == 1 && state == 5 { // sai xicara
             tutorialDelegate?.getNodes()[1].isHidden = true
             tutorialDelegate?.moveObstacleOffScreen()
             state += 1
         }
-        
         else if state == 6 {
             if let label = tutorialDelegate?.getLabelNode() {
                 tutorialDelegate?.addLabelNode(label: label)
@@ -105,7 +103,6 @@ class TutorialSceneController {
                 return
             }
         }
-        
         else if state == 7 {
             if let size = tutorialDelegate?.getScreenSize() {
                 let flyFly = SKAction.moveTo(x: size.width + 500, duration: 3)
@@ -114,13 +111,14 @@ class TutorialSceneController {
                 return
             }
         }
-        
         else if state == 8 {
             let scene = GameScene.newGameScene()
             scene.gameLogic.isGameStarted = true
             tutorialDelegate?.presentScene(scene: scene)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable function_body_length
     
     func passedObstacles(node: SKNode) -> Bool {
             if let sprite = node as? SKSpriteNode {
