@@ -119,23 +119,25 @@ class GameCenterService: GKGameCenterViewController {
     public func showAchievements() {
         print("entrou")
         GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
-            let achievementID = "firstPointMolestone"
+            let achievementID = "firstPointMilestoneID"
             var achievement: GKAchievement? = nil
             
             achievement = achievements?.first(where: {$0.identifier == achievementID} )
             if achievement == nil {
                 achievement = GKAchievement(identifier: achievementID)
+                achievement?.percentComplete = 100
+                achievement?.showsCompletionBanner = true
             }
             
             let achievementsToReport: [GKAchievement] = [achievement!]
             GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
                 if error != nil {
-                    print(error)
+                    print("erro 1: \(error)")
                 }
             })
             
             if error != nil {
-                print(error)
+                print("erro 2: \(error)")
             }
         })
     }
