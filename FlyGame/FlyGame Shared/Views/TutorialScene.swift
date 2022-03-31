@@ -11,6 +11,8 @@ import SpriteKit
 class TutorialScene: SKScene {
     
     var hideTutorial: Bool = false
+    var defaults = UserDefaults.standard
+    
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
         scenario = SKSpriteNode(imageNamed: "cenario")
@@ -219,6 +221,7 @@ extension TutorialScene: TutorialDelegate {
     }
     
     func presentScene(scene: SKScene) {
+        print("oi \(hideTutorial)")
         self.view?.presentScene(scene)
     }
 }

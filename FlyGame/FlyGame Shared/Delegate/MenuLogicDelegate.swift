@@ -16,4 +16,6 @@ protocol MenuLogicDelegate {
     func getTutorialStatus() -> Bool
     
     func presentScene(scene: SKScene)
+    
+    func goToGameScene()
 }

@@ -52,26 +52,28 @@ class MenuSceneController {
         }
     }
     
-    func addTapGestureRecognizer() -> UITapGestureRecognizer {
-        tapGeneralSelection.addTarget(self, action: #selector(clicked))
-        return tapGeneralSelection
-    }
-    
-    @objc func clicked() {
-        
-        if ((menuDelegate?.getButtons()[3].isFocused) == true) {
-            playGame()
-            
-        } else if (menuDelegate?.getButtons()[0].isFocused) == true {
-            toggleSound()
-            
-        } else if (menuDelegate?.getButtons()[1].isFocused) == true {
-            toggleMusic()
-            
-        } else if (menuDelegate?.getButtons()[2].isFocused) == true {
-            menuDelegate?.goToGameCenter()
+    #if os(tvOS)
+        func addTapGestureRecognizer() -> UITapGestureRecognizer {
+            tapGeneralSelection.addTarget(self, action: #selector(clicked))
+            return tapGeneralSelection
         }
-    }
+        
+        @objc func clicked() {
+            
+            if ((menuDelegate?.getButtons()[3].isFocused) == true) {
+                menuDelegate?.goToGameScene()
+                
+            } else if (menuDelegate?.getButtons()[0].isFocused) == true {
+                toggleSound()
+                
+            } else if (menuDelegate?.getButtons()[1].isFocused) == true {
+                toggleMusic()
+                
+            } else if (menuDelegate?.getButtons()[2].isFocused) == true {
+                menuDelegate?.goToGameCenter()
+            }
+        }
+    #endif
     
     func playGame() {
         if menuDelegate?.getTutorialStatus() == false {
