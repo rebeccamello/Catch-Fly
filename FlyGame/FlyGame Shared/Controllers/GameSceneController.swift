@@ -73,9 +73,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             pausedTime = Date().timeIntervalSince1970
         } else {
             let timeDifference = Date().timeIntervalSince1970 - pausedTime
-            print(timeDifference, lastObstacleTimeCreated)
             lastObstacleTimeCreated += timeDifference
-            print(lastObstacleTimeCreated)
         }
     }
     

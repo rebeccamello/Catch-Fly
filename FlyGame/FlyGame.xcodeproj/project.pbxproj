@@ -42,6 +42,8 @@
 		9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
 		9DCF1DE227F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
 		9DCF1DE327F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
+		9DCF1DF127F4D910000487A4 /* Som-Moeda.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9DCF1DF027F4D910000487A4 /* Som-Moeda.mp3 */; };
+		9DCF1DF227F4D910000487A4 /* Som-Moeda.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9DCF1DF027F4D910000487A4 /* Som-Moeda.mp3 */; };
 		C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
 		C82E700027F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
 		C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
@@ -107,6 +109,7 @@
 		9D7E402027EB8DAE00376C51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D7E402B27EB8EDA00376C51 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionBitMask.swift; sourceTree = "<group>"; };
+		9DCF1DF027F4D910000487A4 /* Som-Moeda.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Som-Moeda.mp3"; sourceTree = "<group>"; };
 		C82E6FFE27F3829100E17834 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleFetcher.swift; sourceTree = "<group>"; };
 		C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+CGSize.swift"; sourceTree = "<group>"; };
@@ -163,6 +166,7 @@
 				22C1060227E8F9EC0095EB3E /* Som-Botao.mp3 */,
 				22C1060127E8F9EC0095EB3E /* Som-Colisao.mp3 */,
 				22C1060327E8F9EC0095EB3E /* Som-Swipe.mp3 */,
+				9DCF1DF027F4D910000487A4 /* Som-Moeda.mp3 */,
 			);
 			path = Music;
 			sourceTree = "<group>";
@@ -402,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */,
+				9DCF1DF127F4D910000487A4 /* Som-Moeda.mp3 in Resources */,
 				E9A0F31E27D67B9300F965DE /* Assets.xcassets in Resources */,
 				9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */,
 				22C1060727E8F9ED0095EB3E /* Som-Botao.mp3 in Resources */,
@@ -417,6 +422,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DCF1DF227F4D910000487A4 /* Som-Moeda.mp3 in Resources */,
 				C82E700027F3829100E17834 /* .swiftlint.yml in Resources */,
 				22C1060827E8F9ED0095EB3E /* Som-Botao.mp3 in Resources */,
 				22C1060627E8F9ED0095EB3E /* Som-Colisao.mp3 in Resources */,
@@ -662,8 +668,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 87UTUM347S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -694,8 +700,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 87UTUM347S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -727,8 +733,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "tvOS App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 87UTUM347S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -754,8 +760,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "tvOS App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B47883TN4D;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 87UTUM347S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
