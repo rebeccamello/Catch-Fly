@@ -108,7 +108,6 @@ class AudioService: AudioDelegate {
                 self.loadedAudios[music.description] = audio
                 return audio
             } catch {
-                print(">>> ERRO: N foi possível reproduzir o áudio")
                 return nil
             }
         }

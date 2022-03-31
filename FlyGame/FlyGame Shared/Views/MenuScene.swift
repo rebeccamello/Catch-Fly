@@ -8,8 +8,8 @@
 import SpriteKit
 
 class MenuScene: SKScene {
-    var hideTutorial: Bool = false
     var defaults = UserDefaults.standard
+    var hideTutorial: Bool = false
     
     lazy var menuLogic: MenuSceneController = {
         let m = MenuSceneController()
@@ -142,11 +142,6 @@ class MenuScene: SKScene {
         setupNodesPosition()
         setupNodesSize()
     }
-
-    func goToGameScene() {
-        hideTutorial = defaults.bool(forKey: "playerFirstTime")
-        menuLogic.playGame()
-    }
     
     private func setupNodesSize() {
         scenarioImage.size.width = self.size.width
@@ -226,6 +221,11 @@ extension MenuScene: MenuLogicDelegate {
     
     func presentScene(scene: SKScene) {
         self.view?.presentScene(scene)
+    }
+    
+    func goToGameScene() {
+        hideTutorial = defaults.bool(forKey: "playerFirstTime")
+        menuLogic.playGame()
     }
 }
 

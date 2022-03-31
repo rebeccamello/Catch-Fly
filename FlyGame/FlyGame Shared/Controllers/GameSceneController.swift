@@ -126,19 +126,19 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
         
         @objc func clicked() {
-            if gameDelegate?.getResumeButton().isFocused == true {
+            if gameDelegate?.getButtons()[0].isFocused == true {
                 gameDelegate?.resumeGame()
                 
-            } else if gameDelegate?.getHomeButton().isFocused == true {
+            } else if gameDelegate?.getButtons()[1].isFocused == true {
                 gameDelegate?.goToHome()
                 
-            } else if gameDelegate?.getRestartButton().isFocused == true {
+            } else if gameDelegate?.getButtons()[2].isFocused == true {
                 gameDelegate?.restartGame()
                 
-            } else if gameDelegate?.getSoundButton().isFocused == true {
+            } else if gameDelegate?.getButtons()[3].isFocused == true {
                 gameDelegate?.soundAction()
                 
-            } else if gameDelegate?.getMusicButton().isFocused == true {
+            } else if gameDelegate?.getButtons()[4].isFocused == true {
                 gameDelegate?.musicAction()
             }
         }
@@ -228,7 +228,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
         
         if scenario2XPosition <= -scenario2Width/2 {
-            gameDelegate?.getScenario()[0].position.x = scenario2Width/2 + scenarioXPosition*2
+            gameDelegate?.getScenario()[1].position.x = scenario2Width/2 + scenarioXPosition*2
             
             if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
                 gameDelegate?.getScenario()[1].texture = gameDelegate?.getScenarioTextures()[1]

@@ -9,6 +9,8 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     var score: Int = 20
+    var defaults = UserDefaults.standard
+    var hideTutorial: Bool = false
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -69,6 +71,7 @@ class GameOverScene: SKScene {
     
     lazy var gameOver: GameOverSceneController = {
         let g = GameOverSceneController()
+        g.gameOverDelegate = self
         return g
     }()
     
@@ -176,6 +179,7 @@ extension GameOverScene: GameOverLogicDelegate {
     
     func goToMenu() {
         let scene = MenuScene.newGameScene()
+        hideTutorial = defaults.bool(forKey: "playerFirstTime")
         self.view?.presentScene(scene)
         
 #if os(tvOS)
