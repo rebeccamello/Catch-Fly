@@ -405,7 +405,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func getButtons() -> [SKButtonNode] {
-        return [pauseMenu.resumeButton,pauseMenu.homeButton, pauseMenu.retryButton, pauseMenu.soundButton, pauseMenu.musicButton]
+        return [pauseMenu.resumeButton, pauseMenu.homeButton, pauseMenu.retryButton, pauseMenu.soundButton, pauseMenu.musicButton]
     }
     
     func restartGame() {
@@ -415,7 +415,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func getScenario() -> [SKSpriteNode] {
-        return [scenarioImage,scenarioImage2]
+        return [scenarioImage, scenarioImage2]
     }
     
     func getScenarioTextures() -> [SKTexture] {
