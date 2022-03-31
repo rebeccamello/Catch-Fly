@@ -225,7 +225,6 @@ extension MenuScene: MenuLogicDelegate {
     
     func goToGameScene() {
         hideTutorial = defaults.bool(forKey: "playerFirstTime")
-        print(hideTutorial, "Oi")
         menuLogic.playGame()
     }
 }

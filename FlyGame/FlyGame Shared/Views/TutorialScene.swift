@@ -221,7 +221,6 @@ extension TutorialScene: TutorialDelegate {
     }
     
     func presentScene(scene: SKScene) {
-        print("oi \(hideTutorial)")
         self.view?.presentScene(scene)
     }
 }
