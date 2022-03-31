@@ -9,15 +9,12 @@ import Foundation
 import SpriteKit
 
 protocol GameLogicDelegate: AnyObject {
-    func getSoundButton() -> SKButtonNode
-    
-    func getMusicButton() -> SKButtonNode
-    
     func resumeGame()
     
     func pauseGame()
     
     func drawScore(score: Int)
+    
     func goToHome()
     
     func soundAction()
@@ -34,17 +31,11 @@ protocol GameLogicDelegate: AnyObject {
     
     func pausedStatus() -> Bool
     
-    func getResumeButton() -> SKButtonNode
-    
-    func getHomeButton() -> SKButtonNode
-    
-    func getRestartButton() -> SKButtonNode
+    func getButtons() -> [SKButtonNode]
     
     func restartGame()
     
-    func getScenario() -> SKSpriteNode
-    
-    func getScenario2() -> SKSpriteNode
+    func getScenario() -> [SKSpriteNode]
     
     func getScenarioTextures() -> [SKTexture]
  
