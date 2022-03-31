@@ -54,18 +54,19 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     }
     func movePlayer(direction: Direction) -> CGFloat {
-        var newPosition = currentPosition
-        if direction == .up {
+        switch direction {
+        case .up:
             if currentPosition != 5 {
-                newPosition += 2
+                AudioService.shared.soundManager(with: .swipe, soundAction: .play)
+                currentPosition += 2
             }
-        } else {
+        case .down:
             if currentPosition != 1 {
-                newPosition -= 2
+                AudioService.shared.soundManager(with: .swipe, soundAction: .play)
+                currentPosition -= 2
             }
         }
-        currentPosition = newPosition
-        return CGFloat(newPosition)
+        return CGFloat(currentPosition)
     }
     
     func handlePause(isPaused: Bool) {

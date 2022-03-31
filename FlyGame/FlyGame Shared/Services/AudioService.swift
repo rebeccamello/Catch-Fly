@@ -62,10 +62,6 @@ class AudioService: AudioDelegate {
             switch soundAction {
             case .play:
                 if UserDefaults.standard.bool(forKey: userDefaultsKey) {
-//                    if audio.isPlaying && self.verifyAudioType(with: sound) != .music {
-//                        audio.pause()
-//                        audio.currentTime = 0
-//                    }
                     audio.play()
                 }
             case .pause:
@@ -96,13 +92,6 @@ class AudioService: AudioDelegate {
             do {
                 let audio = try AVAudioPlayer(contentsOf: audioFile)
                 audio.numberOfLoops = reproduction.rawValue
-                
-                switch self.verifyAudioType(with: music) {
-                case .music:
-                    audio.volume = 0.05
-                case .sound:
-                    audio.volume = 1
-                }
                 
                 // Salva o áudio já criado (memoization)
                 self.loadedAudios[music.description] = audio
