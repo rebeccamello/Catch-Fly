@@ -115,4 +115,28 @@ class GameCenterService: GKGameCenterViewController {
     public func setController(_ vc: UIViewController) {
         self.controller = vc
     }
+    
+    public func showAchievements() {
+        print("entrou")
+        GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
+            let achievementID = "firstPointMolestone"
+            var achievement: GKAchievement? = nil
+            
+            achievement = achievements?.first(where: {$0.identifier == achievementID} )
+            if achievement == nil {
+                achievement = GKAchievement(identifier: achievementID)
+            }
+            
+            let achievementsToReport: [GKAchievement] = [achievement!]
+            GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
+                if error != nil {
+                    print(error)
+                }
+            })
+            
+            if error != nil {
+                print(error)
+            }
+        })
+    }
 }

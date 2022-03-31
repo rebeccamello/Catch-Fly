@@ -81,7 +81,6 @@ class MenuSceneController {
             let scene = GameScene.newGameScene()
             scene.gameLogic.isGameStarted = true
             menuDelegate?.presentScene(scene: scene)
-            
         }
     }
 }

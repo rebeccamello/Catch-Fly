@@ -238,19 +238,6 @@ extension MenuScene: MenuLogicDelegate {
     func presentScene(scene: SKScene) {
         self.view?.presentScene(scene)
     }
-    
-//    func playGame() {
-//        let scene = GameScene.newGameScene()
-//        scene.gameLogic.isGameStarted = true
-//        self.view?.presentScene(scene)
-//
-//        #if os(tvOS)
-//            scene.run(SKAction.wait(forDuration: 0.02)) {
-//            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-//            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-//            }
-//        #endif
-//    }
 }
 
 #if os(tvOS)

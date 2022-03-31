@@ -7,6 +7,7 @@
 
 import GameplayKit
 import SpriteKit
+import GameKit
 
 func randomizer(min: Int, max: Int) -> Int {
     let randomizer = GKRandomDistribution(lowestValue: min, highestValue: max)
@@ -89,13 +90,13 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     }
     
     func passedObstacles(node: SKNode) -> Bool {
-            if let sprite = node as? SKSpriteNode {
-                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
-            } else {
-                return false
-            }
+        if let sprite = node as? SKSpriteNode {
+            return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+        } else {
+            return false
+        }
     }
-
+    
     func setSwipeGesture() -> [UISwipeGestureRecognizer] {
         let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -114,35 +115,33 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         if gameDelegate?.pausedStatus() == false {
             gameDelegate?.movePlayer(direction: direction)
         }
-        
-        defaults.set(true, forKey: "playerFirstTime")
     }
     
-    #if os(tvOS)
-        func addTargetToTapGestureRecognizer() -> UITapGestureRecognizer {
-            buttonsPause.addTarget(self, action: #selector(clicked))
-            
-            return buttonsPause
-        }
+#if os(tvOS)
+    func addTargetToTapGestureRecognizer() -> UITapGestureRecognizer {
+        buttonsPause.addTarget(self, action: #selector(clicked))
         
-        @objc func clicked() {
-            if gameDelegate?.getResumeButton().isFocused == true {
-                gameDelegate?.resumeGame()
-                
-            } else if gameDelegate?.getHomeButton().isFocused == true {
-                gameDelegate?.goToHome()
-                
-            } else if gameDelegate?.getRestartButton().isFocused == true {
-                gameDelegate?.restartGame()
-                
-            } else if gameDelegate?.getSoundButton().isFocused == true {
-                gameDelegate?.soundAction()
-                
-            } else if gameDelegate?.getMusicButton().isFocused == true {
-                gameDelegate?.musicAction()
-            }
+        return buttonsPause
+    }
+    
+    @objc func clicked() {
+        if gameDelegate?.getResumeButton().isFocused == true {
+            gameDelegate?.resumeGame()
+            
+        } else if gameDelegate?.getHomeButton().isFocused == true {
+            gameDelegate?.goToHome()
+            
+        } else if gameDelegate?.getRestartButton().isFocused == true {
+            gameDelegate?.restartGame()
+            
+        } else if gameDelegate?.getSoundButton().isFocused == true {
+            gameDelegate?.soundAction()
+            
+        } else if gameDelegate?.getMusicButton().isFocused == true {
+            gameDelegate?.musicAction()
         }
-    #endif
+    }
+#endif
     
     func calculateObstacleMovement(allObstacles: [SKNode]) {
         for obstacle in allObstacles {
@@ -150,25 +149,25 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 obstacle.position.x -= 0
             }
             else {
-                #if os(iOS)
-                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: duration*100)
-                #elseif os(tvOS)
-                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: durationTV*100)
-                #endif
+#if os(iOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: duration*100)
+#elseif os(tvOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: durationTV*100)
+#endif
                 
                 obstacle.run(moveObstAction)
             }
         }
     }
     
-    #if os(tvOS)
-        func addTargetToPauseActionToTV() -> UITapGestureRecognizer {
-            self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
-            self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
-            
-            return buttonTvOS
-        }
-    #endif
+#if os(tvOS)
+    func addTargetToPauseActionToTV() -> UITapGestureRecognizer {
+        self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
+        self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        
+        return buttonTvOS
+    }
+#endif
     
     // MARK: - Função de clicar no botão com tvRemote
     @objc private func tvOSAction() {
@@ -237,7 +236,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             }
         }
     }
-
+    
     func chooseObstacle() -> [Obstacle] {
         /*
          1. decidir peso
@@ -274,6 +273,10 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         calculateScore(currentTime: currentTime)
         calculateDuration(currentTime: currentTime)
         currentScore = score
+        
+        if currentScore == 25 {
+            GameCenterService.shared.showAchievements()
+        }
     }
     // MARK: Calculo de Duration
     private func calculateDuration(currentTime: TimeInterval) {
@@ -328,7 +331,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             lastCoinTimeCreated = currentTime
         }
         let pastTime = (currentTime - lastCoinTimeCreated)
-        #if os(iOS)
+#if os(iOS)
         if pastTime >= coinDelayIOS {
             gameDelegate?.createCoin()
             lastCoinTimeCreated = currentTime
@@ -336,7 +339,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 coinDelayIOS -= 0.05 // cada vez que o update é chamado diminui o delay
             }
         }
-        #elseif os (tvOS)
+#elseif os (tvOS)
         if pastTime >= coinDelayTV {
             gameDelegate?.createCoin()
             lastCoinTimeCreated = currentTime
@@ -344,12 +347,9 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 coinDelayTV -= 0.085 // cada vez que o update é chamado diminui o delay
             }
         }
-        #endif
+#endif
     }
-    // MARK: Primera vez do player no jogo
-    func firstTime() {
-        defaults.set(false, forKey: "playerFirstTime")
-    }
+    
     // MARK: TearDown
     func tearDown() {
         timeCounter = 0

@@ -69,6 +69,7 @@ class GameOverScene: SKScene {
     
     lazy var gameOver: GameOverSceneController = {
         let g = GameOverSceneController()
+        g.gameOverDelegate = self
         return g
     }()
     
