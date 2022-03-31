@@ -211,24 +211,13 @@ class MenuScene: SKScene {
 }
 
 extension MenuScene: MenuLogicDelegate {
+    
     func goToGameCenter() {
         GameCenterService.shared.showGameCenterPage(.leaderboards)
     }
     
-    func getSoundButton() -> SKButtonNode {
-        return soundButton
-    }
-    
-    func getMusicButton() -> SKButtonNode {
-        return musicButton
-    }
-    
-    func getPlayButton() -> SKButtonNode {
-        return playButton
-    }
-    
-    func getGameCenterButton() -> SKButtonNode {
-        return gameCenterButton
+    func getButtons() -> [SKButtonNode] {
+        return [soundButton, musicButton, gameCenterButton, playButton]
     }
     
     func getTutorialStatus() -> Bool {
@@ -238,19 +227,6 @@ extension MenuScene: MenuLogicDelegate {
     func presentScene(scene: SKScene) {
         self.view?.presentScene(scene)
     }
-    
-//    func playGame() {
-//        let scene = GameScene.newGameScene()
-//        scene.gameLogic.isGameStarted = true
-//        self.view?.presentScene(scene)
-//
-//        #if os(tvOS)
-//            scene.run(SKAction.wait(forDuration: 0.02)) {
-//            scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
-//            scene.view?.window?.rootViewController?.updateFocusIfNeeded()
-//            }
-//        #endif
-//    }
 }
 
 #if os(tvOS)

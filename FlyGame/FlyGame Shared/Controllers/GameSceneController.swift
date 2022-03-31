@@ -80,11 +80,11 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     func audioVerification() {
         // Verifica se os áudios já estavam inativos
         if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
-            gameDelegate?.getSoundButton().updateImage(with: .soundOff)
+            gameDelegate?.getButtons()[3].updateImage(with: .soundOff)
         }
         
         if !AudioService.shared.getUserDefaultsStatus(with: .music) {
-            gameDelegate?.getMusicButton().updateImage(with: .musicOff)
+            gameDelegate?.getButtons()[4].updateImage(with: .musicOff)
         }
     }
     
@@ -176,64 +176,64 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     }
     
     func buttonActions() {
-        gameDelegate?.getRestartButton().action = {
+        gameDelegate?.getButtons()[0].action = {
             self.gameDelegate?.restartGame()
         }
         
-        gameDelegate?.getHomeButton().action = {
+        gameDelegate?.getButtons()[1].action = {
             self.gameDelegate?.goToHome()
         }
         
-        gameDelegate?.getResumeButton().action = {
+        gameDelegate?.getButtons()[2].action = {
             self.gameDelegate?.resumeGame()
         }
         
-        gameDelegate?.getSoundButton().action = {
+        gameDelegate?.getButtons()[3].action = {
             self.gameDelegate?.soundAction()
         }
         
-        gameDelegate?.getMusicButton().action = {
+        gameDelegate?.getButtons()[4].action = {
             self.gameDelegate?.musicAction()
         }
     }
     
     func moveBackground() {
-        gameDelegate?.getScenario().position.x -= (1.5+(CGFloat(score/15)))
-        gameDelegate?.getScenario2().position.x -= (1.5+(CGFloat(score/15)))
+        gameDelegate?.getScenario()[0].position.x -= (1.5+(CGFloat(score/15)))
+        gameDelegate?.getScenario()[1].position.x -= (1.5+(CGFloat(score/15)))
         
-        guard let scenarioWidth = gameDelegate?.getScenario().size.width else {
+        guard let scenarioWidth = gameDelegate?.getScenario()[0].size.width else {
             return
         }
         
-        guard let scenarioXPosition = gameDelegate?.getScenario().position.x else {
+        guard let scenarioXPosition = gameDelegate?.getScenario()[0].position.x else {
             return
         }
         
-        guard let scenario2XPosition = gameDelegate?.getScenario2().position.x else {
+        guard let scenario2XPosition = gameDelegate?.getScenario()[1].position.x else {
             return
         }
         
-        guard let scenario2Width = gameDelegate?.getScenario2().size.width else {
+        guard let scenario2Width = gameDelegate?.getScenario()[1].size.width else {
             return
         }
         
         if scenarioXPosition <= -scenarioWidth/2 {
-            gameDelegate?.getScenario().position.x = scenarioWidth/2 + scenario2XPosition*2
+            gameDelegate?.getScenario()[0].position.x = scenarioWidth/2 + scenario2XPosition*2
             
             if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
-                gameDelegate?.getScenario().texture = gameDelegate?.getScenarioTextures()[1]
+                gameDelegate?.getScenario()[0].texture = gameDelegate?.getScenarioTextures()[1]
             } else {
-                gameDelegate?.getScenario().texture = gameDelegate?.getScenarioTextures()[0]
+                gameDelegate?.getScenario()[0].texture = gameDelegate?.getScenarioTextures()[0]
             }
         }
         
         if scenario2XPosition <= -scenario2Width/2 {
-            gameDelegate?.getScenario2().position.x = scenario2Width/2 + scenarioXPosition*2
+            gameDelegate?.getScenario()[0].position.x = scenario2Width/2 + scenarioXPosition*2
             
             if score >= 30 && score <= 50 || score >= 80 && score <= 100 {
-                gameDelegate?.getScenario2().texture = gameDelegate?.getScenarioTextures()[1]
+                gameDelegate?.getScenario()[1].texture = gameDelegate?.getScenarioTextures()[1]
             } else {
-                gameDelegate?.getScenario2().texture = gameDelegate?.getScenarioTextures()[0]
+                gameDelegate?.getScenario()[1].texture = gameDelegate?.getScenarioTextures()[0]
             }
         }
     }

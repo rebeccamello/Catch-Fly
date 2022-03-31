@@ -342,14 +342,6 @@ extension GameScene: GameLogicDelegate {
         return plusTwo
     }
     
-    func getSoundButton() -> SKButtonNode {
-        return pauseMenu.soundButton
-    }
-    
-    func getMusicButton() -> SKButtonNode {
-        return pauseMenu.musicButton
-    }
-    
     func drawScore(score: Int) {
         scoreLabel.text = String(score)
     }
@@ -412,16 +404,8 @@ extension GameScene: GameLogicDelegate {
         return isPaused
     }
     
-    func getResumeButton() -> SKButtonNode {
-        return pauseMenu.resumeButton
-    }
-    
-    func getHomeButton() -> SKButtonNode {
-        return pauseMenu.homeButton
-    }
-    
-    func getRestartButton() -> SKButtonNode {
-        return pauseMenu.retryButton
+    func getButtons() -> [SKButtonNode] {
+        return [pauseMenu.resumeButton,pauseMenu.homeButton, pauseMenu.retryButton, pauseMenu.soundButton, pauseMenu.musicButton]
     }
     
     func restartGame() {
@@ -430,12 +414,8 @@ extension GameScene: GameLogicDelegate {
         self.view?.presentScene(scene)
     }
     
-    func getScenario() -> SKSpriteNode {
-        return scenarioImage
-    }
-    
-    func getScenario2() -> SKSpriteNode {
-        return scenarioImage2
+    func getScenario() -> [SKSpriteNode] {
+        return [scenarioImage,scenarioImage2]
     }
     
     func getScenarioTextures() -> [SKTexture] {
