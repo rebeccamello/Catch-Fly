@@ -273,10 +273,6 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         calculateScore(currentTime: currentTime)
         calculateDuration(currentTime: currentTime)
         currentScore = score
-        
-        if currentScore == 25 {
-            GameCenterService.shared.showAchievements()
-        }
     }
     // MARK: Calculo de Duration
     private func calculateDuration(currentTime: TimeInterval) {

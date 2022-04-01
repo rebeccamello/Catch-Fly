@@ -101,11 +101,35 @@ class GameOverScene: SKScene {
     override func didMove(to view: SKView) {
         self.setUpScene()
         currentScore()
+        callAchievements()
         
 #if os(tvOS)
         addTapGestureRecognizer()
 #endif
         
+    }
+    
+    func callAchievements() {
+        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
+        if currentScore >= 25 {
+            GameCenterService.shared.showAchievements(achievementID: "firstPointMilestoneID")
+            
+            if currentScore >= 60 {
+                GameCenterService.shared.showAchievements(achievementID: "secondPointMilestoneID")
+                
+                if currentScore >= 100 {
+                    GameCenterService.shared.showAchievements(achievementID: "thirdPointMilestoneID")
+                    
+                    if currentScore >= 125 {
+                        GameCenterService.shared.showAchievements(achievementID: "fourthPointMilestoneID")
+                        
+                        if currentScore >= 150 {
+                            GameCenterService.shared.showAchievements(achievementID: "fifthPointMilestoneID")
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func currentScore() {

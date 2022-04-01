@@ -116,10 +116,9 @@ class GameCenterService: GKGameCenterViewController {
         self.controller = vc
     }
     
-    public func showAchievements() {
+    public func showAchievements(achievementID: String) {
         print("entrou")
         GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
-            let achievementID = "firstPointMilestoneID"
             var achievement: GKAchievement? = nil
             
             achievement = achievements?.first(where: {$0.identifier == achievementID} )
