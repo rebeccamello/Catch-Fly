@@ -115,4 +115,28 @@ class GameCenterService: GKGameCenterViewController {
     public func setController(_ vc: UIViewController) {
         self.controller = vc
     }
+    
+    public func showAchievements(achievementID: String) {
+        GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
+            var achievement: GKAchievement?
+            
+            achievement = achievements?.first(where: {$0.identifier == achievementID})
+            if achievement == nil {
+                achievement = GKAchievement(identifier: achievementID)
+                achievement?.percentComplete = 100
+                achievement?.showsCompletionBanner = true
+            }
+            
+            let achievementsToReport: [GKAchievement] = [achievement!]
+            GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
+                if error != nil {
+                    print("erro To Report: ", error ?? "")
+                }
+            })
+            
+            if error != nil {
+                print("erro Load: ", error ?? "")
+            }
+        })
+    }
 }

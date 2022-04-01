@@ -1,19 +1,29 @@
 {
   "images" : [
     {
+      "filename" : "cenario.png",
+      "idiom" : "iphone",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "cenario2.png",
+      "idiom" : "iphone",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "cenario3.png",
+      "idiom" : "iphone",
+      "scale" : "3x"
+    },
+    {
       "filename" : "iPad Pro 12.9_ - 1.png",
-      "idiom" : "universal",
+      "idiom" : "ipad",
       "scale" : "1x"
     },
     {
       "filename" : "iPad Pro 12.9_ - 2.png",
-      "idiom" : "universal",
+      "idiom" : "ipad",
       "scale" : "2x"
-    },
-    {
-      "filename" : "iPad Pro 12.9_ - 3.png",
-      "idiom" : "universal",
-      "scale" : "3x"
     }
   ],
   "info" : {

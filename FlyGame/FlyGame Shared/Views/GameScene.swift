@@ -249,8 +249,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
-        
-        gameLogic.contact(contact: contact, nodeA: nodeA, nodeB: nodeB)
+        // swiftlint: disable force_cast
+        gameLogic.contact(contact: contact, nodeA: nodeA as! SKSpriteNode, nodeB: nodeB as! SKSpriteNode)
+        // swiftlint: enable force_cast
     }
     
     // MARK: Create Texture
@@ -416,7 +417,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func getButtons() -> [SKButtonNode] {
-        return [pauseMenu.resumeButton,pauseMenu.homeButton,pauseMenu.retryButton,pauseMenu.soundButton,pauseMenu.musicButton]
+        return [pauseMenu.resumeButton, pauseMenu.homeButton, pauseMenu.retryButton, pauseMenu.soundButton, pauseMenu.musicButton]
     }
     
     func restartGame() {
@@ -426,7 +427,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func getScenario() -> [SKSpriteNode] {
-        return [scenarioImage,scenarioImage2]
+        return [scenarioImage, scenarioImage2]
     }
     
     func getScenarioTextures() -> [SKTexture] {
