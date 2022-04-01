@@ -129,13 +129,6 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         
         return buttonsPause
     }
-    
-    @objc func clicked() {
-        if gameDelegate?.getResumeButton().isFocused == true {
-            gameDelegate?.resumeGame()
-            
-            return buttonsPause
-        }
         
         @objc func clicked() {
             if gameDelegate?.getButtons()[0].isFocused == true {
@@ -154,7 +147,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 gameDelegate?.musicAction()
             }
         }
-    }
+    
 #endif
     
     func calculateObstacleMovement(allObstacles: [SKNode]) {
