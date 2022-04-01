@@ -157,6 +157,17 @@ class GameOverScene: SKScene {
         scoreLabel.setScale(self.size.height * 0.003)
         homeButton.setScale(self.size.width * 0.00021)
         retryButton.setScale(self.size.width * 0.00021)
+        
+#if os(iOS)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            gameOverLabel.setScale(self.size.height * 0.0055)
+            scoreLabel.setScale(self.size.height * 0.0027)
+            cat.setScale(self.size.height/800)
+        default:
+            break
+        }
+#endif
     }
     
 #if os(tvOS)

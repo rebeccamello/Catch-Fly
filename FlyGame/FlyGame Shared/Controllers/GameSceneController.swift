@@ -177,7 +177,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     
     func buttonActions() {
         gameDelegate?.getButtons()[0].action = {
-            self.gameDelegate?.restartGame()
+            self.gameDelegate?.resumeGame()
         }
         
         gameDelegate?.getButtons()[1].action = {
@@ -185,7 +185,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
         
         gameDelegate?.getButtons()[2].action = {
-            self.gameDelegate?.resumeGame()
+            self.gameDelegate?.restartGame()
         }
         
         gameDelegate?.getButtons()[3].action = {
