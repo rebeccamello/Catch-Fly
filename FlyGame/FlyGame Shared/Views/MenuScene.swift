@@ -212,7 +212,7 @@ class MenuScene: SKScene {
 
 extension MenuScene: MenuLogicDelegate {
     func goToGameCenter() {
-        GameCenterService.shared.showGameCenterPage(.leaderboards)
+        GameCenterService.shared.showGameCenterPage(.default)
     }
     
     func getSoundButton() -> SKButtonNode {

@@ -117,11 +117,10 @@ class GameCenterService: GKGameCenterViewController {
     }
     
     public func showAchievements(achievementID: String) {
-        print("entrou")
         GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
-            var achievement: GKAchievement? = nil
+            var achievement: GKAchievement?
             
-            achievement = achievements?.first(where: {$0.identifier == achievementID} )
+            achievement = achievements?.first(where: {$0.identifier == achievementID})
             if achievement == nil {
                 achievement = GKAchievement(identifier: achievementID)
                 achievement?.percentComplete = 100
@@ -131,12 +130,12 @@ class GameCenterService: GKGameCenterViewController {
             let achievementsToReport: [GKAchievement] = [achievement!]
             GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
                 if error != nil {
-                    print("erro 1: \(error)")
+                    print("erro To Report: ", error ?? "")
                 }
             })
             
             if error != nil {
-                print("erro 2: \(error)")
+                print("erro Load: ", error ?? "")
             }
         })
     }

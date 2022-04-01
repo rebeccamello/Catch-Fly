@@ -42,6 +42,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     var pausedTime: TimeInterval = 0
     var buttonsPause = UITapGestureRecognizer()
     var buttonTvOS = UITapGestureRecognizer()
+    let grandmaTexture = SKTexture(imageNamed: "vovo")
+    var coinsInRun: Int = 0
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -50,6 +52,10 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         let deltaTime = (currentTime - timeScore)
         if deltaTime >= 1 {
             score += 1
+            if score == 80 && coinsInRun == 0 {
+                GameCenterService.shared.showAchievements(achievementID: "noCoinsInRunID")
+            }
+            
             gameDelegate?.drawScore(score: score)
             timeScore = currentTime
         }
@@ -354,7 +360,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         score = 0
     }
     
-    func contact(contact: SKPhysicsContact, nodeA: SKNode, nodeB: SKNode) {
+    func contact(contact: SKPhysicsContact, nodeA: SKSpriteNode, nodeB: SKSpriteNode) {
         if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
             collisionBetween(player: nodeA, enemy: nodeB)
         }
@@ -380,11 +386,26 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     }
     
-    func collisionBetween(player: SKNode, enemy: SKNode) {
+    func collisionBetween(player: SKSpriteNode, enemy: SKSpriteNode) {
         if player.name == "Coin" || enemy.name == "Coin" {
             AudioService.shared.soundManager(with: .coin, soundAction: .play)
             increaseScore(player: player, enemy: enemy)
+            coinsInRun += 1
+            print(coinsInRun)
+            if coinsInRun == 5 {
+                GameCenterService.shared.showAchievements(achievementID: "firstCoinsInRunID")
+            }
+            if coinsInRun == 12 {
+                GameCenterService.shared.showAchievements(achievementID: "secondCoinsInRunID")
+            }
         } else {
+            guard let playerTexture = player.texture else {return}
+            guard let enemyTexture = enemy.texture else {return}
+            
+            if playerTexture.description == grandmaTexture.description || enemyTexture.description == grandmaTexture.description {
+                GameCenterService.shared.showAchievements(achievementID: "crashedGrandmaID")
+            }
+            
             gameDelegate?.goToGameOverScene()
         }
     }
