@@ -14,12 +14,12 @@ class MenuSceneController {
     let tapGeneralSelection = UITapGestureRecognizer()
     
     func toggleSound() {
-        if let node = menuDelegate?.getSoundButton() {
+        if let node = menuDelegate?.getButtons()[0] {
             self.audioService.toggleSound(with: node)
         }
     }
     func toggleMusic() {
-        if let node = menuDelegate?.getMusicButton() {
+        if let node = menuDelegate?.getButtons()[1] {
             self.audioService.toggleMusic(with: node)
         }
     }
@@ -29,11 +29,11 @@ class MenuSceneController {
         // Verifica se é a primeira vez que está entrando no app
         if !UserDefaults.standard.bool(forKey: "firstTimeOpenApp") {
             
-            if let soundButton = menuDelegate?.getSoundButton() {
+            if let soundButton = menuDelegate?.getButtons()[0] {
                 AudioService.shared.toggleSound(with: soundButton)
             } else { return }
             
-            if let musicButton = menuDelegate?.getMusicButton() {
+            if let musicButton = menuDelegate?.getButtons()[1] {
                 AudioService.shared.toggleMusic(with: musicButton)
             } else { return }
             
@@ -42,36 +42,38 @@ class MenuSceneController {
         
         // Verifica se os áudios já estavam inativos
         if !AudioService.shared.getUserDefaultsStatus(with: .sound) {
-            menuDelegate?.getSoundButton().updateImage(with: .soundOff)
+            menuDelegate?.getButtons()[0].updateImage(with: .soundOff)
         }
         
         if !AudioService.shared.getUserDefaultsStatus(with: .music) {
-            menuDelegate?.getMusicButton().updateImage(with: .musicOff)
+            menuDelegate?.getButtons()[1].updateImage(with: .musicOff)
         } else {
             AudioService.shared.soundManager(with: .backgroundMusic, soundAction: .play, .loop)
         }
     }
     
-    func addTapGestureRecognizer() -> UITapGestureRecognizer {
-        tapGeneralSelection.addTarget(self, action: #selector(clicked))
-        return tapGeneralSelection
-    }
-    
-    @objc func clicked() {
-        
-        if ((menuDelegate?.getPlayButton().isFocused) == true) {
-            playGame()
-            
-        } else if (menuDelegate?.getSoundButton().isFocused) == true {
-            toggleSound()
-            
-        } else if (menuDelegate?.getMusicButton().isFocused) == true {
-            toggleMusic()
-            
-        } else if (menuDelegate?.getGameCenterButton().isFocused) == true {
-            menuDelegate?.goToGameCenter()
+    #if os(tvOS)
+        func addTapGestureRecognizer() -> UITapGestureRecognizer {
+            tapGeneralSelection.addTarget(self, action: #selector(clicked))
+            return tapGeneralSelection
         }
-    }
+        
+        @objc func clicked() {
+            
+            if ((menuDelegate?.getButtons()[3].isFocused) == true) {
+                menuDelegate?.goToGameScene()
+                
+            } else if (menuDelegate?.getButtons()[0].isFocused) == true {
+                toggleSound()
+                
+            } else if (menuDelegate?.getButtons()[1].isFocused) == true {
+                toggleMusic()
+                
+            } else if (menuDelegate?.getButtons()[2].isFocused) == true {
+                menuDelegate?.goToGameCenter()
+            }
+        }
+    #endif
     
     func playGame() {
         if menuDelegate?.getTutorialStatus() == false {

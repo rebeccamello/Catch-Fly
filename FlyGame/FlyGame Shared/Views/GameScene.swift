@@ -138,10 +138,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
         plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 20, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
-
+        
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            pauseButton.setScale(self.size.height*0.000225)
+            pauseButton.position = CGPoint(x: size.width*0.045, y: size.height*0.9)
+            scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 55, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+            plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 25, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        default:
+            break
+        }
+        
 #elseif os(tvOS)
         scoreLabel.position = pauseButton.position
         plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 50, y: scoreLabel.position.y)
+        
 #endif
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
@@ -343,14 +354,6 @@ extension GameScene: GameLogicDelegate {
         return plusTwo
     }
     
-    func getSoundButton() -> SKButtonNode {
-        return pauseMenu.soundButton
-    }
-    
-    func getMusicButton() -> SKButtonNode {
-        return pauseMenu.musicButton
-    }
-    
     func drawScore(score: Int) {
         scoreLabel.text = String(score)
     }
@@ -413,16 +416,8 @@ extension GameScene: GameLogicDelegate {
         return isPaused
     }
     
-    func getResumeButton() -> SKButtonNode {
-        return pauseMenu.resumeButton
-    }
-    
-    func getHomeButton() -> SKButtonNode {
-        return pauseMenu.homeButton
-    }
-    
-    func getRestartButton() -> SKButtonNode {
-        return pauseMenu.retryButton
+    func getButtons() -> [SKButtonNode] {
+        return [pauseMenu.resumeButton,pauseMenu.homeButton,pauseMenu.retryButton,pauseMenu.soundButton,pauseMenu.musicButton]
     }
     
     func restartGame() {
@@ -431,12 +426,8 @@ extension GameScene: GameLogicDelegate {
         self.view?.presentScene(scene)
     }
     
-    func getScenario() -> SKSpriteNode {
-        return scenarioImage
-    }
-    
-    func getScenario2() -> SKSpriteNode {
-        return scenarioImage2
+    func getScenario() -> [SKSpriteNode] {
+        return [scenarioImage,scenarioImage2]
     }
     
     func getScenarioTextures() -> [SKTexture] {

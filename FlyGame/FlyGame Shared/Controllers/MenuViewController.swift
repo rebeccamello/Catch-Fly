@@ -29,7 +29,6 @@ class MenuViewController: UIViewController {
         // Fazendo a autenticação com o Game Center
         GameCenterService.shared.autenticateUser {vct, score, error in
             if let error = error {
-                print("ERRO GAME CENTER: \(error.description)")
                 return
             }
             if let vct = vct {

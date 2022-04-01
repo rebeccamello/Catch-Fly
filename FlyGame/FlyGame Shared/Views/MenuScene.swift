@@ -8,8 +8,8 @@
 import SpriteKit
 
 class MenuScene: SKScene {
-    var hideTutorial: Bool = false
     var defaults = UserDefaults.standard
+    var hideTutorial: Bool = false
     
     lazy var menuLogic: MenuSceneController = {
         let m = MenuSceneController()
@@ -142,11 +142,6 @@ class MenuScene: SKScene {
         setupNodesPosition()
         setupNodesSize()
     }
-
-    func goToGameScene() {
-        hideTutorial = defaults.bool(forKey: "playerFirstTime")
-        menuLogic.playGame()
-    }
     
     private func setupNodesSize() {
         scenarioImage.size.width = self.size.width
@@ -161,6 +156,58 @@ class MenuScene: SKScene {
         chandelier.setScale(self.size.height/300)
         chair.setScale(self.size.height/300)
         flyAction.setScale(self.size.height/2800)
+        
+#if os(iOS)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            playButton.setScale(self.size.height/250)
+            musicButton.setScale(self.size.height/3000)
+            soundButton.setScale(self.size.height/3000)
+            gameCenterButton.setScale(self.size.height/3000)
+            piano.setScale(self.size.height/350)
+            catAction.setScale(self.size.height/1000)
+            chandelier.setScale(self.size.height/350)
+            chair.setScale(self.size.height/350)
+            flyAction.setScale(self.size.height/3150)
+            
+            scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            scenarioImage.zPosition = 0
+            
+            soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
+            soundButton.zPosition = 1
+            
+            scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
+            scoreLabel.zPosition = 1
+            scoreLabel.fontSize = self.size.height/15
+            
+            musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
+            musicButton.zPosition = 1
+            
+            gameCenterButton.position = CGPoint(x: soundButton.position.x - self.size.width/9.5, y: self.size.height/3.5)
+            gameCenterButton.zPosition = 1
+            
+            playButton.position = CGPoint(x: self.size.width/2, y: self.size.height/1.6)
+            playButton.zPosition = 1
+            
+            piano.position = CGPoint(x: self.size.width/8.5, y: self.size.height/3.5)
+            piano.zPosition = 1
+            
+            catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.55)
+            catAction.zPosition = 2
+            
+            chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.13)
+            chandelier.zPosition = 1
+            
+            chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/7.5)
+            chair.zPosition = 1
+            
+            flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.6)
+            flyAction.zPosition = 1
+            
+        default:
+            break
+        }
+#endif
     }
     
     private func setupNodesPosition() {
@@ -211,24 +258,13 @@ class MenuScene: SKScene {
 }
 
 extension MenuScene: MenuLogicDelegate {
+    
     func goToGameCenter() {
         GameCenterService.shared.showGameCenterPage(.default)
     }
     
-    func getSoundButton() -> SKButtonNode {
-        return soundButton
-    }
-    
-    func getMusicButton() -> SKButtonNode {
-        return musicButton
-    }
-    
-    func getPlayButton() -> SKButtonNode {
-        return playButton
-    }
-    
-    func getGameCenterButton() -> SKButtonNode {
-        return gameCenterButton
+    func getButtons() -> [SKButtonNode] {
+        return [soundButton, musicButton, gameCenterButton, playButton]
     }
     
     func getTutorialStatus() -> Bool {
@@ -237,6 +273,11 @@ extension MenuScene: MenuLogicDelegate {
     
     func presentScene(scene: SKScene) {
         self.view?.presentScene(scene)
+    }
+    
+    func goToGameScene() {
+        hideTutorial = defaults.bool(forKey: "playerFirstTime")
+        menuLogic.playGame()
     }
 }
 

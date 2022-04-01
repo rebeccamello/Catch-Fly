@@ -9,6 +9,8 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     var score: Int = 20
+    var defaults = UserDefaults.standard
+    var hideTutorial: Bool = false
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -179,6 +181,17 @@ class GameOverScene: SKScene {
         scoreLabel.setScale(self.size.height * 0.003)
         homeButton.setScale(self.size.width * 0.00021)
         retryButton.setScale(self.size.width * 0.00021)
+        
+#if os(iOS)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            gameOverLabel.setScale(self.size.height * 0.0055)
+            scoreLabel.setScale(self.size.height * 0.0027)
+            cat.setScale(self.size.height/800)
+        default:
+            break
+        }
+#endif
     }
     
 #if os(tvOS)
@@ -201,6 +214,7 @@ extension GameOverScene: GameOverLogicDelegate {
     
     func goToMenu() {
         let scene = MenuScene.newGameScene()
+        hideTutorial = defaults.bool(forKey: "playerFirstTime")
         self.view?.presentScene(scene)
         
 #if os(tvOS)

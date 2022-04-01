@@ -10,10 +10,12 @@ import SpriteKit
 
 protocol MenuLogicDelegate {
     func goToGameCenter()
-    func getMusicButton() -> SKButtonNode
-    func getSoundButton() -> SKButtonNode
-    func getPlayButton() -> SKButtonNode
-    func getGameCenterButton() -> SKButtonNode
+    
+    func getButtons() -> [SKButtonNode]
+    
     func getTutorialStatus() -> Bool
+    
     func presentScene(scene: SKScene)
+    
+    func goToGameScene()
 }

@@ -11,6 +11,8 @@ import SpriteKit
 class TutorialScene: SKScene {
     
     var hideTutorial: Bool = false
+    var defaults = UserDefaults.standard
+    
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
         scenario = SKSpriteNode(imageNamed: "cenario")
@@ -118,6 +120,18 @@ class TutorialScene: SKScene {
         tutorialHandDown.setScale(self.size.height*0.0035)
         successLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         successLabel.fontSize = self.size.height/5
+        
+#if os(iOS)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            tutorialHandUp.position = CGPoint(x: size.width/2, y: size.height * 0.6)
+            tutorialHandUp.setScale(self.size.height*0.0025)
+            tutorialHandDown.position = CGPoint(x: size.width/2, y: size.height * 0.4)
+            tutorialHandDown.setScale(self.size.height*0.0025)
+        default:
+            break
+        }
+#endif
     }
     
     // MARK: Create Texture
