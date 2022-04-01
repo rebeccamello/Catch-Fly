@@ -30,7 +30,9 @@ class ObstacleFetcher {
             Obstacle(lanePosition: 5, weight: 1, width: 2, assetName: "estanteVasos", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "estanteVasos"), size: CGSize(width: laneHeight*2, height: laneHeight))),
             Obstacle(lanePosition: 4, weight: 2, width: 1, assetName: "estanteDeCha", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "estanteDeCha"), size: CGSize(width: laneHeight, height: laneHeight*2))),
             Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "vovo", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "vovo"), size: CGSize(width: laneHeight, height: laneHeight*2))),
+            
             Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "piano", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "piano"), size: CGSize(width: laneHeight*2, height: laneHeight*2))),
+            
             Obstacle(lanePosition: 4, weight: 2, width: 2, assetName: "armario", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "armario"), size: CGSize(width: laneHeight*2, height: laneHeight*2))),
             Obstacle(lanePosition: 2, weight: 2, width: 1, assetName: "bancoVaso", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "bancoVaso"), size: CGSize(width: laneHeight, height: laneHeight*2))),
             Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "mesaVaso", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "mesaVaso"), size: CGSize(width: laneHeight*2, height: laneHeight*2))),
