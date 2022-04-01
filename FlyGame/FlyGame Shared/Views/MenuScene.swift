@@ -160,15 +160,15 @@ class MenuScene: SKScene {
 #if os(iOS)
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            playButton.setScale(self.size.height/300)
-            musicButton.setScale(self.size.height/2800)
-            soundButton.setScale(self.size.height/2800)
-            gameCenterButton.setScale(self.size.height/2800)
+            playButton.setScale(self.size.height/250)
+            musicButton.setScale(self.size.height/3000)
+            soundButton.setScale(self.size.height/3000)
+            gameCenterButton.setScale(self.size.height/3000)
             piano.setScale(self.size.height/350)
             catAction.setScale(self.size.height/1000)
             chandelier.setScale(self.size.height/350)
             chair.setScale(self.size.height/350)
-            flyAction.setScale(self.size.height/3000)
+            flyAction.setScale(self.size.height/3150)
             
             scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
             scenarioImage.zPosition = 0
@@ -195,13 +195,13 @@ class MenuScene: SKScene {
             catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.55)
             catAction.zPosition = 2
             
-            chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.19)
+            chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.13)
             chandelier.zPosition = 1
             
-            chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/7)
+            chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/7.5)
             chair.zPosition = 1
             
-            flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.5)
+            flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.6)
             flyAction.zPosition = 1
             
         default:
