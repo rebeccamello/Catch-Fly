@@ -53,19 +53,28 @@ class AudioService: AudioDelegate {
     /// Mexe com um áudio específico
     public func soundManager(with sound: AudiosList, soundAction: AudiosAction, _ reproduction: AudioReproduction = .oneTime) {
         
-        let userDefaultsKey = self.verifyAudioType(with: sound).description
-        
-        // Verifica se o som está ativado
-        let audio = self.getMusic(from: sound, reproduction: reproduction)
-        
-        if let audio = audio {
-            switch soundAction {
-            case .play:
-                if UserDefaults.standard.bool(forKey: userDefaultsKey) {
-                    audio.play()
+        // Cria uma Thread nova pra ativar o som
+        DispatchQueue(label: "Ativar o som", attributes: .concurrent).async {
+            let userDefaultsKey = self.verifyAudioType(with: sound).description
+            
+            // Verifica se o som está ativado
+            let audio = self.getMusic(from: sound, reproduction: reproduction)
+            
+            if let audio = audio {
+                switch soundAction {
+                case .play:
+                    if UserDefaults.standard.bool(forKey: userDefaultsKey) {
+                        
+                        // Verifica se esta tocando pra começar o áudio do zero
+                        if audio.isPlaying && self.verifyAudioType(with: sound) != .music {
+                            audio.pause()
+                            audio.currentTime = 0
+                        }
+                        audio.play()
+                    }
+                case .pause:
+                    audio.stop()
                 }
-            case .pause:
-                audio.stop()
             }
         }
     }
