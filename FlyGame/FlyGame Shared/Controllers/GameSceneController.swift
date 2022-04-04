@@ -7,6 +7,7 @@
 
 import GameplayKit
 import SpriteKit
+import GameKit
 
 func randomizer(min: Int, max: Int) -> Int {
     let randomizer = GKRandomDistribution(lowestValue: min, highestValue: max)
@@ -41,6 +42,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     var pausedTime: TimeInterval = 0
     var buttonsPause = UITapGestureRecognizer()
     var buttonTvOS = UITapGestureRecognizer()
+    let grandmaTexture = SKTexture(imageNamed: "vovo")
+    var coinsInRun: Int = 0
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -49,23 +52,28 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         let deltaTime = (currentTime - timeScore)
         if deltaTime >= 1 {
             score += 1
+            if score == 80 && coinsInRun == 0 {
+                GameCenterService.shared.showAchievements(achievementID: "noCoinsInRunID")
+            }
+            
             gameDelegate?.drawScore(score: score)
             timeScore = currentTime
         }
     }
     func movePlayer(direction: Direction) -> CGFloat {
-        var newPosition = currentPosition
-        if direction == .up {
+        switch direction {
+        case .up:
             if currentPosition != 5 {
-                newPosition += 2
+                AudioService.shared.soundManager(with: .swipe, soundAction: .play)
+                currentPosition += 2
             }
-        } else {
+        case .down:
             if currentPosition != 1 {
-                newPosition -= 2
+                AudioService.shared.soundManager(with: .swipe, soundAction: .play)
+                currentPosition -= 2
             }
         }
-        currentPosition = newPosition
-        return CGFloat(newPosition)
+        return CGFloat(currentPosition)
     }
     
     func handlePause(isPaused: Bool) {
@@ -89,13 +97,13 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     }
     
     func passedObstacles(node: SKNode) -> Bool {
-            if let sprite = node as? SKSpriteNode {
-                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
-            } else {
-                return false
-            }
+        if let sprite = node as? SKSpriteNode {
+            return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+        } else {
+            return false
+        }
     }
-
+    
     func setSwipeGesture() -> [UISwipeGestureRecognizer] {
         let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -114,16 +122,14 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         if gameDelegate?.pausedStatus() == false {
             gameDelegate?.movePlayer(direction: direction)
         }
-        
-        defaults.set(true, forKey: "playerFirstTime")
     }
     
-    #if os(tvOS)
-        func addTargetToTapGestureRecognizer() -> UITapGestureRecognizer {
-            buttonsPause.addTarget(self, action: #selector(clicked))
-            
-            return buttonsPause
-        }
+#if os(tvOS)
+    func addTargetToTapGestureRecognizer() -> UITapGestureRecognizer {
+        buttonsPause.addTarget(self, action: #selector(clicked))
+        
+        return buttonsPause
+    }
         
         @objc func clicked() {
             if gameDelegate?.getButtons()[0].isFocused == true {
@@ -142,7 +148,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 gameDelegate?.musicAction()
             }
         }
-    #endif
+    
+#endif
     
     func calculateObstacleMovement(allObstacles: [SKNode]) {
         for obstacle in allObstacles {
@@ -150,25 +157,25 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 obstacle.position.x -= 0
             }
             else {
-                #if os(iOS)
-                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: duration*100)
-                #elseif os(tvOS)
-                    let moveObstAction = SKAction.moveTo(x: (-100000), duration: durationTV*100)
-                #endif
+#if os(iOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: duration*100)
+#elseif os(tvOS)
+                let moveObstAction = SKAction.moveTo(x: (-100000), duration: durationTV*100)
+#endif
                 
                 obstacle.run(moveObstAction)
             }
         }
     }
     
-    #if os(tvOS)
-        func addTargetToPauseActionToTV() -> UITapGestureRecognizer {
-            self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
-            self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
-            
-            return buttonTvOS
-        }
-    #endif
+#if os(tvOS)
+    func addTargetToPauseActionToTV() -> UITapGestureRecognizer {
+        self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
+        self.buttonTvOS.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        
+        return buttonTvOS
+    }
+#endif
     
     // MARK: - Função de clicar no botão com tvRemote
     @objc private func tvOSAction() {
@@ -237,7 +244,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             }
         }
     }
-
+    
     func chooseObstacle() -> [Obstacle] {
         /*
          1. decidir peso
@@ -328,7 +335,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             lastCoinTimeCreated = currentTime
         }
         let pastTime = (currentTime - lastCoinTimeCreated)
-        #if os(iOS)
+#if os(iOS)
         if pastTime >= coinDelayIOS {
             gameDelegate?.createCoin()
             lastCoinTimeCreated = currentTime
@@ -336,7 +343,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 coinDelayIOS -= 0.05 // cada vez que o update é chamado diminui o delay
             }
         }
-        #elseif os (tvOS)
+#elseif os (tvOS)
         if pastTime >= coinDelayTV {
             gameDelegate?.createCoin()
             lastCoinTimeCreated = currentTime
@@ -344,12 +351,9 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 coinDelayTV -= 0.085 // cada vez que o update é chamado diminui o delay
             }
         }
-        #endif
+#endif
     }
-    // MARK: Primera vez do player no jogo
-    func firstTime() {
-        defaults.set(false, forKey: "playerFirstTime")
-    }
+    
     // MARK: TearDown
     func tearDown() {
         timeCounter = 0
@@ -358,7 +362,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         score = 0
     }
     
-    func contact(contact: SKPhysicsContact, nodeA: SKNode, nodeB: SKNode) {
+    func contact(contact: SKPhysicsContact, nodeA: SKSpriteNode, nodeB: SKSpriteNode) {
         if contact.bodyB.node?.name == "Fly" || contact.bodyA.node?.name == "Fly" {
             collisionBetween(player: nodeA, enemy: nodeB)
         }
@@ -384,11 +388,26 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     }
     
-    func collisionBetween(player: SKNode, enemy: SKNode) {
+    func collisionBetween(player: SKSpriteNode, enemy: SKSpriteNode) {
         if player.name == "Coin" || enemy.name == "Coin" {
             AudioService.shared.soundManager(with: .coin, soundAction: .play)
             increaseScore(player: player, enemy: enemy)
+            coinsInRun += 1
+            print(coinsInRun)
+            if coinsInRun == 5 {
+                GameCenterService.shared.showAchievements(achievementID: "firstCoinsInRunID")
+            }
+            if coinsInRun == 12 {
+                GameCenterService.shared.showAchievements(achievementID: "secondCoinsInRunID")
+            }
         } else {
+            guard let playerTexture = player.texture else {return}
+            guard let enemyTexture = enemy.texture else {return}
+            
+            if playerTexture.description == grandmaTexture.description || enemyTexture.description == grandmaTexture.description {
+                GameCenterService.shared.showAchievements(achievementID: "crashedGrandmaID")
+            }
+            
             gameDelegate?.goToGameOverScene()
         }
     }
