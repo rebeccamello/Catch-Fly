@@ -103,11 +103,35 @@ class GameOverScene: SKScene {
     override func didMove(to view: SKView) {
         self.setUpScene()
         currentScore()
+        callAchievements()
         
 #if os(tvOS)
         addTapGestureRecognizer()
 #endif
         
+    }
+    
+    func callAchievements() {
+        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
+        if currentScore >= 25 {
+            GameCenterService.shared.showAchievements(achievementID: "firstPointMilestoneID")
+            
+            if currentScore >= 60 {
+                GameCenterService.shared.showAchievements(achievementID: "secondPointMilestoneID")
+                
+                if currentScore >= 100 {
+                    GameCenterService.shared.showAchievements(achievementID: "thirdPointMilestoneID")
+                    
+                    if currentScore >= 125 {
+                        GameCenterService.shared.showAchievements(achievementID: "fourthPointMilestoneID")
+                        
+                        if currentScore >= 150 {
+                            GameCenterService.shared.showAchievements(achievementID: "fifthPointMilestoneID")
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func currentScore() {
@@ -157,6 +181,17 @@ class GameOverScene: SKScene {
         scoreLabel.setScale(self.size.height * 0.003)
         homeButton.setScale(self.size.width * 0.00021)
         retryButton.setScale(self.size.width * 0.00021)
+        
+#if os(iOS)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            gameOverLabel.setScale(self.size.height * 0.0055)
+            scoreLabel.setScale(self.size.height * 0.0027)
+            cat.setScale(self.size.height/800)
+        default:
+            break
+        }
+#endif
     }
     
 #if os(tvOS)

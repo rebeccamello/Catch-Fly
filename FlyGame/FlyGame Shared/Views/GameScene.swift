@@ -138,10 +138,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 #if os(iOS)
         scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 50, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
         plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 20, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
-
+        
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            pauseButton.setScale(self.size.height*0.000225)
+            pauseButton.position = CGPoint(x: size.width*0.045, y: size.height*0.9)
+            scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 55, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+            plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 25, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+        default:
+            break
+        }
+        
 #elseif os(tvOS)
         scoreLabel.position = pauseButton.position
         plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 50, y: scoreLabel.position.y)
+        
 #endif
         scenarioImage.position = CGPoint(x: scenarioImage.size.width/2, y: scenarioImage.size.height/2)
         scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
@@ -238,8 +249,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
-        
-        gameLogic.contact(contact: contact, nodeA: nodeA, nodeB: nodeB)
+        // swiftlint: disable force_cast
+        gameLogic.contact(contact: contact, nodeA: nodeA as! SKSpriteNode, nodeB: nodeB as! SKSpriteNode)
+        // swiftlint: enable force_cast
     }
     
     // MARK: Create Texture
@@ -404,7 +416,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func getButtons() -> [SKButtonNode] {
-        return [pauseMenu.resumeButton,pauseMenu.homeButton, pauseMenu.retryButton, pauseMenu.soundButton, pauseMenu.musicButton]
+        return [pauseMenu.resumeButton, pauseMenu.homeButton, pauseMenu.retryButton, pauseMenu.soundButton, pauseMenu.musicButton]
     }
     
     func restartGame() {
@@ -414,7 +426,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func getScenario() -> [SKSpriteNode] {
-        return [scenarioImage,scenarioImage2]
+        return [scenarioImage, scenarioImage2]
     }
     
     func getScenarioTextures() -> [SKTexture] {
