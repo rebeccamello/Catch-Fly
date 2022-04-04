@@ -74,6 +74,15 @@ class PauseMenu: SKNode {
         soundButton.setScale(bg.size.width * 0.00023)
         musicButton.setScale(bg.size.width * 0.00023)
         resumeButton.setScale(bg.size.width * 0.002)
+        
+#if os(iOS)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            resumeButton.setScale(bg.size.width * 0.003)
+        default:
+            break
+        }
+#endif
                 
         buttonsContainer.lineWidth = 0
         setPositions()
@@ -103,13 +112,5 @@ class PauseMenu: SKNode {
         musicButton.position = CGPoint(x: buttonsContainer.frame.size.width/3,
                                        y: -resumeButton.position.y*1.4)
         
-#if os(iOS)
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            resumeButton.setScale(bg.size.width * 0.003)
-        default:
-            break
-        }
-#endif
     }
 }
