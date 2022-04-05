@@ -43,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var pauseMenu: PauseMenu = {
         var menu = PauseMenu()
+        menu.zPosition = 4
         menu.gameDelegate = self
         return menu
     }()
@@ -91,9 +92,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - setUpScenne
     func setUpScene() {
-        removeAllChildren()
-        removeAllActions()
-        
         #if os(tvOS)
             addPauseActionGesture()
         #endif
@@ -110,9 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
-        
-        setNodesSize()
-        setNodesPosition()
+    
         addSwipeGestures()
         gameLogic.buttonActions()
         
@@ -143,7 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .pad:
             pauseButton.setScale(self.size.height*0.000225)
             pauseButton.position = CGPoint(x: size.width*0.045, y: size.height*0.9)
-            scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 55, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+            scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 60, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
             plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 25, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
         default:
             break
@@ -175,7 +171,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
-        self.setUpScene()
+        setNodesSize()
+        setNodesPosition()
         
         setPhysics(node: playerNode)
     }

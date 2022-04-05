@@ -151,23 +151,6 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     
 #endif
     
-    func calculateObstacleMovement(allObstacles: [SKNode]) {
-        for obstacle in allObstacles {
-            if gameDelegate?.pausedStatus() == true {
-                obstacle.position.x -= 0
-            }
-            else {
-#if os(iOS)
-                let moveObstAction = SKAction.moveTo(x: (-100000), duration: duration*100)
-#elseif os(tvOS)
-                let moveObstAction = SKAction.moveTo(x: (-100000), duration: durationTV*100)
-#endif
-                
-                obstacle.run(moveObstAction)
-            }
-        }
-    }
-    
 #if os(tvOS)
     func addTargetToPauseActionToTV() -> UITapGestureRecognizer {
         self.buttonTvOS.addTarget(self, action: #selector(self.tvOSAction))
@@ -393,7 +376,6 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             AudioService.shared.soundManager(with: .coin, soundAction: .play)
             increaseScore(player: player, enemy: enemy)
             coinsInRun += 1
-            print(coinsInRun)
             if coinsInRun == 5 {
                 GameCenterService.shared.showAchievements(achievementID: "firstCoinsInRunID")
             }
