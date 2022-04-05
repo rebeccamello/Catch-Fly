@@ -139,7 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .pad:
             pauseButton.setScale(self.size.height*0.000225)
             pauseButton.position = CGPoint(x: size.width*0.045, y: size.height*0.9)
-            scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 55, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
+            scoreLabel.position = CGPoint(x: pauseButton.position.x + scoreLabel.frame.size.width/2 + 60, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
             plusTwo.position = CGPoint(x: scoreLabel.position.x + plusTwo.frame.size.width/2 + 25, y: pauseButton.position.y - scoreLabel.frame.size.height/2)
         default:
             break

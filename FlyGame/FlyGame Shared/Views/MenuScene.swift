@@ -142,7 +142,6 @@ class MenuScene: SKScene {
         setupNodesPosition()
         setupNodesSize()
     }
-    // swiftlint:disable function_body_length
     private func setupNodesSize() {
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
@@ -175,7 +174,7 @@ class MenuScene: SKScene {
         }
 #endif
     }
-    // swiftlint:enable function_body_length
+    // swiftlint:disable function_body_length
     private func setupNodesPosition() {
         scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         scenarioImage.zPosition = 0
@@ -264,6 +263,7 @@ class MenuScene: SKScene {
         self.scoreLabel.text = "highscore".localized() + "\(score)"
     }
 }
+// swiftlint:enable function_body_length
 
 extension MenuScene: MenuLogicDelegate {
     
