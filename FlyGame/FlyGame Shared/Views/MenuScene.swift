@@ -169,41 +169,7 @@ class MenuScene: SKScene {
             chandelier.setScale(self.size.height/350)
             chair.setScale(self.size.height/350)
             flyAction.setScale(self.size.height/3150)
-            
-            scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-            scenarioImage.zPosition = 0
-            
-            soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
-            soundButton.zPosition = 1
-            
-            scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
-            scoreLabel.zPosition = 1
-            scoreLabel.fontSize = self.size.height/15
-            
-            musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
-            musicButton.zPosition = 1
-            
-            gameCenterButton.position = CGPoint(x: soundButton.position.x - self.size.width/9.5, y: self.size.height/3.5)
-            gameCenterButton.zPosition = 1
-            
-            playButton.position = CGPoint(x: self.size.width/2, y: self.size.height/1.6)
-            playButton.zPosition = 1
-            
-            piano.position = CGPoint(x: self.size.width/8.5, y: self.size.height/3.5)
-            piano.zPosition = 1
-            
-            catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.55)
-            catAction.zPosition = 2
-            
-            chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.13)
-            chandelier.zPosition = 1
-            
-            chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/7.5)
-            chair.zPosition = 1
-            
-            flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.6)
-            flyAction.zPosition = 1
-            
+
         default:
             break
         }
@@ -244,6 +210,48 @@ class MenuScene: SKScene {
         
         flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.28)
         flyAction.zPosition = 1
+        
+#if os(iOS)
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            scenarioImage.zPosition = 0
+            
+            soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
+            soundButton.zPosition = 1
+            
+            scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
+            scoreLabel.zPosition = 1
+            scoreLabel.fontSize = self.size.height/15
+            
+            musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
+            musicButton.zPosition = 1
+            
+            gameCenterButton.position = CGPoint(x: soundButton.position.x - self.size.width/9.5, y: self.size.height/3.5)
+            gameCenterButton.zPosition = 1
+            
+            playButton.position = CGPoint(x: self.size.width/2, y: self.size.height/1.6)
+            playButton.zPosition = 1
+            
+            piano.position = CGPoint(x: self.size.width/8.5, y: self.size.height/3.5)
+            piano.zPosition = 1
+            
+            catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.55)
+            catAction.zPosition = 2
+            
+            chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.13)
+            chandelier.zPosition = 1
+            
+            chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/7.5)
+            chair.zPosition = 1
+            
+            flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.6)
+            flyAction.zPosition = 1
+            
+        default:
+            break
+        }
+#endif
     }
     
     #if os(tvOS)

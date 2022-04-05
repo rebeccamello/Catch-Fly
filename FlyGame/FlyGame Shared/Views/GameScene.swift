@@ -43,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var pauseMenu: PauseMenu = {
         var menu = PauseMenu()
+        menu.zPosition = 4
         menu.gameDelegate = self
         return menu
     }()
@@ -91,9 +92,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - setUpScenne
     func setUpScene() {
-        removeAllChildren()
-        removeAllActions()
-        
         #if os(tvOS)
             addPauseActionGesture()
         #endif
@@ -110,9 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
-        
-        setNodesSize()
-        setNodesPosition()
+    
         addSwipeGestures()
         gameLogic.buttonActions()
         
@@ -175,7 +171,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: didChangeSize
     override func didChangeSize(_ oldSize: CGSize) {
-        self.setUpScene()
+        setNodesSize()
+        setNodesPosition()
         
         setPhysics(node: playerNode)
     }
