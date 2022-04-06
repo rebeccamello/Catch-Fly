@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		225B3ADA27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
+		225B3ADB27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
+		225B3ADC27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */; };
+		225B3ADD27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */; };
+		225B3ADE27FE1B4700CC4F6D /* Som-Moeda.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD727FE1B4700CC4F6D /* Som-Moeda.mp3 */; };
+		225B3ADF27FE1B4700CC4F6D /* Som-Moeda.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD727FE1B4700CC4F6D /* Som-Moeda.mp3 */; };
+		225B3AE027FE1B4700CC4F6D /* Som-Botao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD827FE1B4700CC4F6D /* Som-Botao.mp3 */; };
+		225B3AE127FE1B4700CC4F6D /* Som-Botao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD827FE1B4700CC4F6D /* Som-Botao.mp3 */; };
+		225B3AE227FE1B4700CC4F6D /* Som-Colisao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD927FE1B4700CC4F6D /* Som-Colisao.mp3 */; };
+		225B3AE327FE1B4700CC4F6D /* Som-Colisao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD927FE1B4700CC4F6D /* Som-Colisao.mp3 */; };
 		227117C227EBA93E0083C7E8 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C127EBA93E0083C7E8 /* GameCenterService.swift */; };
 		227117C327EBA93E0083C7E8 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C127EBA93E0083C7E8 /* GameCenterService.swift */; };
 		227117C527EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */; };
@@ -21,16 +31,6 @@
 		2297C54927ED03670009FDD8 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297C54727ED03670009FDD8 /* MenuViewController.swift */; };
 		2297C54B27ED04E70009FDD8 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297C54A27ED04E70009FDD8 /* Direction.swift */; };
 		2297C54C27ED04E70009FDD8 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297C54A27ED04E70009FDD8 /* Direction.swift */; };
-		22AEBD6127F64935008D2FC2 /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5C27F64935008D2FC2 /* Musica-Fundo.mp3 */; };
-		22AEBD6227F64935008D2FC2 /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5C27F64935008D2FC2 /* Musica-Fundo.mp3 */; };
-		22AEBD6327F64935008D2FC2 /* Som-Botao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5D27F64935008D2FC2 /* Som-Botao.mp3 */; };
-		22AEBD6427F64935008D2FC2 /* Som-Botao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5D27F64935008D2FC2 /* Som-Botao.mp3 */; };
-		22AEBD6527F64935008D2FC2 /* Som-Colisao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5E27F64935008D2FC2 /* Som-Colisao.mp3 */; };
-		22AEBD6627F64935008D2FC2 /* Som-Colisao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5E27F64935008D2FC2 /* Som-Colisao.mp3 */; };
-		22AEBD6727F64935008D2FC2 /* Som-Swipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5F27F64935008D2FC2 /* Som-Swipe.mp3 */; };
-		22AEBD6827F64935008D2FC2 /* Som-Swipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD5F27F64935008D2FC2 /* Som-Swipe.mp3 */; };
-		22AEBD6927F64935008D2FC2 /* Som-Moeda.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD6027F64935008D2FC2 /* Som-Moeda.mp3 */; };
-		22AEBD6A27F64935008D2FC2 /* Som-Moeda.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22AEBD6027F64935008D2FC2 /* Som-Moeda.mp3 */; };
 		22C105FE27E8F9C20095EB3E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C105FD27E8F9C20095EB3E /* Audio.swift */; };
 		22C105FF27E8F9C20095EB3E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C105FD27E8F9C20095EB3E /* Audio.swift */; };
 		22C1060E27E903490095EB3E /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C1060D27E903490095EB3E /* Buttons.swift */; };
@@ -117,6 +117,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Musica-Fundo.mp3"; path = "../../../../Arquivos/Musicas/mp3/Musica-Fundo.mp3"; sourceTree = "<group>"; };
+		225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Swipe.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Swipe.mp3"; sourceTree = "<group>"; };
+		225B3AD727FE1B4700CC4F6D /* Som-Moeda.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Moeda.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Moeda.mp3"; sourceTree = "<group>"; };
+		225B3AD827FE1B4700CC4F6D /* Som-Botao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Botao.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Botao.mp3"; sourceTree = "<group>"; };
+		225B3AD927FE1B4700CC4F6D /* Som-Colisao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Colisao.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Colisao.mp3"; sourceTree = "<group>"; };
 		227117C127EBA93E0083C7E8 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterDelegate.swift; sourceTree = "<group>"; };
 		227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
@@ -124,11 +129,6 @@
 		2297C54127ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwipeGestureRecognizer+Direction.swift"; sourceTree = "<group>"; };
 		2297C54727ED03670009FDD8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		2297C54A27ED04E70009FDD8 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
-		22AEBD5C27F64935008D2FC2 /* Musica-Fundo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Musica-Fundo.mp3"; path = "../../../../Arquivos/Musicas/mp3/Musica-Fundo.mp3"; sourceTree = "<group>"; };
-		22AEBD5D27F64935008D2FC2 /* Som-Botao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Botao.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Botao.mp3"; sourceTree = "<group>"; };
-		22AEBD5E27F64935008D2FC2 /* Som-Colisao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Colisao.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Colisao.mp3"; sourceTree = "<group>"; };
-		22AEBD5F27F64935008D2FC2 /* Som-Swipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Swipe.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Swipe.mp3"; sourceTree = "<group>"; };
-		22AEBD6027F64935008D2FC2 /* Som-Moeda.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Moeda.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Moeda.mp3"; sourceTree = "<group>"; };
 		22C105FD27E8F9C20095EB3E /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		22C1060D27E903490095EB3E /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		9553276127F62AE700C8338D /* Catch Fly Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Catch Fly Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,14 +188,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2297C53C27ECFA970009FDD8 /* Music */ = {
+		225B3AD427FE1B3700CC4F6D /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				22AEBD5C27F64935008D2FC2 /* Musica-Fundo.mp3 */,
-				22AEBD5D27F64935008D2FC2 /* Som-Botao.mp3 */,
-				22AEBD5E27F64935008D2FC2 /* Som-Colisao.mp3 */,
-				22AEBD6027F64935008D2FC2 /* Som-Moeda.mp3 */,
-				22AEBD5F27F64935008D2FC2 /* Som-Swipe.mp3 */,
+				225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */,
+				225B3AD827FE1B4700CC4F6D /* Som-Botao.mp3 */,
+				225B3AD927FE1B4700CC4F6D /* Som-Colisao.mp3 */,
+				225B3AD727FE1B4700CC4F6D /* Som-Moeda.mp3 */,
+				225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */,
 			);
 			path = Music;
 			sourceTree = "<group>";
@@ -213,8 +213,8 @@
 		22C1060027E8F9D20095EB3E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				225B3AD427FE1B3700CC4F6D /* Music */,
 				E9A99ED627DBCA28004D86FF /* Font */,
-				2297C53C27ECFA970009FDD8 /* Music */,
 				E9A0F2F627D67B9300F965DE /* Assets.xcassets */,
 			);
 			path = Assets;
@@ -426,6 +426,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					"com.apple.gamecenter.Game Center DashBoard",
+					com.apple.gamecenter.Leaderboard,
+				);
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
@@ -475,15 +479,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */,
-				22AEBD6927F64935008D2FC2 /* Som-Moeda.mp3 in Resources */,
 				E9A0F31E27D67B9300F965DE /* Assets.xcassets in Resources */,
 				9D53766127D7EB8A002E5BF5 /* LaunchScreen.storyboard in Resources */,
-				22AEBD6527F64935008D2FC2 /* Som-Colisao.mp3 in Resources */,
-				22AEBD6327F64935008D2FC2 /* Som-Botao.mp3 in Resources */,
+				225B3AE227FE1B4700CC4F6D /* Som-Colisao.mp3 in Resources */,
+				225B3ADC27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */,
 				E9A99EDA27DBD568004D86FF /* munro.ttf in Resources */,
-				22AEBD6727F64935008D2FC2 /* Som-Swipe.mp3 in Resources */,
+				225B3ADE27FE1B4700CC4F6D /* Som-Moeda.mp3 in Resources */,
 				9D7E401F27EB8DAE00376C51 /* Localizable.strings in Resources */,
-				22AEBD6127F64935008D2FC2 /* Musica-Fundo.mp3 in Resources */,
+				225B3ADA27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */,
+				225B3AE027FE1B4700CC4F6D /* Som-Botao.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,15 +495,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22AEBD6A27F64935008D2FC2 /* Som-Moeda.mp3 in Resources */,
-				22AEBD6627F64935008D2FC2 /* Som-Colisao.mp3 in Resources */,
+				225B3ADF27FE1B4700CC4F6D /* Som-Moeda.mp3 in Resources */,
 				C82E700027F3829100E17834 /* .swiftlint.yml in Resources */,
 				E9A99EDC27DBE6C6004D86FF /* Assets.xcassets in Resources */,
-				22AEBD6427F64935008D2FC2 /* Som-Botao.mp3 in Resources */,
-				22AEBD6227F64935008D2FC2 /* Musica-Fundo.mp3 in Resources */,
+				225B3AE327FE1B4700CC4F6D /* Som-Colisao.mp3 in Resources */,
+				225B3ADB27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */,
+				225B3AE127FE1B4700CC4F6D /* Som-Botao.mp3 in Resources */,
+				225B3ADD27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */,
 				9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */,
 				E9A99EDB27DBD569004D86FF /* munro.ttf in Resources */,
-				22AEBD6827F64935008D2FC2 /* Som-Swipe.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,7 +795,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
-				DEVELOPMENT_TEAM = 87UTUM347S;
+				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -824,7 +828,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
-				DEVELOPMENT_TEAM = 87UTUM347S;
+				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -858,7 +862,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 87UTUM347S;
+				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
@@ -885,7 +889,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 87UTUM347S;
+				DEVELOPMENT_TEAM = 534V229RMK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "FlyGame-tvOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Catch Fly";
