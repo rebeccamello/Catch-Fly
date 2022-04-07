@@ -287,7 +287,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let diference = Calendar.current.dateComponents([.second], from: self.timeWhenPaused, to: dateNow)
         
         if let seconds = diference.second {
-            if seconds > 10 {
+            if seconds > 20 {
                 self.goToHome()
                 return
             }
