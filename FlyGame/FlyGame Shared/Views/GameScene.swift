@@ -11,7 +11,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var currentTime: TimeInterval = 0
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
-    var defaults = UserDefaults.standard
+    private var timeWhenPaused = Date()
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -266,21 +266,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addGestureRecognizer(gameLogic.setSwipeGesture()[1])
     }
     
-// MARK: - Funcao ao sair do App e voltar
-        
+    // MARK: - App em segundo plano
+    
+    /// Ciclo de Vida
     public override func sceneDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.didLeaveFromBackgound),
+            name: UIApplication.didBecomeActiveNotification, object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.didEnterOnBackground),
+            name: UIApplication.willResignActiveNotification, object: nil
+        )
     }
 
-    @objc func didBecomeActiveNotification(notification: NSNotification) {
+    /// Quando entra no app (sai do segundo plano)
+    @objc func didLeaveFromBackgound() {
+        let dateNow = Date()
+        let diference = Calendar.current.dateComponents([.second], from: self.timeWhenPaused, to: dateNow)
+        
+        if let seconds = diference.second {
+            if seconds > 20 {
+                self.goToHome()
+                return
+            }
+        }
         self.isPaused = true
     }
     
-    @objc func didEnterBackgroundNotification(notification: NSNotification) {
+    /// Quando sai do app (entra em segundo plano)
+    @objc func didEnterOnBackground() {
+        self.timeWhenPaused = Date()
         pauseGame()
     }
-    
+        
     #if os(tvOS)
         func addTapGestureRecognizer() {
             self.view?.addGestureRecognizer(gameLogic.addTargetToTapGestureRecognizer())
@@ -288,6 +308,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     #endif
     
     // MARK: - Criação e movimentação de obstáculos
+    
     func createObstacle(obstacle: Obstacle) {
         let enemy = SKSpriteNode(imageNamed: obstacle.assetName)
         enemy.physicsBody = obstacle.physicsBody.copy() as? SKPhysicsBody
