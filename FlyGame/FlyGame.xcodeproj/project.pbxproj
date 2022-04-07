@@ -23,6 +23,8 @@
 		227117C627EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */; };
 		227117C827EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */; };
 		227117C927EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */; };
+		22967A3727FF80020012BCA4 /* GKGameCenterContent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22967A3627FF80020012BCA4 /* GKGameCenterContent.plist */; };
+		22967A3827FF80020012BCA4 /* GKGameCenterContent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22967A3627FF80020012BCA4 /* GKGameCenterContent.plist */; };
 		2297C53F27ECFAD40009FDD8 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297C53E27ECFAD40009FDD8 /* String+Localized.swift */; };
 		2297C54027ECFAD40009FDD8 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297C53E27ECFAD40009FDD8 /* String+Localized.swift */; };
 		2297C54227ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297C54127ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift */; };
@@ -125,6 +127,7 @@
 		227117C127EBA93E0083C7E8 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterDelegate.swift; sourceTree = "<group>"; };
 		227117C727EBAA7E0083C7E8 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		22967A3627FF80020012BCA4 /* GKGameCenterContent.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GKGameCenterContent.plist; sourceTree = "<group>"; };
 		2297C53E27ECFAD40009FDD8 /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		2297C54127ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwipeGestureRecognizer+Direction.swift"; sourceTree = "<group>"; };
 		2297C54727ED03670009FDD8 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -261,6 +264,7 @@
 				9D7E402127EB8DAE00376C51 /* Localizable.strings */,
 				E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */,
 				C82E6FFE27F3829100E17834 /* .swiftlint.yml */,
+				22967A3627FF80020012BCA4 /* GKGameCenterContent.plist */,
 			);
 			path = "FlyGame Shared";
 			sourceTree = "<group>";
@@ -488,6 +492,7 @@
 				9D7E401F27EB8DAE00376C51 /* Localizable.strings in Resources */,
 				225B3ADA27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */,
 				225B3AE027FE1B4700CC4F6D /* Som-Botao.mp3 in Resources */,
+				22967A3727FF80020012BCA4 /* GKGameCenterContent.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +505,7 @@
 				E9A99EDC27DBE6C6004D86FF /* Assets.xcassets in Resources */,
 				225B3AE327FE1B4700CC4F6D /* Som-Colisao.mp3 in Resources */,
 				225B3ADB27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */,
+				22967A3827FF80020012BCA4 /* GKGameCenterContent.plist in Resources */,
 				225B3AE127FE1B4700CC4F6D /* Som-Botao.mp3 in Resources */,
 				225B3ADD27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */,
 				9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */,
