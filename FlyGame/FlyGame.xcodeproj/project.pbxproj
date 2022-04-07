@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		102237C26E651B2295F5E364 /* Pods_FlyGame_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEE6CC0813608C8E6A71FBA /* Pods_FlyGame_iOS.framework */; };
 		225B3ADA27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
 		225B3ADB27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
 		225B3ADC27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */; };
@@ -48,6 +49,8 @@
 		9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
 		9DCF1DE227F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
 		9DCF1DE327F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
+		A19A93064BB62006A278D532 /* Pods_FlyGame_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E22656863D21525ADAE86DF6 /* Pods_FlyGame_tvOS.framework */; };
+		B0DE331BE423DC10FA9CA304 /* Pods_Catch_Fly_Stickers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5759DBD98F36F2A913A631 /* Pods_Catch_Fly_Stickers.framework */; };
 		C82E6FFF27F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
 		C82E700027F3829100E17834 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C82E6FFE27F3829100E17834 /* .swiftlint.yml */; };
 		C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */; };
@@ -119,6 +122,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		06B01510BA9C9EAA24F3163B /* Pods-FlyGame tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyGame tvOS.release.xcconfig"; path = "Target Support Files/Pods-FlyGame tvOS/Pods-FlyGame tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		0AEE6CC0813608C8E6A71FBA /* Pods_FlyGame_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlyGame_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		20A48A7C229500E0AA9586FF /* Pods-Catch Fly Stickers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Catch Fly Stickers.debug.xcconfig"; path = "Target Support Files/Pods-Catch Fly Stickers/Pods-Catch Fly Stickers.debug.xcconfig"; sourceTree = "<group>"; };
 		225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Musica-Fundo.mp3"; path = "../../../../Arquivos/Musicas/mp3/Musica-Fundo.mp3"; sourceTree = "<group>"; };
 		225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Swipe.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Swipe.mp3"; sourceTree = "<group>"; };
 		225B3AD727FE1B4700CC4F6D /* Som-Moeda.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Moeda.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Moeda.mp3"; sourceTree = "<group>"; };
@@ -134,6 +140,8 @@
 		2297C54A27ED04E70009FDD8 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 		22C105FD27E8F9C20095EB3E /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		22C1060D27E903490095EB3E /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		2551C872184D2D153056946C /* Pods-FlyGame iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyGame iOS.debug.xcconfig"; path = "Target Support Files/Pods-FlyGame iOS/Pods-FlyGame iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		4E5BF963429F0040AA4C2F56 /* Pods-Catch Fly Stickers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Catch Fly Stickers.release.xcconfig"; path = "Target Support Files/Pods-Catch Fly Stickers/Pods-Catch Fly Stickers.release.xcconfig"; sourceTree = "<group>"; };
 		9553276127F62AE700C8338D /* Catch Fly Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Catch Fly Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9553276327F62AE800C8338D /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		9553276527F62AE800C8338D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -142,12 +150,16 @@
 		9D7E402027EB8DAE00376C51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D7E402B27EB8EDA00376C51 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionBitMask.swift; sourceTree = "<group>"; };
+		AF5759DBD98F36F2A913A631 /* Pods_Catch_Fly_Stickers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Catch_Fly_Stickers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3740C1B89A58EF10490156A /* Pods-FlyGame tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyGame tvOS.debug.xcconfig"; path = "Target Support Files/Pods-FlyGame tvOS/Pods-FlyGame tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		BE3C55D5D079AA306C2BD419 /* Pods-FlyGame iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyGame iOS.release.xcconfig"; path = "Target Support Files/Pods-FlyGame iOS/Pods-FlyGame iOS.release.xcconfig"; sourceTree = "<group>"; };
 		C82E6FFE27F3829100E17834 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C8AB7EFC27DBE67600AB0590 /* ObstacleFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleFetcher.swift; sourceTree = "<group>"; };
 		C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+CGSize.swift"; sourceTree = "<group>"; };
 		C8C2044827ECF7A100507AB5 /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
 		C8C2044B27ECFADD00507AB5 /* TutorialSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSceneController.swift; sourceTree = "<group>"; };
 		C8D2275027DFCF7B0077CEF2 /* PauseMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseMenu.swift; sourceTree = "<group>"; };
+		E22656863D21525ADAE86DF6 /* Pods_FlyGame_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlyGame_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E97A078427D7D6CA00B1BA64 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9A0F2F527D67B9100F965DE /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		E9A0F2F627D67B9300F965DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -174,10 +186,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9E44406F95499D4B2F406C7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0DE331BE423DC10FA9CA304 /* Pods_Catch_Fly_Stickers.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E9A0F2F827D67B9300F965DE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				102237C26E651B2295F5E364 /* Pods_FlyGame_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A19A93064BB62006A278D532 /* Pods_FlyGame_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +245,16 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		3BB02CC78035C89744A801AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF5759DBD98F36F2A913A631 /* Pods_Catch_Fly_Stickers.framework */,
+				0AEE6CC0813608C8E6A71FBA /* Pods_FlyGame_iOS.framework */,
+				E22656863D21525ADAE86DF6 /* Pods_FlyGame_tvOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9553276227F62AE700C8338D /* Catch Fly Stickers */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +272,20 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		CCD31A7EFA17C69107B20A7D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				20A48A7C229500E0AA9586FF /* Pods-Catch Fly Stickers.debug.xcconfig */,
+				4E5BF963429F0040AA4C2F56 /* Pods-Catch Fly Stickers.release.xcconfig */,
+				2551C872184D2D153056946C /* Pods-FlyGame iOS.debug.xcconfig */,
+				BE3C55D5D079AA306C2BD419 /* Pods-FlyGame iOS.release.xcconfig */,
+				B3740C1B89A58EF10490156A /* Pods-FlyGame tvOS.debug.xcconfig */,
+				06B01510BA9C9EAA24F3163B /* Pods-FlyGame tvOS.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E9A0F2ED27D67B9100F965DE = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +294,8 @@
 				E9A0F30D27D67B9300F965DE /* FlyGame tvOS */,
 				9553276227F62AE700C8338D /* Catch Fly Stickers */,
 				E9A0F2FC27D67B9300F965DE /* Products */,
+				CCD31A7EFA17C69107B20A7D /* Pods */,
+				3BB02CC78035C89744A801AD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -375,7 +423,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9553276927F62AE800C8338D /* Build configuration list for PBXNativeTarget "Catch Fly Stickers" */;
 			buildPhases = (
+				872AB4C358C506CDA5FE2CF2 /* [CP] Check Pods Manifest.lock */,
 				9553275F27F62AE700C8338D /* Resources */,
+				9E44406F95499D4B2F406C7C /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -390,11 +440,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9A0F32227D67B9300F965DE /* Build configuration list for PBXNativeTarget "FlyGame iOS" */;
 			buildPhases = (
+				ADA215F5379EE0C1B52A94EF /* [CP] Check Pods Manifest.lock */,
 				C82E6FFD27F37DEB00E17834 /* Run SwiftLint */,
 				E9A0F2F727D67B9300F965DE /* Sources */,
 				E9A0F2F827D67B9300F965DE /* Frameworks */,
 				E9A0F2F927D67B9300F965DE /* Resources */,
 				9553276C27F62AE800C8338D /* Embed App Extensions */,
+				6D28ABA13436431D8D898211 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -410,6 +462,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9A0F32527D67B9300F965DE /* Build configuration list for PBXNativeTarget "FlyGame tvOS" */;
 			buildPhases = (
+				E99DAE4FAA35D120DC32EB70 /* [CP] Check Pods Manifest.lock */,
 				E9A0F30827D67B9300F965DE /* Sources */,
 				E9A0F30927D67B9300F965DE /* Frameworks */,
 				E9A0F30A27D67B9300F965DE /* Resources */,
@@ -516,6 +569,67 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6D28ABA13436431D8D898211 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FlyGame iOS/Pods-FlyGame iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FlyGame iOS/Pods-FlyGame iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlyGame iOS/Pods-FlyGame iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		872AB4C358C506CDA5FE2CF2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Catch Fly Stickers-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADA215F5379EE0C1B52A94EF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlyGame iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C82E6FFD27F37DEB00E17834 /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -533,6 +647,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		E99DAE4FAA35D120DC32EB70 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FlyGame tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -638,6 +774,7 @@
 /* Begin XCBuildConfiguration section */
 		9553276A27F62AE800C8338D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20A48A7C229500E0AA9586FF /* Pods-Catch Fly Stickers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
@@ -660,6 +797,7 @@
 		};
 		9553276B27F62AE800C8338D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E5BF963429F0040AA4C2F56 /* Pods-Catch Fly Stickers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
@@ -796,6 +934,7 @@
 		};
 		E9A0F32327D67B9300F965DE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2551C872184D2D153056946C /* Pods-FlyGame iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -829,6 +968,7 @@
 		};
 		E9A0F32427D67B9300F965DE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE3C55D5D079AA306C2BD419 /* Pods-FlyGame iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -863,6 +1003,7 @@
 		};
 		E9A0F32627D67B9300F965DE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3740C1B89A58EF10490156A /* Pods-FlyGame tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "tvOS App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -890,6 +1031,7 @@
 		};
 		E9A0F32727D67B9300F965DE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06B01510BA9C9EAA24F3163B /* Pods-FlyGame tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "tvOS App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

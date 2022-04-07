@@ -6,6 +6,8 @@
 //
 
 import SpriteKit
+import GoogleMobileAds
+import UIKit
 
 class GameOverScene: SKScene {
     var score: Int = 20
@@ -64,6 +66,13 @@ class GameOverScene: SKScene {
         return but
     }()
     
+    lazy var adButton: SKButtonNode = {
+        let but = SKButtonNode(image: .restart) {
+            self.showAds()
+        }
+        return but
+    }()
+    
     lazy var gameLogic: GameSceneController = {
         let g = GameSceneController()
         return g
@@ -89,6 +98,7 @@ class GameOverScene: SKScene {
         self.addChild(scoreLabel)
         self.addChild(homeButton)
         self.addChild(retryButton)
+        self.addChild(adButton)
     }
     
     func createTexture(_ name: String) -> [SKTexture] {
@@ -108,7 +118,6 @@ class GameOverScene: SKScene {
 #if os(tvOS)
         addTapGestureRecognizer()
 #endif
-        
     }
     
     func callAchievements() {
@@ -167,6 +176,9 @@ class GameOverScene: SKScene {
         retryButton.position = CGPoint(x: gameOverLabel.position.x + self.size.width * 0.055, y: self.size.height * 0.42)
         retryButton.zPosition = 2
         
+        adButton.position = CGPoint(x: homeButton.position.x, y: self.size.height * 0.2)
+        adButton.zPosition = 2
+        
     }
     
     private func setupNodesSize() {
@@ -181,6 +193,7 @@ class GameOverScene: SKScene {
         scoreLabel.setScale(self.size.height * 0.003)
         homeButton.setScale(self.size.width * 0.00021)
         retryButton.setScale(self.size.width * 0.00021)
+        adButton.setScale(self.size.width * 0.00021)
         
 #if os(iOS)
         switch UIDevice.current.userInterfaceIdiom {
@@ -223,6 +236,10 @@ extension GameOverScene: GameOverLogicDelegate {
             scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
 #endif
+    }
+    
+    func showAds() {
+        gameOver.showRewardedAd()
     }
 }
 

@@ -1,0 +1,25 @@
+
+target 'Catch Fly Stickers' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Catch Fly Stickers
+
+end
+
+target 'FlyGame iOS' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for FlyGame iOS
+	pod 'Google-Mobile-Ads-SDK'
+
+end
+
+target 'FlyGame tvOS' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for FlyGame tvOS
+
+end

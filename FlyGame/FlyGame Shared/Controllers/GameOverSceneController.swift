@@ -7,8 +7,10 @@
 
 import SpriteKit
 import Foundation
+import GoogleMobileAds
+import UIKit
 
-class GameOverSceneController {
+class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
     
     weak var gameOverDelegate: GameOverLogicDelegate?
     let tapGeneralSelection = UITapGestureRecognizer()
@@ -37,5 +39,59 @@ class GameOverSceneController {
         }
     }
     #endif
+    
+    //MARK: Ads
+    private var rewardedAd: GADRewardedAd?
+    func loadRewardedAd() {
+        let request = GADRequest()
+        GADRewardedAd.load(withAdUnitID: "ca-app-pub-3940256099942544/1712485313", request: request) { [self] ad, error in
+            if let error = error {
+                print("Failed to load rewarded ad with error ", error)
+                return
+            }
+            
+            rewardedAd = ad
+            rewardedAd?.fullScreenContentDelegate = self
+        }
+    }
+    
+    func showRewardedAd() {
+        if let ad = rewardedAd {
+            ad.present(fromRootViewController: self) {
+//                let reward = ad.adReward
+                self.continueGame()
+                // TODO: Reward the user.
+            }
+        } else {
+            print("Ad wasn't ready")
+        }
+    }
+    
+    func continueGame() {
+        print("vai continuar")
+    }
+    
+    // MARK: GADFullScreenContentDelegate
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Rewarded ad dismissed.")
+        self.loadRewardedAd()
+    }
+    
+    func ad(
+        _ ad: GADFullScreenPresentingAd,
+        didFailToPresentFullScreenContentWithError error: Error
+    ) {
+        print("Rewarded ad failed to present with error: \(error.localizedDescription).")
+        let alert = UIAlertController(
+            title: "Wait a minute!",
+            message: "We do not have ads to show right now!",
+            preferredStyle: .alert)
+        let alertAction = UIAlertAction(
+            title: "OK",
+            style: .cancel,
+            handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }

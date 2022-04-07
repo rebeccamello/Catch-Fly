@@ -1,0 +1,6 @@
+framework module Pods_Catch_Fly_Stickers {
+  umbrella header "Pods-Catch Fly Stickers-umbrella.h"
+
+  export *
+  module * { export * }
+}

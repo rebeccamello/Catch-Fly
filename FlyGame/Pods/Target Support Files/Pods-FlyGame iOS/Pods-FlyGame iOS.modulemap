@@ -1,0 +1,6 @@
+framework module Pods_FlyGame_iOS {
+  umbrella header "Pods-FlyGame iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
