@@ -44,6 +44,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     var buttonTvOS = UITapGestureRecognizer()
     let grandmaTexture = SKTexture(imageNamed: "vovo")
     var coinsInRun: Int = 0
+    var firstTimeLoosing = true
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -284,6 +285,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
 #endif
     }
+    
     // MARK: Calculo de Delay
     private func calculateDelay(currentTime: TimeInterval) {
         if lastObstacleTimeCreated == 0 {
@@ -343,6 +345,12 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         timeCounter = 0
         timer.invalidate()
         defaults.set(score, forKey: "currentScore")
+        defaults.set(delayIOS, forKey: "delayIOS")
+        defaults.set(delayTV, forKey: "delayTV")
+        defaults.set(coinDelayIOS, forKey: "coinDelayIOS")
+        defaults.set(coinDelayTV, forKey: "coinDelayTV")
+        defaults.set(duration, forKey: "durationIOS")
+        defaults.set(durationTV, forKey: "durationTV")
         score = 0
     }
     

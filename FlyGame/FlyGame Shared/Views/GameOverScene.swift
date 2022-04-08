@@ -14,6 +14,12 @@ class GameOverScene: SKScene {
     var defaults = UserDefaults.standard
     var hideTutorial: Bool = false
     let currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
+    let delayIOS: TimeInterval = UserDefaults.standard.double(forKey: "delayIOS")
+    let delayTV: TimeInterval = UserDefaults.standard.double(forKey: "delayTV")
+    let coinDelayIOS: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayIOS")
+    let coinDelayTV: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayTV")
+    let duration: CGFloat = UserDefaults.standard.double(forKey: "durationIOS")
+    let durationTV: CGFloat = UserDefaults.standard.double(forKey: "durationTV")
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -69,7 +75,11 @@ class GameOverScene: SKScene {
     
     lazy var adButton: SKButtonNode = {
         let but = SKButtonNode(image: .restart) {
-            self.showAds()
+            if self.gameLogic.firstTimeLoosing {
+                self.showAds()
+            } else {
+                print("nao eh a primeira vez")
+            }
         }
         return but
     }()
@@ -122,20 +132,19 @@ class GameOverScene: SKScene {
     }
     
     func callAchievements() {
-        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
-        if currentScore >= 25 {
+        if currentScoreValue >= 25 {
             GameCenterService.shared.showAchievements(achievementID: "firstPointMilestoneID")
             
-            if currentScore >= 60 {
+            if currentScoreValue >= 60 {
                 GameCenterService.shared.showAchievements(achievementID: "secondPointMilestoneID")
                 
-                if currentScore >= 100 {
+                if currentScoreValue >= 100 {
                     GameCenterService.shared.showAchievements(achievementID: "thirdPointMilestoneID")
                     
-                    if currentScore >= 125 {
+                    if currentScoreValue >= 125 {
                         GameCenterService.shared.showAchievements(achievementID: "fourthPointMilestoneID")
                         
-                        if currentScore >= 150 {
+                        if currentScoreValue >= 150 {
                             GameCenterService.shared.showAchievements(achievementID: "fifthPointMilestoneID")
                         }
                     }
@@ -145,7 +154,6 @@ class GameOverScene: SKScene {
     }
     
     func currentScore() {
-//        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
         scoreLabel.text = "your_score".localized() + "\(currentScoreValue)"
         gameOver.currentScore(currentScore: currentScoreValue)
     }
@@ -218,14 +226,22 @@ class GameOverScene: SKScene {
 extension GameOverScene: GameOverLogicDelegate {
     func continueGameAfterAds() {
         let scene = GameScene.newGameScene()
+        scene.gameLogic.firstTimeLoosing = false
         scene.gameLogic.isGameStarted = true
         scene.gameLogic.score = currentScoreValue
         scene.scoreLabel.text = String(currentScoreValue)
+        scene.gameLogic.delayIOS = delayIOS
+        scene.gameLogic.delayTV = delayTV
+        scene.gameLogic.coinDelayIOS = coinDelayIOS
+        scene.gameLogic.coinDelayTV = coinDelayTV
+        scene.gameLogic.durationTV = durationTV
+        scene.gameLogic.duration = duration
         self.view?.presentScene(scene)
     }
     
     func restartGame() {
         let scene = GameScene.newGameScene()
+//        scene.firstTimeLoosing = true
         scene.gameLogic.isGameStarted = true
         self.view?.presentScene(scene)
     }

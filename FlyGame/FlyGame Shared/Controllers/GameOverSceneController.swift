@@ -42,10 +42,6 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
     #endif
     
     //MARK: Ads
-//    func callAds() {
-//        rewardedAd.showRewardedAd(vc: self)
-//    }
-    
     func loadRewardedAd() {
         // teste id ca-app-pub-3940256099942544/1712485313
         // do app: ca-app-pub-1021015536387349/6793205108
@@ -62,20 +58,15 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
     }
     
     func showRewardedAd() {
-        self.continueGame()
+        self.gameOverDelegate?.continueGameAfterAds()
         if let ad = rewardedAd {
             ad.present(fromRootViewController: self) {
 //                let reward = ad.adReward
-                self.continueGame()
+                self.gameOverDelegate?.continueGameAfterAds()
             }
         } else {
             print("Ad wasn't ready")
         }
-    }
-    
-    func continueGame() {
-        print("vai continuar")
-        gameOverDelegate?.continueGameAfterAds()
     }
     
     // MARK: GADFullScreenContentDelegate

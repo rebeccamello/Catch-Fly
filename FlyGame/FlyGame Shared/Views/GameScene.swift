@@ -367,6 +367,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     #endif
 }
 
+//MARK: Extension
 extension GameScene: GameLogicDelegate {
     func getPlusTwoLabel() -> SKLabelNode {
         return plusTwo
