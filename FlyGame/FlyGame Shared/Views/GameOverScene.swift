@@ -170,13 +170,13 @@ class GameOverScene: SKScene {
         scoreLabel.position = CGPoint(x: gameOverLabel.position.x, y: self.size.height * 0.55)
         scoreLabel.zPosition = 2
         
-        homeButton.position = CGPoint(x: gameOverLabel.position.x - self.size.width * 0.055, y: self.size.height * 0.42)
+        homeButton.position = CGPoint(x: gameOverLabel.position.x - self.size.width * 0.1, y: self.size.height * 0.42)
         homeButton.zPosition = 2
         
-        retryButton.position = CGPoint(x: gameOverLabel.position.x + self.size.width * 0.055, y: self.size.height * 0.42)
+        retryButton.position = CGPoint(x: gameOverLabel.position.x, y: self.size.height * 0.42)
         retryButton.zPosition = 2
         
-        adButton.position = CGPoint(x: homeButton.position.x, y: self.size.height * 0.2)
+        adButton.position = CGPoint(x: gameOverLabel.position.x + self.size.width * 0.1, y: self.size.height * 0.42)
         adButton.zPosition = 2
         
     }
@@ -239,7 +239,7 @@ extension GameOverScene: GameOverLogicDelegate {
     }
     
     func showAds() {
-        gameOver.showRewardedAd()
+        gameOver.callAds()
     }
 }
 
