@@ -10,9 +10,10 @@ import GoogleMobileAds
 import UIKit
 
 class GameOverScene: SKScene {
-    var score: Int = 20
+    var score: Int = 0
     var defaults = UserDefaults.standard
     var hideTutorial: Bool = false
+    let currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
     
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode(imageNamed: "cenario")
@@ -144,9 +145,9 @@ class GameOverScene: SKScene {
     }
     
     func currentScore() {
-        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
-        scoreLabel.text = "your_score".localized() + "\(currentScore)"
-        gameOver.currentScore(currentScore: currentScore)
+//        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
+        scoreLabel.text = "your_score".localized() + "\(currentScoreValue)"
+        gameOver.currentScore(currentScore: currentScoreValue)
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -215,6 +216,14 @@ class GameOverScene: SKScene {
 }
 
 extension GameOverScene: GameOverLogicDelegate {
+    func continueGameAfterAds() {
+        let scene = GameScene.newGameScene()
+        scene.gameLogic.isGameStarted = true
+        scene.gameLogic.score = currentScoreValue
+        scene.scoreLabel.text = String(currentScoreValue)
+        self.view?.presentScene(scene)
+    }
+    
     func restartGame() {
         let scene = GameScene.newGameScene()
         scene.gameLogic.isGameStarted = true
@@ -239,7 +248,7 @@ extension GameOverScene: GameOverLogicDelegate {
     }
     
     func showAds() {
-        gameOver.callAds()
+        gameOver.showRewardedAd()
     }
 }
 

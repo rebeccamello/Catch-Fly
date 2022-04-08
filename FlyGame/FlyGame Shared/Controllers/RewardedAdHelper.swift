@@ -28,6 +28,7 @@ class RewardedAdHelper: NSObject, GADFullScreenContentDelegate {
     }
     
     func showRewardedAd(vc: UIViewController) {
+        self.continueGame()
         if let ad = rewardedAd {
             ad.present(fromRootViewController: vc) {
 //                let reward = ad.adReward

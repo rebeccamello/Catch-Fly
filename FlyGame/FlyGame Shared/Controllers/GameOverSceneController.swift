@@ -14,7 +14,7 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
     
     weak var gameOverDelegate: GameOverLogicDelegate?
     let tapGeneralSelection = UITapGestureRecognizer()
-    var rewardedAd = RewardedAdHelper()
+    private var rewardedAd: GADRewardedAd?
     
     func currentScore(currentScore: Int) {
         if currentScore > UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) {
@@ -42,7 +42,45 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
     #endif
     
     //MARK: Ads
-    func callAds() {
-        rewardedAd.showRewardedAd(vc: self)
+//    func callAds() {
+//        rewardedAd.showRewardedAd(vc: self)
+//    }
+    
+    func loadRewardedAd() {
+        // teste id ca-app-pub-3940256099942544/1712485313
+        // do app: ca-app-pub-1021015536387349/6793205108
+        let request = GADRequest()
+        GADRewardedAd.load(withAdUnitID: "ca-app-pub-3940256099942544/1712485313", request: request) { [self] ad, error in
+            if let error = error {
+                print("Failed to load rewarded ad with error ", error)
+                return
+            }
+            
+            rewardedAd = ad
+            rewardedAd?.fullScreenContentDelegate = self
+        }
+    }
+    
+    func showRewardedAd() {
+        self.continueGame()
+        if let ad = rewardedAd {
+            ad.present(fromRootViewController: self) {
+//                let reward = ad.adReward
+                self.continueGame()
+            }
+        } else {
+            print("Ad wasn't ready")
+        }
+    }
+    
+    func continueGame() {
+        print("vai continuar")
+        gameOverDelegate?.continueGameAfterAds()
+    }
+    
+    // MARK: GADFullScreenContentDelegate
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Rewarded ad dismissed.")
+        self.loadRewardedAd()
     }
 }

@@ -60,6 +60,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             timeScore = currentTime
         }
     }
+    
     func movePlayer(direction: Direction) -> CGFloat {
         switch direction {
         case .up:
