@@ -5,7 +5,6 @@
 //  Created by Caroline Taus on 24/03/22.
 //
 
-import Foundation
 import SpriteKit
 
 class TutorialScene: SKScene {

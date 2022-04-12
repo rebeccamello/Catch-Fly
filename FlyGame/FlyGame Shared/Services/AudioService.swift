@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-class AudioService: AudioDelegate {
+class AudioService {
         
     /* MARK: - Atributos */
     
@@ -21,7 +21,7 @@ class AudioService: AudioDelegate {
     /* MARK: - Delegate */
     
     /// Muda a variável que verifica se os sons estão ativados ou não
-    internal func toggleSound(with button: SKButtonNode) {
+    public func toggleSound(with button: SKButtonNode) {
         switch self.updateUserDefaults(soundType: .sound) {
         case true:
             button.updateImage(with: .soundOn)
@@ -32,7 +32,7 @@ class AudioService: AudioDelegate {
     }
     
     /// Muda a variável que verifica se as músicas estão ativadas ou não
-    internal func toggleMusic(with button: SKButtonNode) {
+    public func toggleMusic(with button: SKButtonNode) {
         switch self.updateUserDefaults(soundType: .music) {
         case true:
             self.soundManager(with: .backgroundMusic, soundAction: .play, .loop)

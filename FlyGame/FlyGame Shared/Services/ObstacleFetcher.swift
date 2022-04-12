@@ -5,7 +5,6 @@
 //  Created by Caroline Taus on 11/03/22.
 //
 
-import Foundation
 import CoreGraphics
 import SpriteKit
 
@@ -15,7 +14,8 @@ class ObstacleFetcher {
     init() {
         let screenSize: CGSize = .screenSize()
         let laneHeight = screenSize.height/3
-        obstacles = [
+        
+        self.obstacles = [
             Obstacle(lanePosition: 2, weight: 2, width: 2, assetName: "comodaVaso", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "comodaVaso"), size: CGSize(width: laneHeight*2, height: laneHeight*2))),
             Obstacle(lanePosition: 5, weight: 1, width: 1, assetName: "lustre", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "lustre"), size: CGSize(width: laneHeight, height: laneHeight))),
             Obstacle(lanePosition: 1, weight: 1, width: 1, assetName: "globo", physicsBody: SKPhysicsBody(texture: SKTexture(imageNamed: "globo"), size: CGSize(width: laneHeight, height: laneHeight))),

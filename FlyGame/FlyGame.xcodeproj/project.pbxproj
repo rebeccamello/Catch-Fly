@@ -37,6 +37,12 @@
 		22C105FF27E8F9C20095EB3E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C105FD27E8F9C20095EB3E /* Audio.swift */; };
 		22C1060E27E903490095EB3E /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C1060D27E903490095EB3E /* Buttons.swift */; };
 		22C1060F27E903490095EB3E /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C1060D27E903490095EB3E /* Buttons.swift */; };
+		22DEAC932805EBA9000A1A48 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEAC922805EBA9000A1A48 /* UserDefaultsKeys.swift */; };
+		22DEAC942805EBA9000A1A48 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEAC922805EBA9000A1A48 /* UserDefaultsKeys.swift */; };
+		22DEAC962805F028000A1A48 /* UserDefaults+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEAC952805F028000A1A48 /* UserDefaults+Actions.swift */; };
+		22DEAC972805F028000A1A48 /* UserDefaults+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEAC952805F028000A1A48 /* UserDefaults+Actions.swift */; };
+		22DEAC992805FD9D000A1A48 /* SKNode+SetPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEAC982805FD9D000A1A48 /* SKNode+SetPosition.swift */; };
+		22DEAC9A2805FD9D000A1A48 /* SKNode+SetPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DEAC982805FD9D000A1A48 /* SKNode+SetPosition.swift */; };
 		9553276427F62AE800C8338D /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9553276327F62AE800C8338D /* Stickers.xcassets */; };
 		9553276827F62AE800C8338D /* Catch Fly Stickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9553276127F62AE700C8338D /* Catch Fly Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9921B89527DBC66500E3AD23 /* SKButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921B89427DBC66500E3AD23 /* SKButtonNode.swift */; };
@@ -81,8 +87,6 @@
 		E9A0F34827D6A63700F965DE /* GameSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F34627D6A63700F965DE /* GameSceneController.swift */; };
 		E9A0F34C27D6A6BD00F965DE /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F34B27D6A6BD00F965DE /* AudioService.swift */; };
 		E9A0F34D27D6A6BD00F965DE /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F34B27D6A6BD00F965DE /* AudioService.swift */; };
-		E9A0F35027D6A71200F965DE /* AudioDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F34F27D6A71200F965DE /* AudioDelegate.swift */; };
-		E9A0F35127D6A71200F965DE /* AudioDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F34F27D6A71200F965DE /* AudioDelegate.swift */; };
 		E9A0F35327D6A75800F965DE /* MenuLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */; };
 		E9A0F35427D6A75800F965DE /* MenuLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */; };
 		E9A0F35627D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */; };
@@ -134,6 +138,9 @@
 		2297C54A27ED04E70009FDD8 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 		22C105FD27E8F9C20095EB3E /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		22C1060D27E903490095EB3E /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		22DEAC922805EBA9000A1A48 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		22DEAC952805F028000A1A48 /* UserDefaults+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Actions.swift"; sourceTree = "<group>"; };
+		22DEAC982805FD9D000A1A48 /* SKNode+SetPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+SetPosition.swift"; sourceTree = "<group>"; };
 		9553276127F62AE700C8338D /* Catch Fly Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Catch Fly Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9553276327F62AE800C8338D /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		9553276527F62AE800C8338D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -164,7 +171,6 @@
 		E9A0F34327D6A5EB00F965DE /* GameOverSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverSceneController.swift; sourceTree = "<group>"; };
 		E9A0F34627D6A63700F965DE /* GameSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneController.swift; sourceTree = "<group>"; };
 		E9A0F34B27D6A6BD00F965DE /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
-		E9A0F34F27D6A71200F965DE /* AudioDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDelegate.swift; sourceTree = "<group>"; };
 		E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLogicDelegate.swift; sourceTree = "<group>"; };
 		E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverLogicDelegate.swift; sourceTree = "<group>"; };
 		E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogicDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +215,8 @@
 				C8BAAFDA27E0FEEE0052E9BE /* UIScreen+CGSize.swift */,
 				2297C53E27ECFAD40009FDD8 /* String+Localized.swift */,
 				2297C54127ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift */,
+				22DEAC952805F028000A1A48 /* UserDefaults+Actions.swift */,
+				22DEAC982805FD9D000A1A48 /* SKNode+SetPosition.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -308,7 +316,6 @@
 				E9A0F32B27D6804E00F965DE /* MenuScene.swift */,
 				E9A0F32E27D685CE00F965DE /* GameOverScene.swift */,
 				C8C2044827ECF7A100507AB5 /* TutorialScene.swift */,
-				9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -320,6 +327,8 @@
 				22C105FD27E8F9C20095EB3E /* Audio.swift */,
 				22C1060D27E903490095EB3E /* Buttons.swift */,
 				2297C54A27ED04E70009FDD8 /* Direction.swift */,
+				22DEAC922805EBA9000A1A48 /* UserDefaultsKeys.swift */,
+				9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -350,7 +359,6 @@
 		E9A0F34E27D6A6F900F965DE /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				E9A0F34F27D6A71200F965DE /* AudioDelegate.swift */,
 				E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */,
 				E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */,
 				E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */,
@@ -555,12 +563,13 @@
 				227117C527EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */,
 				9937A6DE27F4EA2A00144C71 /* TutorialDelegate.swift in Sources */,
 				E9A0F35627D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */,
-				E9A0F35027D6A71200F965DE /* AudioDelegate.swift in Sources */,
+				22DEAC932805EBA9000A1A48 /* UserDefaultsKeys.swift in Sources */,
 				E9A0F34127D6A59800F965DE /* MenuSceneController.swift in Sources */,
 				2297C54B27ED04E70009FDD8 /* Direction.swift in Sources */,
 				E9A0F35927D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
 				C8C2044927ECF7A100507AB5 /* TutorialScene.swift in Sources */,
 				E9A0F34C27D6A6BD00F965DE /* AudioService.swift in Sources */,
+				22DEAC962805F028000A1A48 /* UserDefaults+Actions.swift in Sources */,
 				C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				2297C54227ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift in Sources */,
@@ -570,6 +579,7 @@
 				E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */,
 				227117C827EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */,
 				E9A0F2FF27D67B9300F965DE /* AppDelegate.swift in Sources */,
+				22DEAC992805FD9D000A1A48 /* SKNode+SetPosition.swift in Sources */,
 				C8C2044C27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */,
 				E9A0F33B27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);
@@ -593,12 +603,13 @@
 				227117C627EBA9B50083C7E8 /* GameCenterDelegate.swift in Sources */,
 				9937A6DF27F4EA2A00144C71 /* TutorialDelegate.swift in Sources */,
 				E9A0F35727D6A7C300F965DE /* GameOverLogicDelegate.swift in Sources */,
-				E9A0F35127D6A71200F965DE /* AudioDelegate.swift in Sources */,
+				22DEAC942805EBA9000A1A48 /* UserDefaultsKeys.swift in Sources */,
 				E9A0F34227D6A59800F965DE /* MenuSceneController.swift in Sources */,
 				2297C54C27ED04E70009FDD8 /* Direction.swift in Sources */,
 				E9A0F35A27D6A84900F965DE /* GameLogicDelegate.swift in Sources */,
 				C8C2044A27ECF7A100507AB5 /* TutorialScene.swift in Sources */,
 				E9A0F34D27D6A6BD00F965DE /* AudioService.swift in Sources */,
+				22DEAC972805F028000A1A48 /* UserDefaults+Actions.swift in Sources */,
 				C8BAAFDC27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				2297C54327ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift in Sources */,
@@ -608,6 +619,7 @@
 				E9A0F31127D67B9300F965DE /* GameViewController.swift in Sources */,
 				227117C927EBAA7E0083C7E8 /* ErrorHandler.swift in Sources */,
 				E9A0F30F27D67B9300F965DE /* AppDelegate.swift in Sources */,
+				22DEAC9A2805FD9D000A1A48 /* SKNode+SetPosition.swift in Sources */,
 				C8C2044D27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */,
 				E9A0F33C27D6905D00F965DE /* Obstacle.swift in Sources */,
 			);

@@ -18,6 +18,7 @@ enum Buttons: CustomStringConvertible {
     case soundOff
     case tutorial
     case gameCenter
+    
     var description: String {
         switch self {
         case .resume: return "continuarBotao"

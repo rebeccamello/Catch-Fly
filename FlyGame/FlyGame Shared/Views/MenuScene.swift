@@ -8,7 +8,6 @@
 import SpriteKit
 
 class MenuScene: SKScene {
-    var defaults = UserDefaults.standard
     var hideTutorial: Bool = false
     
     lazy var menuLogic: MenuSceneController = {
@@ -17,51 +16,32 @@ class MenuScene: SKScene {
         return m
     }()
     
-    lazy var scenarioImage: SKSpriteNode = {
-        var scenario = SKSpriteNode(imageNamed: "cenario")
-        return scenario
-    }()
+    lazy var scenarioImage: SKSpriteNode = SKSpriteNode(imageNamed: "cenario")
     
-    lazy var piano: SKSpriteNode = {
-        var piano = SKSpriteNode(imageNamed: "piano")
-        return piano
-    }()
+    lazy var piano: SKSpriteNode = SKSpriteNode(imageNamed: "piano")
     
-    lazy var playButton: SKButtonNode = {
-        var bt = SKButtonNode(image: .play) {
-            self.goToGameScene()
-        }
-        return bt
-    }()
+    lazy var playButton = SKButtonNode(image: .play) {
+        self.goToGameScene()
+    }
     
-    lazy var soundButton: SKButtonNode = {
-        var bt = SKButtonNode(image: .soundOn) {
-            self.menuLogic.toggleSound()
-        }
-        return bt
-    }()
-    
-    lazy var musicButton: SKButtonNode = {
-        var bt = SKButtonNode(image: .musicOn) {
-            self.menuLogic.toggleMusic()
-        }
-        return bt
-    }()
-    
-    lazy var gameCenterButton: SKButtonNode = {
-        var bt = SKButtonNode(image: .gameCenter) {
-            self.goToGameCenter()
-        }
-        bt.image.texture?.filteringMode = .nearest
-        return bt
-    }()
+    lazy var soundButton = SKButtonNode(image: .soundOn) {
+        self.menuLogic.toggleSound()
+    }
+        
+    lazy var musicButton = SKButtonNode(image: .musicOn) {
+        self.menuLogic.toggleMusic()
+    }
+        
+    lazy var gameCenterButton = SKButtonNode(image: .gameCenter) {
+        self.goToGameCenter()
+    }
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
         lbl.numberOfLines = 0
         lbl.fontColor = SKColor.black
         lbl.fontName = "munro"
-        lbl.text = "highscore".localized() + "\(UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey))"
+        lbl.text = "highscore".localized() + "\(UserDefaults.getIntValue(with: .highScore))"
         return lbl
     }()
     
@@ -105,6 +85,29 @@ class MenuScene: SKScene {
         return scene
     }
     
+    #if os(tvOS)
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [playButton]
+    }
+    #endif
+    
+    /* MARK: - Ciclo de Vida */
+    override func didMove(to view: SKView) {
+        self.setUpScene()
+        
+        #if os(tvOS)
+        self.presentGesture()
+        #endif
+        
+        menuLogic.audioVerification()
+    }
+    
+    override func didChangeSize(_ oldSize: CGSize) {
+        self.setupNodesPosition()
+        self.setupNodesSize()
+    }
+    
+    /* MARK: - Métodos */
     func setUpScene() {
         self.addChild(scoreLabel)
         self.addChild(musicButton)
@@ -128,142 +131,86 @@ class MenuScene: SKScene {
         return frames
     }
     
-    override func didMove(to view: SKView) {
-        self.setUpScene()
-        
-        #if os(tvOS)
-            presentGesture()
-        #endif
-        
-        menuLogic.audioVerification()
-    }
-    
-    override func didChangeSize(_ oldSize: CGSize) {
-        setupNodesPosition()
-        setupNodesSize()
-    }
+    /// Definindo o tamanho dos Nodes
     private func setupNodesSize() {
         scenarioImage.size.width = self.size.width
         scenarioImage.size.height = self.size.height
         
+        // Botões
         playButton.setScale(self.size.height/250)
         musicButton.setScale(self.size.height/2300)
         soundButton.setScale(self.size.height/2300)
         gameCenterButton.setScale(self.size.height/2300)
+        
+        // Fundo
         piano.setScale(self.size.height/300)
-        catAction.setScale(self.size.height/700)
         chandelier.setScale(self.size.height/300)
         chair.setScale(self.size.height/300)
+        
+        catAction.setScale(self.size.height/700)
         flyAction.setScale(self.size.height/2800)
         
-#if os(iOS)
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            playButton.setScale(self.size.height/250)
+        #if os(iOS)
+        if UIDevice.current.userInterfaceIdiom == .pad {    // iPad
+            // Botões
             musicButton.setScale(self.size.height/3000)
             soundButton.setScale(self.size.height/3000)
             gameCenterButton.setScale(self.size.height/3000)
+            
+            // Fundo
             piano.setScale(self.size.height/350)
-            catAction.setScale(self.size.height/1000)
             chandelier.setScale(self.size.height/350)
             chair.setScale(self.size.height/350)
+            
+            catAction.setScale(self.size.height/1000)
             flyAction.setScale(self.size.height/3150)
-
-        default:
-            break
         }
-#endif
+        #endif
     }
-    // swiftlint:disable function_body_length
+    
+    /// Posicionando os nodes na tela
     private func setupNodesPosition() {
-        scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-        scenarioImage.zPosition = 0
+        let butXPosition = self.size.width/2
         
-        soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
-        soundButton.zPosition = 1
-        
-        scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
-        scoreLabel.zPosition = 1
+        // Label
+        scoreLabel.setPositions(x: butXPosition, y: self.size.height/2.5, z: 1)
         scoreLabel.fontSize = self.size.height/15
         
-        musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
-        musicButton.zPosition = 1
+        // Botões
+        soundButton.setPositions(x: butXPosition, y: self.size.height/3.5, z: 1)
+        musicButton.setPositions(x: butXPosition + self.size.width/9.5, y: self.size.height/3.5, z: 1)
+        gameCenterButton.setPositions(x: butXPosition - self.size.width/9.5, y: self.size.height/3.5, z: 1)
+        playButton.setPositions(x: butXPosition, y: self.size.height/1.6, z: 1)
         
-        gameCenterButton.position = CGPoint(x: soundButton.position.x - self.size.width/9.5, y: self.size.height/3.5)
-        gameCenterButton.zPosition = 1
+        // Fundo
+        scenarioImage.setPositions(x: butXPosition, y: self.size.height/2, z: 0)
         
-        playButton.position = CGPoint(x: self.size.width/2, y: self.size.height/1.6)
-        playButton.zPosition = 1
+        piano.setPositions(x: self.size.width/8.5, y: self.size.height/3.5, z: 1)
+        chandelier.setPositions(x: self.size.width/1.3, y: self.size.height/1.19, z: 1)
+        chair.setPositions(x: self.size.width/1.215, y: self.size.height/6.5, z: 1)
         
-        piano.position = CGPoint(x: self.size.width/8.5, y: self.size.height/3.5)
-        piano.zPosition = 1
+        catAction.setPositions(x: self.size.width/6, y: self.size.height/1.4, z: 2)
+        flyAction.setPositions(x: self.size.width/1.215, y: self.size.height/2.28, z: 1)
         
-        catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.4)
-        catAction.zPosition = 2
-        
-        chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.19)
-        chandelier.zPosition = 1
-        
-        chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/6.5)
-        chair.zPosition = 1
-        
-        flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.28)
-        flyAction.zPosition = 1
-        
-#if os(iOS)
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-            scenarioImage.zPosition = 0
+        #if os(iOS)
+        if UIDevice.current.userInterfaceIdiom == .pad {    // iPad
+            chandelier.position.y = self.size.height/1.13
+            chair.position.y = self.size.height/7.5
             
-            soundButton.position = CGPoint(x: self.size.width/2, y: self.size.height/3.5)
-            soundButton.zPosition = 1
-            
-            scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2.5)
-            scoreLabel.zPosition = 1
-            scoreLabel.fontSize = self.size.height/15
-            
-            musicButton.position = CGPoint(x: soundButton.position.x + self.size.width/9.5, y: self.size.height/3.5)
-            musicButton.zPosition = 1
-            
-            gameCenterButton.position = CGPoint(x: soundButton.position.x - self.size.width/9.5, y: self.size.height/3.5)
-            gameCenterButton.zPosition = 1
-            
-            playButton.position = CGPoint(x: self.size.width/2, y: self.size.height/1.6)
-            playButton.zPosition = 1
-            
-            piano.position = CGPoint(x: self.size.width/8.5, y: self.size.height/3.5)
-            piano.zPosition = 1
-            
-            catAction.position = CGPoint(x: self.size.width/6, y: self.size.height/1.55)
-            catAction.zPosition = 2
-            
-            chandelier.position = CGPoint(x: self.size.width/1.3, y: self.size.height/1.13)
-            chandelier.zPosition = 1
-            
-            chair.position = CGPoint(x: self.size.width/1.215, y: self.size.height/7.5)
-            chair.zPosition = 1
-            
-            flyAction.position = CGPoint(x: self.size.width/1.215, y: self.size.height/2.6)
-            flyAction.zPosition = 1
-            
-        default:
-            break
+            catAction.position.y = self.size.height/1.55
+            flyAction.position.y = self.size.height/2.6
         }
-#endif
+        #endif
     }
     
-    #if os(tvOS)
-        func presentGesture() {
-            self.view?.addGestureRecognizer(menuLogic.addTapGestureRecognizer())
-        }
-    #endif
-    
+    func presentGesture() {
+        self.view?.addGestureRecognizer(menuLogic.addTapGestureRecognizer())
+    }
+
     public func setScore(with score: Int) {
         self.scoreLabel.text = "highscore".localized() + "\(score)"
     }
 }
-// swiftlint:enable function_body_length
 
 extension MenuScene: MenuLogicDelegate {
     
@@ -284,15 +231,7 @@ extension MenuScene: MenuLogicDelegate {
     }
     
     func goToGameScene() {
-        hideTutorial = defaults.bool(forKey: "playerFirstTime")
+        self.hideTutorial = UserDefaults.getBoolValue(with: .tutorial)
         menuLogic.playGame()
     }
 }
-
-#if os(tvOS)
-extension MenuScene {
-    override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        return [playButton]
-    }
-}
-#endif

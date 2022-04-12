@@ -9,7 +9,7 @@ import SpriteKit
 
 class SKButtonNode: SKNode {
     
-    var image: SKSpriteNode
+    private var image: SKSpriteNode
     var action: (() -> Void)
     var isFocusable = true
     
@@ -30,12 +30,10 @@ class SKButtonNode: SKNode {
         self.addChild(self.image)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
     override var canBecomeFocused: Bool {
-        return isFocusable
+        return self.isFocusable
     }
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
