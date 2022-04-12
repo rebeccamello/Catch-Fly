@@ -1,11 +1,14 @@
-# SinglePlayer
-![Version](https://img.shields.io/badge/versão-0.0.0-orange)
-![Size](https://img.shields.io/badge/tamanho-1,4%20MB-blue)
-![Plataform](https://img.shields.io/badge/plataforma-IOS%2014.5+-lightgrey?)
+# Catch Fly - The Escape
+[![Version](https://img.shields.io/badge/versão-1.2.0-orange)](https://github.com/rebeccamello/SinglePlayerGame/releases/tag/v1.2)
+![Size](https://img.shields.io/badge/tamanho-2,1%20MB-blue)
+![Plataform](https://img.shields.io/badge/plataforma-IOS%2014.7+-lightgrey?)
 [![Swift version](https://img.shields.io/badge/swift-v5.5-blue?logo=swift)](https://swift.org/download/#releases)
 [![License](https://img.shields.io/badge/licença-GNU%20v3.0-brightgreen?)](https://github.com/rebeccamello/SinglePlayerGame/blob/main/LICENSE)
 
-<!-- ![Capa](https://github.com/rebeccamello/SinglePlayerGame/blob/main/arquivos/Git-Capa.png) -->
+<a href="https://apps.apple.com/us/app/catch-fly-the-escape/id1615619928">
+    <img src="https://github.com/rebeccamello/SinglePlayerGame/blob/main/Arquivos/Imagens/GitHub/Capa-Git.jpg" 
+    alt="Capa do GitHub"/><br>
+</a>
 
 Um jogo singleplayer hyper casual e viciante!! 
 
@@ -16,13 +19,13 @@ Um jogo singleplayer hyper casual e viciante!!
 5. [Autores](#autores)
 
 ## App Store
-Em breve na AppStore.
+Baixe já na app store [aqui](https://apps.apple.com/us/app/catch-fly-the-escape/id1615619928). Não se esqueça de conectar no Game Center e se divertir com os seus amigos!
 
 ## Código
 Esse projeto é open source, todo o código está disponível nesse repositório.
 
 ## Documentação
-Documentação em construção na [wiki](https://github.com/rebeccamello/SinglePlayerGame/wiki) do projeto.
+Documentação (GDD) está na [wiki](https://github.com/rebeccamello/SinglePlayerGame/wiki) do projeto.
 
 ## Licença
 Esse projeto é licenciado pela [GNU General Public License v3.0](https://github.com/rebeccamello/SinglePlayerGame/blob/dev/LICENSE).
@@ -42,7 +45,7 @@ Esse projeto é licenciado pela [GNU General Public License v3.0](https://github
             <a href="https://github.com/rebeccamello">
                 <img src="https://avatars.githubusercontent.com/u/49920539" width="100px;" alt="Foto da Rebecca Melo no GitHub"/><br>
                 <sub>
-                    <b>Rebecca Melo</b>
+                    <b>Rebecca Mello</b>
                 </sub>
             </a>
         </td>
@@ -80,4 +83,3 @@ Esse projeto é licenciado pela [GNU General Public License v3.0](https://github
         </td>
     </tr>
 </table>
-

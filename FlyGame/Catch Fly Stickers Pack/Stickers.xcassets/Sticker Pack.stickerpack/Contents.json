@@ -1,0 +1,41 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "grid-size" : "regular"
+  },
+  "stickers" : [
+    {
+      "filename" : "meme1.sticker"
+    },
+    {
+      "filename" : "meme2.sticker"
+    },
+    {
+      "filename" : "meme3.sticker"
+    },
+    {
+      "filename" : "meme4.sticker"
+    },
+    {
+      "filename" : "meme5.sticker"
+    },
+    {
+      "filename" : "meme6.sticker"
+    },
+    {
+      "filename" : "meme7.sticker"
+    },
+    {
+      "filename" : "meme8.sticker"
+    },
+    {
+      "filename" : "meme9.sticker"
+    },
+    {
+      "filename" : "meme10.sticker"
+    }
+  ]
+}
