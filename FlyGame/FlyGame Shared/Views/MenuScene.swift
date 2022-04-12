@@ -49,10 +49,8 @@ class MenuScene: SKScene {
         var cat = SKSpriteNode(imageNamed: "gato0")
         cat.texture?.filteringMode = .nearest
         
-        let frames: [SKTexture] = createTexture("GatoHome")
-        cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                        timePerFrame: TimeInterval(0.2),
-                                                        resize: false, restore: true)))
+        let animation = SKAction.creatAnimation(by: "GatoHome")
+        cat.run(SKAction.repeatForever(animation))
         return cat
     }()
     
@@ -70,12 +68,10 @@ class MenuScene: SKScene {
     
     lazy var flyAction: SKSpriteNode = {
         var fly = SKSpriteNode(imageNamed: "mosca")
+        fly.texture?.filteringMode = .nearest
         
-        let frames: [SKTexture] = createTexture("Mosca")
-        fly.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                        timePerFrame: TimeInterval(0.2),
-                                                        resize: false, restore: true)))
-        
+        let animation = SKAction.creatAnimation(by: "Mosca")
+        fly.run(SKAction.repeatForever(animation))
         return fly
     }()
     
@@ -122,14 +118,6 @@ class MenuScene: SKScene {
         self.addChild(flyAction)
     }
     
-    func createTexture(_ name: String) -> [SKTexture] {
-        let textureAtlas = SKTextureAtlas(named: name)
-        var frames = [SKTexture]()
-        for i in 1...textureAtlas.textureNames.count - 1 {
-            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
-        }
-        return frames
-    }
     
     /// Definindo o tamanho dos Nodes
     private func setupNodesSize() {

@@ -5,7 +5,6 @@
 //  Created by Caroline Taus on 24/03/22.
 //
 
-import Foundation
 import SpriteKit
 
 class TutorialSceneController {
@@ -32,14 +31,18 @@ class TutorialSceneController {
     }
     
     func setSwipeGesture() -> [UISwipeGestureRecognizer] {
-        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipe = UISwipeGestureRecognizer(
+            target: self,
+            action: #selector(self.respondToSwipeGesture)
+        )
+        
+        let swipeUp = swipe
         swipeUp.direction = .up
         
-        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeDown.direction = .down
+        let swipeDown = swipe
+        swipeUp.direction = .down
         
         return [swipeUp, swipeDown]
-        
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -48,9 +51,12 @@ class TutorialSceneController {
             let direction = swipeGesture.direction.direction
         else { return }
         
-        tutorialDelegate?.movePlayer(direction: direction)
-        shouldMoveObstacle()
-        defaults.set(true, forKey: "playerFirstTime")
+        if let delegate = self.tutorialDelegate {
+            delegate.movePlayer(direction: direction)
+            self.shouldMoveObstacle()
+        }
+        
+        UserDefaults.updateValue(in: .tutorial, with: true)
     }
     
     // swiftlint:disable cyclomatic_complexity
@@ -74,8 +80,6 @@ class TutorialSceneController {
                 tutorialDelegate?.createObstacle(obstacle: obstacles[1])
                 tutorialDelegate?.moveObstacle()
                 state += 1
-            } else {
-                return
             }
         }
         else if obstacleIndex == 1 && (currentPosition == 3 || currentPosition == 1) && state == 3 { // sair lustre
@@ -99,16 +103,12 @@ class TutorialSceneController {
                 tutorialDelegate?.addLabelNode(label: label)
                 state += 1
                 shouldMoveObstacle()
-            } else {
-                return
             }
         }
         else if state == 7 {
             if let size = tutorialDelegate?.getScreenSize() {
                 let flyFly = SKAction.moveTo(x: size.width + 500, duration: 3)
                 tutorialDelegate?.getNodes()[2].run(flyFly)
-            } else {
-                return
             }
         }
         else if state == 8 {
@@ -121,10 +121,9 @@ class TutorialSceneController {
     // swiftlint:enable function_body_length
     
     func passedObstacles(node: SKNode) -> Bool {
-            if let sprite = node as? SKSpriteNode {
-                return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
-            } else {
-                return false
-            }
+        if let sprite = node as? SKSpriteNode {
+            return sprite.position.x < (-1 * (sprite.size.width/2 + 20))
+        }
+        return false
     }
 }

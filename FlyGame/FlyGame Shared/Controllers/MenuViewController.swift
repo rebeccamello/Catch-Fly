@@ -5,7 +5,6 @@
 //  Created by Gui Reis on 24/03/22.
 //
 
-import UIKit
 import SpriteKit
 
 class MenuViewController: UIViewController {

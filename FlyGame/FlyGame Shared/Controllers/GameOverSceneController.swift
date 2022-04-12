@@ -6,7 +6,6 @@
 //
 
 import SpriteKit
-import Foundation
 
 class GameOverSceneController {
     

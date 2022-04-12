@@ -18,10 +18,9 @@ class GameViewController: MenuViewController {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone: return .allButUpsideDown
+        default: return .all
         }
     }
 

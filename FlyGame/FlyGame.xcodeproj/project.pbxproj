@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2223D40728061A58001A74F6 /* SKTextureAtlas+createTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40628061A58001A74F6 /* SKTextureAtlas+createTexture.swift */; };
+		2223D40828061A58001A74F6 /* SKTextureAtlas+createTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40628061A58001A74F6 /* SKTextureAtlas+createTexture.swift */; };
+		2223D40A28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */; };
+		2223D40B28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */; };
 		225B3ADA27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
 		225B3ADB27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
 		225B3ADC27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */; };
@@ -123,6 +127,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2223D40628061A58001A74F6 /* SKTextureAtlas+createTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKTextureAtlas+createTexture.swift"; sourceTree = "<group>"; };
+		2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKAction+creatAnimation.swift"; sourceTree = "<group>"; };
 		225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Musica-Fundo.mp3"; path = "../../../../Arquivos/Musicas/mp3/Musica-Fundo.mp3"; sourceTree = "<group>"; };
 		225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Swipe.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Swipe.mp3"; sourceTree = "<group>"; };
 		225B3AD727FE1B4700CC4F6D /* Som-Moeda.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Moeda.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Moeda.mp3"; sourceTree = "<group>"; };
@@ -217,6 +223,8 @@
 				2297C54127ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift */,
 				22DEAC952805F028000A1A48 /* UserDefaults+Actions.swift */,
 				22DEAC982805FD9D000A1A48 /* SKNode+SetPosition.swift */,
+				2223D40628061A58001A74F6 /* SKTextureAtlas+createTexture.swift */,
+				2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -550,6 +558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9A0F32F27D685CE00F965DE /* GameOverScene.swift in Sources */,
+				2223D40728061A58001A74F6 /* SKTextureAtlas+createTexture.swift in Sources */,
 				C8D2275127DFCF7B0077CEF2 /* PauseMenu.swift in Sources */,
 				E9A0F31C27D67B9300F965DE /* GameScene.swift in Sources */,
 				2297C54827ED03670009FDD8 /* MenuViewController.swift in Sources */,
@@ -571,6 +580,7 @@
 				E9A0F34C27D6A6BD00F965DE /* AudioService.swift in Sources */,
 				22DEAC962805F028000A1A48 /* UserDefaults+Actions.swift in Sources */,
 				C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
+				2223D40A28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */,
 				C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				2297C54227ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift in Sources */,
 				E9A0F34727D6A63700F965DE /* GameSceneController.swift in Sources */,
@@ -590,6 +600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9A0F33027D685CE00F965DE /* GameOverScene.swift in Sources */,
+				2223D40828061A58001A74F6 /* SKTextureAtlas+createTexture.swift in Sources */,
 				C8D2275227DFCF7B0077CEF2 /* PauseMenu.swift in Sources */,
 				E9A0F31D27D67B9300F965DE /* GameScene.swift in Sources */,
 				2297C54927ED03670009FDD8 /* MenuViewController.swift in Sources */,
@@ -611,6 +622,7 @@
 				E9A0F34D27D6A6BD00F965DE /* AudioService.swift in Sources */,
 				22DEAC972805F028000A1A48 /* UserDefaults+Actions.swift in Sources */,
 				C8BAAFDC27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
+				2223D40B28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */,
 				C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				2297C54327ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift in Sources */,
 				E9A0F34827D6A63700F965DE /* GameSceneController.swift in Sources */,

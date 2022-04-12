@@ -5,7 +5,6 @@
 //  Created by Gabriele Namie on 30/03/22.
 //
 
-import Foundation
 import SpriteKit
 
 protocol TutorialDelegate: AnyObject {

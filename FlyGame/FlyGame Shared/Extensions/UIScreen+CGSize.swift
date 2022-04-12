@@ -5,8 +5,7 @@
 //  Created by Caroline Taus on 15/03/22.
 //
 
-import Foundation
-import SpriteKit
+import UIKit
 
 extension CGSize {
     static func screenSize(widthMultiplier: CGFloat = 1, heighMultiplier: CGFloat = 1) -> CGSize {
