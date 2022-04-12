@@ -75,11 +75,7 @@ class GameOverScene: SKScene {
     
     lazy var adButton: SKButtonNode = {
         let but = SKButtonNode(image: .restart) {
-            if self.gameLogic.firstTimeLoosing {
-                self.showAds()
-            } else {
-                print("nao eh a primeira vez")
-            }
+            self.showAds()
         }
         return but
     }()
@@ -89,16 +85,14 @@ class GameOverScene: SKScene {
         return g
     }()
     
-    lazy var gameOver: GameOverSceneController = {
-        let g = GameOverSceneController()
-        g.gameOverDelegate = self
-        return g
-    }()
-    
     class func newGameScene() -> GameOverScene {
         let scene = GameOverScene()
         scene.scaleMode = .resizeFill
         return scene
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setUpScene() {
@@ -110,6 +104,13 @@ class GameOverScene: SKScene {
         self.addChild(homeButton)
         self.addChild(retryButton)
         self.addChild(adButton)
+        NotificationCenter.default.addObserver(self, selector: #selector(callAd),
+                                               name: .init(rawValue: "callAd"),
+                                               object: nil)
+    }
+    
+    @objc func callAd() {
+        continueGameAfterAds()
     }
     
     func createTexture(_ name: String) -> [SKTexture] {
@@ -155,7 +156,6 @@ class GameOverScene: SKScene {
     
     func currentScore() {
         scoreLabel.text = "your_score".localized() + "\(currentScoreValue)"
-        gameOver.currentScore(currentScore: currentScoreValue)
     }
     
     override func didChangeSize(_ oldSize: CGSize) {
@@ -225,6 +225,7 @@ class GameOverScene: SKScene {
 
 extension GameOverScene: GameOverLogicDelegate {
     func continueGameAfterAds() {
+        print("continue game")
         let scene = GameScene.newGameScene()
         scene.gameLogic.firstTimeLoosing = false
         scene.gameLogic.isGameStarted = true
@@ -264,7 +265,7 @@ extension GameOverScene: GameOverLogicDelegate {
     }
     
     func showAds() {
-        gameOver.showRewardedAd()
+        NotificationCenter.default.post(name: .init(rawValue: "loadAd"), object: nil)
     }
 }
 

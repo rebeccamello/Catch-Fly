@@ -26,7 +26,7 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
         }
     }
     
-    #if os(tvOS)
+#if os(tvOS)
     func addTargetToGestureRecognizer() -> UITapGestureRecognizer {
         tapGeneralSelection.addTarget(self, action: #selector(clicked))
         return tapGeneralSelection
@@ -36,12 +36,12 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
         if gameOverDelegate?.getButtons()[0].isFocused == true {
             gameOverDelegate?.goToMenu()
         } else if gameOverDelegate?.getButtons()[1].isFocused == true {
-           gameOverDelegate?.restartGame()
+            gameOverDelegate?.restartGame()
         }
     }
-    #endif
+#endif
     
-    //MARK: Ads
+    // MARK: Ads
     func loadRewardedAd() {
         // teste id ca-app-pub-3940256099942544/1712485313
         // do app: ca-app-pub-1021015536387349/6793205108
@@ -51,17 +51,17 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
                 print("Failed to load rewarded ad with error ", error)
                 return
             }
-            
+            print("no load")
             rewardedAd = ad
             rewardedAd?.fullScreenContentDelegate = self
         }
     }
     
     func showRewardedAd() {
-        self.gameOverDelegate?.continueGameAfterAds()
+        //        self.gameOverDelegate?.continueGameAfterAds()
         if let ad = rewardedAd {
             ad.present(fromRootViewController: self) {
-//                let reward = ad.adReward
+                print("aqui")
                 self.gameOverDelegate?.continueGameAfterAds()
             }
         } else {
@@ -73,5 +73,23 @@ class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         print("Rewarded ad dismissed.")
         self.loadRewardedAd()
+    }
+    
+    // Calling Ad
+    func ad(
+        _ ad: GADFullScreenPresentingAd,
+        didFailToPresentFullScreenContentWithError error: Error
+    ) {
+        print("Rewarded ad failed to present with error: \(error.localizedDescription).")
+        let alert = UIAlertController(
+            title: "Wait a minute!",
+            message: "We do not have ads to show right now!",
+            preferredStyle: .alert)
+        let alertAction = UIAlertAction(
+            title: "OK",
+            style: .cancel,
+            handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }
