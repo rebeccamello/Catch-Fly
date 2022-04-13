@@ -44,7 +44,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
     var buttonTvOS = UITapGestureRecognizer()
     let grandmaTexture = SKTexture(imageNamed: "vovo")
     var coinsInRun: Int = 0
-    var firstTimeLoosing = true
+    var firstTimeLosing = true
     
     private func calculateScore(currentTime: TimeInterval) {
         if timeScore == 0 {
@@ -401,8 +401,11 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 GameCenterService.shared.showAchievements(achievementID: "crashedGrandmaID")
             }
             
-//            gameDelegate?.goToGameOverScene()
-            gameDelegate?.goToAdMenu()
+            if firstTimeLosing {
+                gameDelegate?.goToAdMenu()
+            } else {
+                gameDelegate?.goToGameOverScene()
+            }
         }
     }
 }

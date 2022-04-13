@@ -6,7 +6,6 @@
 //
 
 import SpriteKit
-import GoogleMobileAds
 import UIKit
 
 class GameOverScene: SKScene {

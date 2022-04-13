@@ -6,6 +6,7 @@
 //
 // swiftlint:disable line_length
 import UIKit
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = GameViewController()
         window.makeKeyAndVisible()
         self.window = window
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         return true
     }
 

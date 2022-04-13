@@ -62,6 +62,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return menu
     }()
     
+    lazy var loadingView: LoadingView = {
+        var view = LoadingView()
+        view.zPosition = 5
+        view.gameDelegate = self
+        return view
+    }()
+    
     lazy var scenarioImage: SKSpriteNode = {
         var scenario = SKSpriteNode()
         scenario = SKSpriteNode(imageNamed: "cenario")
@@ -123,11 +130,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
         self.addChild(adMenu)
+        self.addChild(loadingView)
     
         addSwipeGestures()
         gameLogic.buttonActions()
         
         pauseMenu.isHidden = true
+        loadingView.isHidden = true
         adMenu.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(callAd),
                                                name: .init(rawValue: "callAd"),
@@ -152,6 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setNodesPosition() {
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        loadingView.position = CGPoint(x: size.width/2, y: size.height/2)
         adMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         
@@ -253,6 +263,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.size.width = self.size.height/5.2
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        loadingView.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         pauseButton.setScale(self.size.height*0.00035)
         scoreLabel.fontSize = self.size.height/15
@@ -414,6 +425,10 @@ extension GameScene: GameLogicDelegate {
         self.gameLogic.handlePause(isPaused: self.isPaused)
     }
     
+    func callLoadingView() {
+        self.loadingView.isHidden = false
+    }
+    
     func goToHome() {
         let scene = MenuScene.newGameScene()
         view?.presentScene(scene)
@@ -484,7 +499,7 @@ extension GameScene: GameLogicDelegate {
         print("continue game")
         adMenu.isHidden = true
         let scene = GameScene.newGameScene()
-        scene.gameLogic.firstTimeLoosing = false
+        scene.gameLogic.firstTimeLosing = false
         scene.gameLogic.isGameStarted = true
         scene.gameLogic.score = currentScoreValue
         scene.scoreLabel.text = String(currentScoreValue)

@@ -13,6 +13,8 @@ protocol GameLogicDelegate: AnyObject {
     
     func pauseGame()
     
+    func callLoadingView()
+    
     func drawScore(score: Int)
     
     func goToHome()

@@ -7,8 +7,10 @@
 
 import SpriteKit
 import Foundation
-import GoogleMobileAds
 import UIKit
+#if os(iOS)
+import GoogleMobileAds
+#endif
 
 class GameOverSceneController: UIViewController, GADFullScreenContentDelegate {
     

@@ -1,5 +1,5 @@
 //
-//  AdMenu.swift
+//  LoadingView.swift
 //  FlyGame
 //
 //  Created by Rebecca Mello on 13/04/22.
@@ -8,8 +8,7 @@
 import Foundation
 import SpriteKit
 
-class AdMenu: SKNode {
-    
+class LoadingView: SKNode {
     let buttonsPause = UITapGestureRecognizer()
     
     var buttonsContainer: SKShapeNode = SKShapeNode(
@@ -20,37 +19,22 @@ class AdMenu: SKNode {
     let screenSize: CGSize = .screenSize()
     weak var gameDelegate: GameLogicDelegate?
     
-    lazy var adButton: SKButtonNode = {
+    lazy var loadingButton: SKButtonNode = {
         let but = SKButtonNode(image: .revive) {
-            self.gameDelegate?.callLoadingView()
-            self.gameDelegate?.showAds()
+            print("game over")
         }
         return but
     }()
-    
-    lazy var gameOverButton: SKButtonNode = {
-        let but = SKButtonNode(image: .restart) {
-            self.gameDelegate?.goToGameOverScene()
-        }
-        return but
-    }()
-    
-    override var isUserInteractionEnabled: Bool {
-        get {return true}
-        set {}
-    }
     
     override init() {
         super.init()
         addChild(bg)
         addChild(buttonsContainer)
-        buttonsContainer.addChild(adButton)
-        buttonsContainer.addChild(gameOverButton)
+        buttonsContainer.addChild(loadingButton)
         
         bg.size = screenSize
         
-        adButton.setScale(bg.size.width * 0.001)
-        gameOverButton.setScale(bg.size.width * 0.00023)
+        loadingButton.setScale(bg.size.width * 0.001)
         
         buttonsContainer.lineWidth = 0
         setPositions()
@@ -63,10 +47,7 @@ class AdMenu: SKNode {
     func setPositions() {
         bg.zPosition = 3
         
-        adButton.position = CGPoint(x: 0, y: buttonsContainer.frame.size.height * 0.2)
-        adButton.zPosition = 4
-        
-        gameOverButton.position = CGPoint(x: 0, y: -buttonsContainer.frame.size.height * 0.2)
-        gameOverButton.zPosition = 4
+        loadingButton.position = CGPoint(x: 0, y: 0)
+        loadingButton.zPosition = 4
     }
 }
