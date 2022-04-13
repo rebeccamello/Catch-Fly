@@ -49,6 +49,8 @@
 		9D7E402927EB8E8000376C51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D7E402127EB8DAE00376C51 /* Localizable.strings */; };
 		9D7F9C8227FFB20900CDD415 /* RewardedAdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7F9C8127FFB20900CDD415 /* RewardedAdHelper.swift */; };
 		9D7F9C8327FFB20900CDD415 /* RewardedAdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7F9C8127FFB20900CDD415 /* RewardedAdHelper.swift */; };
+		9D8AC08E28072EBF00F71DDC /* AdMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AC08D28072EBF00F71DDC /* AdMenu.swift */; };
+		9D8AC08F28072EBF00F71DDC /* AdMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AC08D28072EBF00F71DDC /* AdMenu.swift */; };
 		9DCF1DE227F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
 		9DCF1DE327F37C7F000487A4 /* CollisionBitMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */; };
 		A19A93064BB62006A278D532 /* Pods_FlyGame_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E22656863D21525ADAE86DF6 /* Pods_FlyGame_tvOS.framework */; };
@@ -152,6 +154,7 @@
 		9D7E402027EB8DAE00376C51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D7E402B27EB8EDA00376C51 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9D7F9C8127FFB20900CDD415 /* RewardedAdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdHelper.swift; sourceTree = "<group>"; };
+		9D8AC08D28072EBF00F71DDC /* AdMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMenu.swift; sourceTree = "<group>"; };
 		9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionBitMask.swift; sourceTree = "<group>"; };
 		AF5759DBD98F36F2A913A631 /* Pods_Catch_Fly_Stickers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Catch_Fly_Stickers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3740C1B89A58EF10490156A /* Pods-FlyGame tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyGame tvOS.debug.xcconfig"; path = "Target Support Files/Pods-FlyGame tvOS/Pods-FlyGame tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -359,6 +362,7 @@
 				E9A0F32E27D685CE00F965DE /* GameOverScene.swift */,
 				C8C2044827ECF7A100507AB5 /* TutorialScene.swift */,
 				9DCF1DE127F37C7F000487A4 /* CollisionBitMask.swift */,
+				9D8AC08D28072EBF00F71DDC /* AdMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -712,6 +716,7 @@
 				C8C2044C27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */,
 				9D7F9C8227FFB20900CDD415 /* RewardedAdHelper.swift in Sources */,
 				E9A0F33B27D6905D00F965DE /* Obstacle.swift in Sources */,
+				9D8AC08E28072EBF00F71DDC /* AdMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +756,7 @@
 				C8C2044D27ECFADD00507AB5 /* TutorialSceneController.swift in Sources */,
 				9D7F9C8327FFB20900CDD415 /* RewardedAdHelper.swift in Sources */,
 				E9A0F33C27D6905D00F965DE /* Obstacle.swift in Sources */,
+				9D8AC08F28072EBF00F71DDC /* AdMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

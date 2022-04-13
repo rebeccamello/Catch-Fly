@@ -14,6 +14,4 @@ protocol GameOverLogicDelegate: AnyObject {
     func getButtons() -> [SKButtonNode]
     
     func goToMenu()
-    
-    func continueGameAfterAds()
 }

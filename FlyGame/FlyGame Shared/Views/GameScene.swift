@@ -12,6 +12,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     private var timeWhenPaused = Date()
+    let currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
+    let delayIOS: TimeInterval = UserDefaults.standard.double(forKey: "delayIOS")
+    let delayTV: TimeInterval = UserDefaults.standard.double(forKey: "delayTV")
+    let coinDelayIOS: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayIOS")
+    let coinDelayTV: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayTV")
+    let duration: CGFloat = UserDefaults.standard.double(forKey: "durationIOS")
+    let durationTV: CGFloat = UserDefaults.standard.double(forKey: "durationTV")
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -43,6 +50,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var pauseMenu: PauseMenu = {
         var menu = PauseMenu()
+        menu.zPosition = 4
+        menu.gameDelegate = self
+        return menu
+    }()
+    
+    lazy var adMenu: AdMenu = {
+        var menu = AdMenu()
         menu.zPosition = 4
         menu.gameDelegate = self
         return menu
@@ -108,11 +122,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(pauseMenu)
         self.addChild(scoreLabel)
+        self.addChild(adMenu)
     
         addSwipeGestures()
         gameLogic.buttonActions()
         
         pauseMenu.isHidden = true
+        adMenu.isHidden = true
+        NotificationCenter.default.addObserver(self, selector: #selector(callAd),
+                                               name: .init(rawValue: "callAd"),
+                                               object: nil)
+    }
+    
+    @objc func callAd() {
+        continueGameAfterAds()
     }
     
     func setNodesSize() {
@@ -129,6 +152,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setNodesPosition() {
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
+        adMenu.position = CGPoint(x: size.width/2, y: size.height/2)
         pauseButton.position = CGPoint(x: size.width*0.06, y: size.height*0.88)
         
 #if os(iOS)
@@ -367,7 +391,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     #endif
 }
 
-//MARK: Extension
+// MARK: Extension
 extension GameScene: GameLogicDelegate {
     func getPlusTwoLabel() -> SKLabelNode {
         return plusTwo
@@ -405,6 +429,10 @@ extension GameScene: GameLogicDelegate {
     
     func setPhysicsWorldDelegate() {
         physicsWorld.contactDelegate = gameLogic
+    }
+    
+    func goToAdMenu() {
+        adMenu.isHidden = false
     }
     
     func goToGameOverScene() {
@@ -450,6 +478,27 @@ extension GameScene: GameLogicDelegate {
     
     func getScenarioTextures() -> [SKTexture] {
         return [greenScenarioTexture, blueScenarioTexture]
+    }
+    
+    func continueGameAfterAds() {
+        print("continue game")
+        adMenu.isHidden = true
+        let scene = GameScene.newGameScene()
+        scene.gameLogic.firstTimeLoosing = false
+        scene.gameLogic.isGameStarted = true
+        scene.gameLogic.score = currentScoreValue
+        scene.scoreLabel.text = String(currentScoreValue)
+        scene.gameLogic.delayIOS = delayIOS
+        scene.gameLogic.delayTV = delayTV
+        scene.gameLogic.coinDelayIOS = coinDelayIOS
+        scene.gameLogic.coinDelayTV = coinDelayTV
+        scene.gameLogic.durationTV = durationTV
+        scene.gameLogic.duration = duration
+        self.view?.presentScene(scene)
+    }
+    
+    func showAds() {
+        NotificationCenter.default.post(name: .init(rawValue: "loadAd"), object: nil)
     }
 }
 

@@ -18,4 +18,6 @@ protocol MenuLogicDelegate {
     func presentScene(scene: SKScene)
     
     func goToGameScene()
+    
+    
 }

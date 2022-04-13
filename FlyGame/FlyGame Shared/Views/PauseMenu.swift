@@ -14,6 +14,7 @@ class PauseMenu: SKNode {
     var buttonsContainer: SKShapeNode = SKShapeNode(
         rectOf: .screenSize(widthMultiplier: 0.5, heighMultiplier: 0.8),
         cornerRadius: 20)
+    
     var bg: SKSpriteNode = SKSpriteNode(imageNamed: "cenario")
     let screenSize: CGSize = .screenSize()
     weak var gameDelegate: GameLogicDelegate?

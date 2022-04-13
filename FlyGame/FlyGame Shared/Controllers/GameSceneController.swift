@@ -360,6 +360,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     }
     
+    // MARK: Increase Score
     func increaseScore(player: SKNode, enemy: SKNode) {
         score += 2
         let wait = SKAction.wait(forDuration: 1)
@@ -380,6 +381,7 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         }
     }
     
+    // MARK: Colisão
     func collisionBetween(player: SKSpriteNode, enemy: SKSpriteNode) {
         if player.name == "Coin" || enemy.name == "Coin" {
             AudioService.shared.soundManager(with: .coin, soundAction: .play)
@@ -399,7 +401,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
                 GameCenterService.shared.showAchievements(achievementID: "crashedGrandmaID")
             }
             
-            gameDelegate?.goToGameOverScene()
+//            gameDelegate?.goToGameOverScene()
+            gameDelegate?.goToAdMenu()
         }
     }
 }

@@ -25,6 +25,8 @@ protocol GameLogicDelegate: AnyObject {
     
     func setPhysicsWorldDelegate()
     
+    func goToAdMenu()
+    
     func goToGameOverScene()
     
     func movePlayer(direction: Direction)
@@ -42,4 +44,8 @@ protocol GameLogicDelegate: AnyObject {
     func createCoin()
     
     func getPlusTwoLabel() -> SKLabelNode
+    
+    func continueGameAfterAds()
+    
+    func showAds()
 }
