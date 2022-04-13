@@ -29,7 +29,7 @@ class AdMenu: SKNode {
     }()
     
     lazy var gameOverButton: SKButtonNode = {
-        let but = SKButtonNode(image: .restart) {
+        let but = SKButtonNode(image: .giveUp) {
             self.gameDelegate?.goToGameOverScene()
         }
         return but
@@ -49,8 +49,8 @@ class AdMenu: SKNode {
         
         bg.size = screenSize
         
-        adButton.setScale(bg.size.width * 0.001)
-        gameOverButton.setScale(bg.size.width * 0.00023)
+        adButton.setScale(bg.size.width * 0.0022)
+        gameOverButton.setScale(bg.size.width * 0.0022)
         
         buttonsContainer.lineWidth = 0
         setPositions()

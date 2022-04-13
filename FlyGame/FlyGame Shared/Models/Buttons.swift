@@ -19,6 +19,7 @@ enum Buttons: CustomStringConvertible {
     case tutorial
     case gameCenter
     case revive
+    case giveUp
     var description: String {
         switch self {
         case .resume: return "continuarBotao"
@@ -33,6 +34,7 @@ enum Buttons: CustomStringConvertible {
         case .tutorial: return "tutorialBotao"
         case .gameCenter: return "gameCenterBotao"
         case .revive: return "reviverBotao"
+        case .giveUp: return "giveUpBotao"
         }
     }
 }

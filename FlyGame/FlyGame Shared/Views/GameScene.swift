@@ -19,6 +19,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let coinDelayTV: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayTV")
     let duration: CGFloat = UserDefaults.standard.double(forKey: "durationIOS")
     let durationTV: CGFloat = UserDefaults.standard.double(forKey: "durationTV")
+    let shouldPauseForAd: Bool = UserDefaults.standard.bool(forKey: "pauseForAd")
+    var tryAgainTimer: TimeInterval = 0
     
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
@@ -213,6 +215,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: Update
     override func update(_ currentTime: TimeInterval) {
+//        if shouldPauseForAd {
+//            if tryAgainTimer == 0 {
+//                tryAgainTimer = currentTime
+//            }
+//            let pastTime = (currentTime - tryAgainTimer)
+//
+//            if pastTime >= 3 {
+//                tryAgainTimer = currentTime
+//                UserDefaults.standard.set(false, forKey: "pauseForAd")
+//                self.isPaused = false
+//                print("falseee")
+//
+//            }
+//            else {
+//                self.isPaused = true
+//                print("trueee")
+//            }
+//        }
         self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
             gameLogic.passedObstacles(node: node)
@@ -426,6 +446,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func callLoadingView() {
+        self.adMenu.isHidden = true
         self.loadingView.isHidden = false
     }
     
@@ -498,6 +519,7 @@ extension GameScene: GameLogicDelegate {
     func continueGameAfterAds() {
         print("continue game")
         adMenu.isHidden = true
+        self.isPaused = false
         let scene = GameScene.newGameScene()
         scene.gameLogic.firstTimeLosing = false
         scene.gameLogic.isGameStarted = true

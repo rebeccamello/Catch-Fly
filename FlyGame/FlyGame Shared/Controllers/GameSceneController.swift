@@ -402,8 +402,10 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             }
             
             if firstTimeLosing {
+                defaults.set(true, forKey: "pauseForAd")
                 gameDelegate?.goToAdMenu()
             } else {
+                defaults.set(false, forKey: "pauseForAd")
                 gameDelegate?.goToGameOverScene()
             }
         }
