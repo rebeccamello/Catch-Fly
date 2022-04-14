@@ -62,7 +62,7 @@ class MenuViewController: UIViewController {
         // teste id ca-app-pub-3940256099942544/1712485313
         // do app: ca-app-pub-1021015536387349/6793205108
         let request = GADRequest()
-        GADRewardedAd.load(withAdUnitID: "ca-app-pub-3940256099942544/1712485313", request: request) { [weak self] ad, error in
+        GADRewardedAd.load(withAdUnitID: "ca-app-pub-1021015536387349/6793205108", request: request) { [weak self] ad, error in
             guard let self = self else { return }
             
             if let error = error {
