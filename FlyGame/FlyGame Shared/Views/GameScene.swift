@@ -15,7 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentScoreValue = 0
     var delayIOS: TimeInterval = 0
     var delayTV: TimeInterval = UserDefaults.standard.double(forKey: "delayTV")
-    var coinDelayIOS: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayIOS")
+    var coinDelayIOS: TimeInterval = 0
     var coinDelayTV: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayTV")
     var duration: CGFloat = 0
     var durationTV: CGFloat = UserDefaults.standard.double(forKey: "durationTV")
@@ -111,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // MARK: - setUpScenne
+    // MARK: - setUpScene
     func setUpScene() {
         #if os(tvOS)
             addPauseActionGesture()
@@ -132,14 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(adMenu)
         self.addChild(loadingView)
     
-//        self.setValues()
-        currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
-        delayIOS = UserDefaults.standard.double(forKey: "delayIOS")
-        delayTV = UserDefaults.standard.double(forKey: "delayTV")
-        coinDelayIOS = UserDefaults.standard.double(forKey: "coinDelayIOS")
-        coinDelayTV = UserDefaults.standard.double(forKey: "coinDelayTV")
-        duration = UserDefaults.standard.double(forKey: "durationIOS")
-        durationTV = UserDefaults.standard.double(forKey: "durationTV")
+        self.setValues()
         addSwipeGestures()
         gameLogic.buttonActions()
         
@@ -156,15 +149,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: Set Game Values after ads
-//    func setValues() {
-//        currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
-//        delayIOS = UserDefaults.standard.double(forKey: "delayIOS")
-//        delayTV = UserDefaults.standard.double(forKey: "delayTV")
-//        coinDelayIOS = UserDefaults.standard.double(forKey: "coinDelayIOS")
-//        coinDelayTV = UserDefaults.standard.double(forKey: "coinDelayTV")
-//        duration = UserDefaults.standard.double(forKey: "durationIOS")
-//        durationTV = UserDefaults.standard.double(forKey: "durationTV")
-//    }
+    func setValues() {
+        currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
+        delayIOS = UserDefaults.standard.double(forKey: "delayIOS")
+        delayTV = UserDefaults.standard.double(forKey: "delayTV")
+        coinDelayIOS = UserDefaults.standard.double(forKey: "coinDelayIOS")
+        coinDelayTV = UserDefaults.standard.double(forKey: "coinDelayTV")
+        duration = UserDefaults.standard.double(forKey: "durationIOS")
+        durationTV = UserDefaults.standard.double(forKey: "durationTV")
+    }
     
     // MARK: Set Nodes Size
     func setNodesSize() {
@@ -469,6 +462,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func goToAdMenu() {
+        AudioService.shared.soundManager(with: .colision, soundAction: .play)
         adMenu.isHidden = false
         gameLogic.getGameValuesAfterAd()
     }
@@ -521,7 +515,6 @@ extension GameScene: GameLogicDelegate {
     func continueGameAfterAds() {
         print("continue game")
         adMenu.isHidden = true
-        self.isPaused = false
         let scene = GameScene.newGameScene()
         scene.gameLogic.firstTimeLosing = false
         scene.gameLogic.isGameStarted = true
@@ -529,7 +522,7 @@ extension GameScene: GameLogicDelegate {
         scene.scoreLabel.text = String(UserDefaults.standard.integer(forKey: "currentScore"))
         scene.gameLogic.delayIOS = UserDefaults.standard.double(forKey: "delayIOS")
         scene.gameLogic.delayTV = delayTV
-        scene.gameLogic.coinDelayIOS = coinDelayIOS
+        scene.gameLogic.coinDelayIOS = UserDefaults.standard.double(forKey: "coinDelayIOS")
         scene.gameLogic.coinDelayTV = coinDelayTV
         scene.gameLogic.durationTV = durationTV
         scene.gameLogic.duration = UserDefaults.standard.double(forKey: "durationIOS")
@@ -537,6 +530,7 @@ extension GameScene: GameLogicDelegate {
     }
     
     func showAds() {
+        isPaused = true
         NotificationCenter.default.post(name: .init(rawValue: "loadAd"), object: nil)
     }
 }

@@ -11,6 +11,7 @@ import GoogleMobileAds
 
 class MenuViewController: UIViewController {
     private var rewardedAd: GADRewardedAd?
+    private var didEarnReward: Bool = false
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -28,7 +29,7 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         GameCenterService.shared.setController(self)
         gameCenterVerification()
-        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ "2077ef9a63d2b398840261c8221a0c9b" ]
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ "5628a90bb663d430e3e3ef7531742388", "GADSimulatorID" ]
         setupBindings()
     }
     
@@ -66,6 +67,20 @@ class MenuViewController: UIViewController {
             
             if let error = error {
                 print("Failed to load rewarded ad with error ", error)
+                // MARK: fazer alert de que deu erro com botao de ok e dai ir pro game over
+                let alert = UIAlertController(
+                    title: "Wait a minute!",
+                    message: "An error occured",
+                    preferredStyle: .alert)
+                let alertAction = UIAlertAction(
+                    title: "OK",
+                    style: .default,
+                    handler: { _ in
+                        guard let skView = self.view as? SKView else { fatalError() }
+                        skView.presentScene(GameOverScene.newGameScene())
+                    } )
+                alert.addAction(alertAction)
+                self.present(alert, animated: true, completion: nil)
                 return
             }
             self.rewardedAd = ad
@@ -75,11 +90,14 @@ class MenuViewController: UIViewController {
     }
     
     func showRewardedAd() {
-        //        self.gameOverDelegate?.continueGameAfterAds()
-        if let ad = rewardedAd {
-            ad.present(fromRootViewController: self) {
+        if let ad = rewardedAd, let gameScene = ((view as? SKView)?.scene as? GameScene) {
+            gameScene.loadingView.isHidden = true
+            gameScene.adMenu.isHidden = true
+            ad.present(fromRootViewController: self) {[weak self] in
+                self?.didEarnReward = true
                 NotificationCenter.default.post(name: .init(rawValue: "callAd"), object: nil)
-                //self.gameOverDelegate?.continueGameAfterAds()
+                guard let newGameScene = ((self?.view as? SKView)?.scene as? GameScene) else { return }
+                newGameScene.isPaused = true
             }
         } else {
             print("Ad wasn't ready")
@@ -90,7 +108,15 @@ class MenuViewController: UIViewController {
 extension MenuViewController: GADFullScreenContentDelegate {
     // MARK: GADFullScreenContentDelegate
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        print("Rewarded ad dismissed.")
+        guard let skView = view as? SKView else { return }
+        
+        if !didEarnReward {
+            didEarnReward.toggle()
+            skView.presentScene(GameOverScene.newGameScene())
+        } else {
+            guard let scene = skView.scene as? GameScene else { return }
+            scene.isPaused = false
+        }
     }
     
     // Calling Ad
