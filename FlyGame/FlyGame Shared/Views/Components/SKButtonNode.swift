@@ -9,9 +9,17 @@ import SpriteKit
 
 class SKButtonNode: SKNode {
     
+    /* MARK: - Atributos*/
+    
     private var image: SKSpriteNode
     var action: (() -> Void)
     var isFocusable = true
+    
+    override var canBecomeFocused: Bool {
+        return self.isFocusable
+    }
+    
+    /* MARK: - Construtor */
     
     init(image: Buttons, action: @escaping () -> Void) {
         let texture = SKTexture(imageNamed: image.description)
@@ -32,9 +40,7 @@ class SKButtonNode: SKNode {
     
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
     
-    override var canBecomeFocused: Bool {
-        return self.isFocusable
-    }
+    /* MARK: - Ciclo de Vida */
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         
@@ -50,16 +56,22 @@ class SKButtonNode: SKNode {
             self.alpha = 1
         }
     }
+    
     #if os(tvOS)
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        AudioService.shared.soundManager(with: .button, soundAction: .play)
         self.action()
     }
     #endif
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         AudioService.shared.soundManager(with: .button, soundAction: .play)
         self.action()
     }
     
+    /* MARK: - Métodos de Ação */
+    
+    /// Atualiza a imagem (ícone) do botão
     public func updateImage(with image: Buttons) {
         self.image.texture = SKTexture(imageNamed: image.description)
     }

@@ -22,8 +22,6 @@ protocol GameLogicDelegate: AnyObject {
     
     func createObstacle(obstacle: Obstacle)
     
-    func setPhysicsWorldDelegate()
-    
     func goToGameOverScene()
     
     func movePlayer(direction: Direction)
@@ -35,10 +33,16 @@ protocol GameLogicDelegate: AnyObject {
     func restartGame()
     
     func getScenario() -> [SKSpriteNode]
-    
-    func getScenarioTextures() -> [SKTexture]
- 
+     
+    /// Cria um nova moeda
     func createCoin()
     
-    func getPlusTwoLabel() -> SKLabelNode
+    /// Lida com o contato entre dois nodes
+    func contact(with contact: SKPhysicsContact)
+    
+    /// Defini a visibilidade da Label
+    func setCoinScoreLabelVisibility(for status: Bool)
+    
+    /// Ativa uma ação na Label que mostra a pontuação ganha da moeda
+    func runCoinScoreLabelAction(with action: SKAction)
 }

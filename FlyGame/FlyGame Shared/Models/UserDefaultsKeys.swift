@@ -18,7 +18,7 @@ enum UserDefaultsKeys: CustomStringConvertible {
         case .firstTimeOnApp: return "firstTimeOpenApp"
         case .tutorial: return "playerFirstTime"
         case .highScore: return "highscore"
-        case .gameScore: return "score"
+        case .gameScore: return "currentScore"
         case .sound: return "sound"
         case .music: return "music"
         }

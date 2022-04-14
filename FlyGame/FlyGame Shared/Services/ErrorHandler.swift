@@ -8,7 +8,7 @@
 import struct Foundation.URLError
 
 /**
-    Classe responsável pelo tratamento dos erros que podem acontecer na API.
+    Classe responsável pelo tratamento dos erros que podem acontecer no Game Center.
  
     Todos os erros são categorizados e tratados, podendo ter acesso á eles pelo que é mostrado ao usuário
  (`localizedDescription` ) ou para o desenvolvedor (`description`).

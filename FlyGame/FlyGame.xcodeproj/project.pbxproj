@@ -11,6 +11,10 @@
 		2223D40828061A58001A74F6 /* SKTextureAtlas+createTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40628061A58001A74F6 /* SKTextureAtlas+createTexture.swift */; };
 		2223D40A28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */; };
 		2223D40B28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */; };
+		2223D40D28075727001A74F6 /* SKSpriteNode+setupPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40C28075727001A74F6 /* SKSpriteNode+setupPhysics.swift */; };
+		2223D40E28075727001A74F6 /* SKSpriteNode+setupPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40C28075727001A74F6 /* SKSpriteNode+setupPhysics.swift */; };
+		2223D4102808ACF5001A74F6 /* PhysicsContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40F2808ACF5001A74F6 /* PhysicsContactDelegate.swift */; };
+		2223D4112808ACF5001A74F6 /* PhysicsContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2223D40F2808ACF5001A74F6 /* PhysicsContactDelegate.swift */; };
 		225B3ADA27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
 		225B3ADB27FE1B4700CC4F6D /* Musica-Fundo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */; };
 		225B3ADC27FE1B4700CC4F6D /* Som-Swipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */; };
@@ -129,6 +133,8 @@
 /* Begin PBXFileReference section */
 		2223D40628061A58001A74F6 /* SKTextureAtlas+createTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKTextureAtlas+createTexture.swift"; sourceTree = "<group>"; };
 		2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKAction+creatAnimation.swift"; sourceTree = "<group>"; };
+		2223D40C28075727001A74F6 /* SKSpriteNode+setupPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKSpriteNode+setupPhysics.swift"; sourceTree = "<group>"; };
+		2223D40F2808ACF5001A74F6 /* PhysicsContactDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsContactDelegate.swift; sourceTree = "<group>"; };
 		225B3AD527FE1B4700CC4F6D /* Musica-Fundo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Musica-Fundo.mp3"; path = "../../../../Arquivos/Musicas/mp3/Musica-Fundo.mp3"; sourceTree = "<group>"; };
 		225B3AD627FE1B4700CC4F6D /* Som-Swipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Swipe.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Swipe.mp3"; sourceTree = "<group>"; };
 		225B3AD727FE1B4700CC4F6D /* Som-Moeda.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Som-Moeda.mp3"; path = "../../../../Arquivos/Musicas/mp3/Som-Moeda.mp3"; sourceTree = "<group>"; };
@@ -203,6 +209,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2223D4122808AD0C001A74F6 /* Costum */ = {
+			isa = PBXGroup;
+			children = (
+				9937A6DD27F4EA2A00144C71 /* TutorialDelegate.swift */,
+				E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */,
+				E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */,
+				E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */,
+			);
+			path = Costum;
+			sourceTree = "<group>";
+		};
 		225B3AD427FE1B3700CC4F6D /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +242,7 @@
 				22DEAC982805FD9D000A1A48 /* SKNode+SetPosition.swift */,
 				2223D40628061A58001A74F6 /* SKTextureAtlas+createTexture.swift */,
 				2223D40928061E7B001A74F6 /* SKAction+creatAnimation.swift */,
+				2223D40C28075727001A74F6 /* SKSpriteNode+setupPhysics.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -367,11 +385,9 @@
 		E9A0F34E27D6A6F900F965DE /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				E9A0F35227D6A75800F965DE /* MenuLogicDelegate.swift */,
-				E9A0F35527D6A7C300F965DE /* GameOverLogicDelegate.swift */,
-				E9A0F35827D6A84900F965DE /* GameLogicDelegate.swift */,
+				2223D4122808AD0C001A74F6 /* Costum */,
 				227117C427EBA9B50083C7E8 /* GameCenterDelegate.swift */,
-				9937A6DD27F4EA2A00144C71 /* TutorialDelegate.swift */,
+				2223D40F2808ACF5001A74F6 /* PhysicsContactDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -581,9 +597,11 @@
 				22DEAC962805F028000A1A48 /* UserDefaults+Actions.swift in Sources */,
 				C8BAAFDB27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				2223D40A28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */,
+				2223D4102808ACF5001A74F6 /* PhysicsContactDelegate.swift in Sources */,
 				C8AB7EFD27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				2297C54227ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift in Sources */,
 				E9A0F34727D6A63700F965DE /* GameSceneController.swift in Sources */,
+				2223D40D28075727001A74F6 /* SKSpriteNode+setupPhysics.swift in Sources */,
 				227117C227EBA93E0083C7E8 /* GameCenterService.swift in Sources */,
 				9DCF1DE227F37C7F000487A4 /* CollisionBitMask.swift in Sources */,
 				E9A0F30127D67B9300F965DE /* GameViewController.swift in Sources */,
@@ -623,9 +641,11 @@
 				22DEAC972805F028000A1A48 /* UserDefaults+Actions.swift in Sources */,
 				C8BAAFDC27E0FEEE0052E9BE /* UIScreen+CGSize.swift in Sources */,
 				2223D40B28061E7B001A74F6 /* SKAction+creatAnimation.swift in Sources */,
+				2223D4112808ACF5001A74F6 /* PhysicsContactDelegate.swift in Sources */,
 				C8AB7EFE27DBE67600AB0590 /* ObstacleFetcher.swift in Sources */,
 				2297C54327ECFB570009FDD8 /* UISwipeGestureRecognizer+Direction.swift in Sources */,
 				E9A0F34827D6A63700F965DE /* GameSceneController.swift in Sources */,
+				2223D40E28075727001A74F6 /* SKSpriteNode+setupPhysics.swift in Sources */,
 				227117C327EBA93E0083C7E8 /* GameCenterService.swift in Sources */,
 				9DCF1DE327F37C7F000487A4 /* CollisionBitMask.swift in Sources */,
 				E9A0F31127D67B9300F965DE /* GameViewController.swift in Sources */,

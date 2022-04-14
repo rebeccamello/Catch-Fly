@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import SpriteKit
+import GameplayKit
 
 class ObstacleFetcher {
     private var obstacles: [Obstacle]
@@ -51,5 +52,11 @@ class ObstacleFetcher {
         }
         let index = randomizer(min: 0, max: filteredObstacles.count-1)
         return filteredObstacles[index]
+    }
+    
+    func randomizer(min: Int, max: Int) -> Int {
+        let randomizer = GKRandomDistribution(lowestValue: min, highestValue: max)
+        let randomIndex = randomizer.nextInt()
+        return randomIndex
     }
 }

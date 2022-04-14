@@ -118,7 +118,6 @@ class MenuScene: SKScene {
         self.addChild(flyAction)
     }
     
-    
     /// Definindo o tamanho dos Nodes
     private func setupNodesSize() {
         scenarioImage.size.width = self.size.width

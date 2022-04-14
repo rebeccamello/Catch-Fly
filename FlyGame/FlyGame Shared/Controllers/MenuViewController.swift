@@ -8,6 +8,7 @@
 import SpriteKit
 
 class MenuViewController: UIViewController {
+    
     /* MARK: - Ciclo de Vida */
     
     override func loadView() {
@@ -16,24 +17,31 @@ class MenuViewController: UIViewController {
         let skView = SKView()
         skView.ignoresSiblingOrder = true
         skView.presentScene(scene)
+        
+        skView.showsPhysics = true
+        skView.showsFPS = true
+        skView.showsNodeCount = true
         self.view = skView
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GameCenterService.shared.setController(self)
-        gameCenterVerification()
+        self.gameCenterAutentication()
     }
     
-    func gameCenterVerification() {
+    func gameCenterAutentication() {
         // Fazendo a autenticação com o Game Center
-        GameCenterService.shared.autenticateUser {vct, score, error in
+        GameCenterService.shared.autenticateUser {vc, score, error in
             if error != nil {
                 return
             }
-            if let vct = vct {
-                self.present(vct, animated: true)
+            
+            if let vc = vc {
+                self.present(vc, animated: true)
                 return
             }
+            
             if let score = score {
                 guard let scene = (self.view as? SKView)?.scene as? MenuScene else {return}
                 scene.setScore(with: score)

@@ -10,16 +10,15 @@ import SpriteKit
 extension SKAction {
     
     /// Cria uma animação a partir de uma imagem
-    static func creatAnimation(by image: String) -> SKAction {
+    static func creatAnimation(by image: String, time: TimeInterval = 0.2) -> SKAction {
         let texture = SKTextureAtlas(named: image)
         let frames = texture.getFrames()
         
         let animation = SKAction.animate(
             with: frames,
-            timePerFrame: TimeInterval(0.2),
+            timePerFrame: TimeInterval(time),
             resize: false, restore: true)
         
         return SKAction.repeatForever(animation)
     }
 }
-
