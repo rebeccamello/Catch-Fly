@@ -12,16 +12,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blueScenarioTexture = SKTexture(imageNamed: "cenarioAzul")
     var greenScenarioTexture = SKTexture(imageNamed: "cenario")
     private var timeWhenPaused = Date()
-    let currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
-    let delayIOS: TimeInterval = UserDefaults.standard.double(forKey: "delayIOS")
-    let delayTV: TimeInterval = UserDefaults.standard.double(forKey: "delayTV")
-    let coinDelayIOS: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayIOS")
-    let coinDelayTV: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayTV")
-    let duration: CGFloat = UserDefaults.standard.double(forKey: "durationIOS")
-    let durationTV: CGFloat = UserDefaults.standard.double(forKey: "durationTV")
-    let shouldPauseForAd: Bool = UserDefaults.standard.bool(forKey: "pauseForAd")
-    var tryAgainTimer: TimeInterval = 0
-    
+    var currentScoreValue = 0
+    var delayIOS: TimeInterval = 0
+    var delayTV: TimeInterval = UserDefaults.standard.double(forKey: "delayTV")
+    var coinDelayIOS: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayIOS")
+    var coinDelayTV: TimeInterval = UserDefaults.standard.double(forKey: "coinDelayTV")
+    var duration: CGFloat = 0
+    var durationTV: CGFloat = UserDefaults.standard.double(forKey: "durationTV")
+
     lazy var scoreLabel: SKLabelNode = {
         var lbl = SKLabelNode()
         lbl.numberOfLines = 0
@@ -66,7 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     lazy var loadingView: LoadingView = {
         var view = LoadingView()
-        view.zPosition = 5
+        view.zPosition = 7
         view.gameDelegate = self
         return view
     }()
@@ -134,6 +132,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(adMenu)
         self.addChild(loadingView)
     
+//        self.setValues()
+        currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
+        delayIOS = UserDefaults.standard.double(forKey: "delayIOS")
+        delayTV = UserDefaults.standard.double(forKey: "delayTV")
+        coinDelayIOS = UserDefaults.standard.double(forKey: "coinDelayIOS")
+        coinDelayTV = UserDefaults.standard.double(forKey: "coinDelayTV")
+        duration = UserDefaults.standard.double(forKey: "durationIOS")
+        durationTV = UserDefaults.standard.double(forKey: "durationTV")
         addSwipeGestures()
         gameLogic.buttonActions()
         
@@ -149,6 +155,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         continueGameAfterAds()
     }
     
+    // MARK: Set Game Values after ads
+//    func setValues() {
+//        currentScoreValue = UserDefaults.standard.integer(forKey: "currentScore")
+//        delayIOS = UserDefaults.standard.double(forKey: "delayIOS")
+//        delayTV = UserDefaults.standard.double(forKey: "delayTV")
+//        coinDelayIOS = UserDefaults.standard.double(forKey: "coinDelayIOS")
+//        coinDelayTV = UserDefaults.standard.double(forKey: "coinDelayTV")
+//        duration = UserDefaults.standard.double(forKey: "durationIOS")
+//        durationTV = UserDefaults.standard.double(forKey: "durationTV")
+//    }
+    
+    // MARK: Set Nodes Size
     func setNodesSize() {
         playerNode.size = CGSize(width: self.size.height/5.2, height: self.size.height/5.2)
         scenarioImage.size = CGSize(width: self.size.width * 1.2, height: self.size.height)
@@ -160,6 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         plusTwo.fontSize = self.size.height/15
     }
     
+    // MARK: Set Nodes Positions
     func setNodesPosition() {
         playerNode.position = CGPoint(x: size.width/4, y: size.height/2)
         pauseMenu.position = CGPoint(x: size.width/2, y: size.height/2)
@@ -215,24 +234,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: Update
     override func update(_ currentTime: TimeInterval) {
-//        if shouldPauseForAd {
-//            if tryAgainTimer == 0 {
-//                tryAgainTimer = currentTime
-//            }
-//            let pastTime = (currentTime - tryAgainTimer)
-//
-//            if pastTime >= 3 {
-//                tryAgainTimer = currentTime
-//                UserDefaults.standard.set(false, forKey: "pauseForAd")
-//                self.isPaused = false
-//                print("falseee")
-//
-//            }
-//            else {
-//                self.isPaused = true
-//                print("trueee")
-//            }
-//        }
         self.currentTime = currentTime
         let outOfTheScreenNodes = children.filter { node in
             gameLogic.passedObstacles(node: node)
@@ -469,6 +470,7 @@ extension GameScene: GameLogicDelegate {
     
     func goToAdMenu() {
         adMenu.isHidden = false
+        gameLogic.getGameValuesAfterAd()
     }
     
     func goToGameOverScene() {
@@ -523,14 +525,14 @@ extension GameScene: GameLogicDelegate {
         let scene = GameScene.newGameScene()
         scene.gameLogic.firstTimeLosing = false
         scene.gameLogic.isGameStarted = true
-        scene.gameLogic.score = currentScoreValue
-        scene.scoreLabel.text = String(currentScoreValue)
-        scene.gameLogic.delayIOS = delayIOS
+        scene.gameLogic.score = UserDefaults.standard.integer(forKey: "currentScore")
+        scene.scoreLabel.text = String(UserDefaults.standard.integer(forKey: "currentScore"))
+        scene.gameLogic.delayIOS = UserDefaults.standard.double(forKey: "delayIOS")
         scene.gameLogic.delayTV = delayTV
         scene.gameLogic.coinDelayIOS = coinDelayIOS
         scene.gameLogic.coinDelayTV = coinDelayTV
         scene.gameLogic.durationTV = durationTV
-        scene.gameLogic.duration = duration
+        scene.gameLogic.duration = UserDefaults.standard.double(forKey: "durationIOS")
         self.view?.presentScene(scene)
     }
     

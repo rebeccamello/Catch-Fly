@@ -345,13 +345,19 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         timeCounter = 0
         timer.invalidate()
         defaults.set(score, forKey: "currentScore")
+        score = 0
+    }
+    
+    func getGameValuesAfterAd() {
+        timeCounter = 0
+        timer.invalidate()
+        defaults.set(score, forKey: "currentScore")
         defaults.set(delayIOS, forKey: "delayIOS")
         defaults.set(delayTV, forKey: "delayTV")
         defaults.set(coinDelayIOS, forKey: "coinDelayIOS")
         defaults.set(coinDelayTV, forKey: "coinDelayTV")
         defaults.set(duration, forKey: "durationIOS")
         defaults.set(durationTV, forKey: "durationTV")
-        score = 0
     }
     
     func contact(contact: SKPhysicsContact, nodeA: SKSpriteNode, nodeB: SKSpriteNode) {
@@ -402,10 +408,8 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
             }
             
             if firstTimeLosing {
-                defaults.set(true, forKey: "pauseForAd")
                 gameDelegate?.goToAdMenu()
             } else {
-                defaults.set(false, forKey: "pauseForAd")
                 gameDelegate?.goToGameOverScene()
             }
         }
