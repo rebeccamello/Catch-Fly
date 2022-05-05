@@ -228,7 +228,7 @@ class GameScene: SKScene {
         self.view?.addGestureRecognizer(gameLogic.pauseTapGesture())
         
         // Ativa as funções dos botões quando selecionados
-        self.view?.addGestureRecognizer(gameLogic.buttonsTapGesture())
+        self.view?.addGestureRecognizer(gameLogic.getTvControlTapRecognizer())
     }
     
     /// Reconhecimento dos swipes do controle
@@ -257,15 +257,17 @@ class GameScene: SKScene {
     func createCoin() {
         let coin = SKSpriteNode(imageNamed: "moeda0")
         coin.name = "Coin"
-    
+        
+        // Física
+        var size: CGFloat = self.size.height/3
         coin.physicsBody = SKPhysicsBody(
             texture: coin.texture!,
-            size: CGSize(width: self.size.height/3, height: self.size.height/3)
+            size: CGSize(width: size, height: size)
         ).copy() as? SKPhysicsBody
         coin.setupPhysics()
         
         // Tamanho e posição
-        let size = self.size.height/7
+        size = self.size.height/7
         coin.size = CGSize(width: size, height: size)
         
         var coinPosition: [CGFloat] = [1, 3, 5]
@@ -281,7 +283,7 @@ class GameScene: SKScene {
     func addNode(with node: SKNode) {
         // Add novo node na tela
         self.addChild(node)
-        self.allObstacles = children.filter { node in node.name == "Enemy" || node.name == "Coin" }
+        self.allObstacles = children.filter {node in node.name == "Enemy" || node.name == "Coin"}
         
         // Remove aqueles que não estão mais na tela
         removeChildren(in: children.filter {node in gameLogic.passedObstacles(node: node)})
@@ -365,11 +367,11 @@ extension GameScene: GameLogicDelegate {
         
         let scene = GameOverScene.newGameScene()
         scene.score = gameLogic.score
-        AudioService.shared.soundManager(with: .colision, soundAction: .play)
+        
         self.view?.presentScene(scene)
         
         #if os(tvOS)
-            scene.run(SKAction.wait(forDuration: 0.02)) {
+        scene.run(SKAction.wait(forDuration: 0.02)) {
             scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
             scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }

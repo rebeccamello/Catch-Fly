@@ -48,10 +48,6 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         let deltaTime = (currentTime - timeScore)
         if deltaTime >= 1 {
             score += 1
-            if score == 80 && coinsCollected == 0 {
-                GameCenterService.shared.showAchievements(achievementID: "noCoinsInRunID")
-            }
-            
             gameDelegate?.drawScore(score: score)
             timeScore = currentTime
         }
@@ -124,12 +120,14 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         return gesture
     }
     
-    func buttonsTapGesture() -> UITapGestureRecognizer {
+    /// Cria o reconhecimento do toque nos controles
+    func getTvControlTapRecognizer() -> UITapGestureRecognizer {
         let gesture = UITapGestureRecognizer()
         gesture.addTarget(self, action: #selector(self.clicked))
         return gesture
     }
-        
+    
+    /// Ações dos botões quando clicados pelo controle da TV
     @objc func clicked() {
         if gameDelegate?.getButtons()[0].isFocused == true {
             gameDelegate?.resumeGame()
@@ -299,30 +297,19 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         return actual - past
     }
     
+    /// Lida com a colisão do player
     func collisionHandler(with node: SKSpriteNode) {
-        if node.name == "Coin" {
+        switch node.name {
+        case "Coin":
             AudioService.shared.soundManager(with: .coin, soundAction: .play)
             
-            increaseCoinScore()
+            self.increaseCoinScore()
             node.removeFromParent()
             
-            switch self.coinsCollected {
-            case 5:
-                GameCenterService.shared.showAchievements(achievementID: "firstCoinsInRunID")
-            case 12:
-                GameCenterService.shared.showAchievements(achievementID: "secondCoinsInRunID")
-            default: break
-            }
-        
-        } else {
-            guard let nodeTexture = node.texture else {return}
+        default:
+            AudioService.shared.soundManager(with: .colision, soundAction: .play)
             
-            let grandmaTexture = SKTexture(imageNamed: "vovo")
-            
-            if nodeTexture.description == grandmaTexture.description {
-                GameCenterService.shared.showAchievements(achievementID: "crashedGrandmaID")
-            }
-            
+            self.verifyGameCenterAchievements(nodeEnemy: node)
             gameDelegate?.goToGameOverScene()
         }
     }
@@ -341,5 +328,48 @@ class GameSceneController: NSObject, SKPhysicsContactDelegate {
         
         self.gameDelegate?.runCoinScoreLabelAction(with: sequence)
         self.gameDelegate?.setCoinScoreLabelVisibility(for: false)
+    }
+    
+    /// Verifica se durante a partida ganhou alguma conquista
+    func verifyGameCenterAchievements(nodeEnemy: SKSpriteNode) {
+        // Nenhuma moeda
+        if score == 80 && coinsCollected == 0 {
+            GameCenterService.shared.showAchievements(for: .noCoins)
+        }
+        
+        // Moedas coletadas
+        if self.coinsCollected >= 5 {
+            GameCenterService.shared.showAchievements(for: .coin5)
+            
+            if self.coinsCollected >= 12 {
+                GameCenterService.shared.showAchievements(for: .coin12)
+            }
+        }
+        
+        // Pontuação
+        if score >= 25 {
+            GameCenterService.shared.showAchievements(for: .score25)
+            if score >= 60 {
+                GameCenterService.shared.showAchievements(for: .score60)
+                if score >= 100 {
+                    GameCenterService.shared.showAchievements(for: .score100)
+                    if score >= 125 {
+                        GameCenterService.shared.showAchievements(for: .score125)
+                        if score >= 150 {
+                            GameCenterService.shared.showAchievements(for: .score150)
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Verificando o obstáculo
+        guard let nodeTexture = nodeEnemy.texture else {return}
+        
+        let grandmaTexture = SKTexture(imageNamed: "vovo")
+        
+        if nodeTexture.description == grandmaTexture.description {
+            GameCenterService.shared.showAchievements(for: .grandma)
+        }
     }
 }

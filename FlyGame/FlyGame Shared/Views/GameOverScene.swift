@@ -8,28 +8,28 @@
 import SpriteKit
 
 class GameOverScene: SKScene {
+    
+    /* MARK: - Atributos */
+    
+    #if os(tvOS)
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        return [homeButton]
+    }
+    #endif
+    
     var score: Int = 20
-    var defaults = UserDefaults.standard
-    var hideTutorial: Bool = false
     
-    lazy var scenarioImage: SKSpriteNode = {
-        var scenario = SKSpriteNode(imageNamed: "cenario")
-        return scenario
-    }()
+    lazy var gameLogic = GameSceneController()
     
-    lazy var floor: SKSpriteNode = {
-        var floor = SKSpriteNode(imageNamed: "floor")
-        return floor
-    }()
+    lazy var scenarioImage = SKSpriteNode(imageNamed: "cenario")
     
+    lazy var floor = SKSpriteNode(imageNamed: "floor")
+        
     lazy var cat: SKSpriteNode = {
         var cat = SKSpriteNode(imageNamed: "gatoMosca0")
         cat.texture?.filteringMode = .nearest
         
-        let frames: [SKTexture] = createTexture("GatoMosca")
-        cat.run(SKAction.repeatForever(SKAction.animate(with: frames,
-                                                        timePerFrame: TimeInterval(0.2),
-                                                        resize: false, restore: true)))
+        cat.run(SKAction.creatAnimation(by: "GatoMosca", time: 0.2))
         return cat
     }()
     
@@ -50,24 +50,13 @@ class GameOverScene: SKScene {
         return lbl
     }()
     
-    lazy var homeButton: SKButtonNode = {
-        let but = SKButtonNode(image: .menu) {
-            self.goToMenu()
-        }
-        return but
-    }()
+    lazy var homeButton = SKButtonNode(image: .menu) {
+        self.goToMenu()
+    }
     
-    lazy var retryButton: SKButtonNode = {
-        let but = SKButtonNode(image: .restart) {
-            self.restartGame()
-        }
-        return but
-    }()
-    
-    lazy var gameLogic: GameSceneController = {
-        let g = GameSceneController()
-        return g
-    }()
+    lazy var retryButton = SKButtonNode(image: .restart) {
+        self.restartGame()
+    }
     
     lazy var gameOver: GameOverSceneController = {
         let g = GameOverSceneController()
@@ -81,6 +70,25 @@ class GameOverScene: SKScene {
         return scene
     }
     
+    /* MARK: - Ciclo de Vida */
+    
+    override func didChangeSize(_ oldSize: CGSize) {
+        setupNodesPosition()
+        setupNodesSize()
+    }
+    
+    override func didMove(to view: SKView) {
+        setUpScene()
+        updateScore()
+        
+        #if os(tvOS)
+        addTapGestureRecognizer()
+        #endif
+        
+    }
+    
+    /* MARK: - Métodos */
+    
     func setUpScene() {
         self.addChild(scenarioImage)
         self.addChild(floor)
@@ -90,115 +98,65 @@ class GameOverScene: SKScene {
         self.addChild(homeButton)
         self.addChild(retryButton)
     }
-    
-    func createTexture(_ name: String) -> [SKTexture] {
-        let textureAtlas = SKTextureAtlas(named: name)
-        var frames = [SKTexture]()
-        for i in 1...textureAtlas.textureNames.count - 1 {
-            frames.append(textureAtlas.textureNamed(textureAtlas.textureNames[i]))
-        }
-        return frames
-    }
-    
-    override func didMove(to view: SKView) {
-        self.setUpScene()
-        currentScore()
-        callAchievements()
         
-#if os(tvOS)
-        addTapGestureRecognizer()
-#endif
-        
-    }
-    
-    func callAchievements() {
-        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
-        if currentScore >= 25 {
-            GameCenterService.shared.showAchievements(achievementID: "firstPointMilestoneID")
-            
-            if currentScore >= 60 {
-                GameCenterService.shared.showAchievements(achievementID: "secondPointMilestoneID")
-                
-                if currentScore >= 100 {
-                    GameCenterService.shared.showAchievements(achievementID: "thirdPointMilestoneID")
-                    
-                    if currentScore >= 125 {
-                        GameCenterService.shared.showAchievements(achievementID: "fourthPointMilestoneID")
-                        
-                        if currentScore >= 150 {
-                            GameCenterService.shared.showAchievements(achievementID: "fifthPointMilestoneID")
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func currentScore() {
-        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
+    func updateScore() {
+        let currentScore = UserDefaults.getIntValue(with: .gameScore)
         scoreLabel.text = "your_score".localized() + "\(currentScore)"
-        gameOver.currentScore(currentScore: currentScore)
-    }
-    
-    override func didChangeSize(_ oldSize: CGSize) {
-        setupNodesPosition()
-        setupNodesSize()
+        
+        gameOver.scoreHandler(with: currentScore)
     }
     
     private func setupNodesPosition() {
-        scenarioImage.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-        scenarioImage.zPosition = 0
+        scenarioImage.setPositions(x: self.size.width/2, y: self.size.height/2, z: 0)
         
-        floor.position = CGPoint(x: self.size.width/2, y: floor.size.height/2)
-        floor.zPosition = 1
+        floor.setPositions(x: scenarioImage.position.x, y: scenarioImage.position.y, z: 0)
         
-        cat.position = CGPoint(x: self.size.width/4, y: floor.size.height)
-        cat.zPosition = 2
+        cat.setPositions(x: self.size.width/4, y: floor.size.height, z: 2)
         
-        gameOverLabel.position = CGPoint(x: self.size.width * 0.71, y: self.size.height * 0.67)
-        gameOverLabel.zPosition = 2
+        gameOverLabel.setPositions(x: self.size.width * 0.71, y: self.size.height * 0.67, z: 2)
         
-        scoreLabel.position = CGPoint(x: gameOverLabel.position.x, y: self.size.height * 0.55)
-        scoreLabel.zPosition = 2
+        gameOverLabel.setPositions(x: self.size.width * 0.71, y: self.size.height * 0.67, z: 2)
         
-        homeButton.position = CGPoint(x: gameOverLabel.position.x - self.size.width * 0.055, y: self.size.height * 0.42)
-        homeButton.zPosition = 2
+        scoreLabel.setPositions(x: gameOverLabel.position.x, y: self.size.height * 0.55, z: 2)
         
-        retryButton.position = CGPoint(x: gameOverLabel.position.x + self.size.width * 0.055, y: self.size.height * 0.42)
-        retryButton.zPosition = 2
+        homeButton.setPositions(
+            x: gameOverLabel.position.x - self.size.width * 0.055,
+            y: self.size.height * 0.42,
+            z: 2
+        )
         
+        retryButton.setPositions(
+            x: gameOverLabel.position.x + self.size.width * 0.055,
+            y: self.size.height * 0.42,
+            z: 2
+        )
     }
     
     private func setupNodesSize() {
-        scenarioImage.size.width = self.size.width
-        scenarioImage.size.height = self.size.height
+        scenarioImage.size = CGSize(width: self.size.width, height: self.size.height)
         
-        floor.size.width = self.size.width
-        floor.size.height = self.size.height * 0.3
+        floor.size = CGSize(width: self.size.width, height: self.size.height * 0.3)
         
         cat.setScale(self.size.height/700)
         gameOverLabel.setScale(self.size.height * 0.006)
         scoreLabel.setScale(self.size.height * 0.003)
-        homeButton.setScale(self.size.width * 0.00021)
-        retryButton.setScale(self.size.width * 0.00021)
         
-#if os(iOS)
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
+        let scale = self.size.width * 0.00021
+        homeButton.setScale(scale)
+        retryButton.setScale(scale)
+        
+        #if os(iOS)
+        if UIDevice.current.userInterfaceIdiom == .pad {
             gameOverLabel.setScale(self.size.height * 0.0055)
             scoreLabel.setScale(self.size.height * 0.0027)
             cat.setScale(self.size.height/800)
-        default:
-            break
         }
-#endif
+        #endif
     }
     
-#if os(tvOS)
     func addTapGestureRecognizer() {
-        self.view?.addGestureRecognizer(gameOver.addTargetToGestureRecognizer())
+        self.view?.addGestureRecognizer(gameOver.getTvControlTapRecognizer())
     }
-#endif
 }
 
 extension GameOverScene: GameOverLogicDelegate {
@@ -214,22 +172,13 @@ extension GameOverScene: GameOverLogicDelegate {
     
     func goToMenu() {
         let scene = MenuScene.newGameScene()
-        hideTutorial = defaults.bool(forKey: "playerFirstTime")
         self.view?.presentScene(scene)
         
-#if os(tvOS)
+        #if os(tvOS)
         scene.run(SKAction.wait(forDuration: 0.02)) {
             scene.view?.window?.rootViewController?.setNeedsFocusUpdate()
             scene.view?.window?.rootViewController?.updateFocusIfNeeded()
         }
-#endif
+        #endif
     }
 }
-
-#if os(tvOS)
-extension GameOverScene {
-    override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        return [homeButton]
-    }
-}
-#endif

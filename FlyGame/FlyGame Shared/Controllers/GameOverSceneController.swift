@@ -9,25 +9,32 @@ import SpriteKit
 
 class GameOverSceneController {
     
-    weak var gameOverDelegate: GameOverLogicDelegate?
-    let tapGeneralSelection = UITapGestureRecognizer()
+    /* MARK: - Atributos */
     
-    func currentScore(currentScore: Int) {
-        if currentScore > UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) {
-            GameCenterService.shared.submitHighScore(score: currentScore) {error in
-                if error == error {
-                    UserDefaults.standard.set(currentScore, forKey: GameCenterService.highscoreKey)
+    weak var gameOverDelegate: GameOverLogicDelegate?
+    
+    /* MARK: - Métodos */
+    
+    /// Lida com a pontuação para o Game Center
+    func scoreHandler(with score: Int) {
+        // Atualiza o placar
+        if score > UserDefaults.getIntValue(with: .highScore) {
+            GameCenterService.shared.submitHighScore(score: score) {error in
+                if error != nil {
+                    UserDefaults.updateValue(in: .highScore, with: score)
                 }
             }
         }
     }
     
-    #if os(tvOS)
-    func addTargetToGestureRecognizer() -> UITapGestureRecognizer {
-        tapGeneralSelection.addTarget(self, action: #selector(clicked))
-        return tapGeneralSelection
+    /// Cria o reconhecimento do toque nos controles
+    func getTvControlTapRecognizer() -> UITapGestureRecognizer {
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: #selector(clicked))
+        return tap
     }
     
+    /// Ações dos botões quando clicados pelo controle da TV
     @objc func clicked() {
         if gameOverDelegate?.getButtons()[0].isFocused == true {
             gameOverDelegate?.goToMenu()
@@ -35,6 +42,4 @@ class GameOverSceneController {
            gameOverDelegate?.restartGame()
         }
     }
-    #endif
-    
 }

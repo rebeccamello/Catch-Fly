@@ -19,13 +19,14 @@ enum ErrorHandler: Error, CustomStringConvertible {
     case scoreNotFound
     case scoreNotSubmited
     case badCommunication
+    case noAchievement
 
     /// Feedback para o usuário
     var localizedDescription: String {
         switch self {
         case .noAuthenticaded, .authenticationError:
             return "Falha na autenticação com o Game Center."
-        case .scoreNotFound, .badCommunication, .scoreNotSubmited:
+        case .scoreNotFound, .badCommunication, .scoreNotSubmited, .noAchievement:
             return "Houve um erro"
         }
     }
@@ -38,6 +39,7 @@ enum ErrorHandler: Error, CustomStringConvertible {
         case .scoreNotFound: return "Pontuação não foi encontrado"
         case .scoreNotSubmited: return "Pontuação não foi postada."
         case .badCommunication: return "Houve um erro na hora de se conectar com o Leaderboard"
+        case .noAchievement: return "Não foi achado achievements"
         }
     }
 }

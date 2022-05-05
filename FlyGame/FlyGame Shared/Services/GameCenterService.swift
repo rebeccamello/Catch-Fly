@@ -30,16 +30,14 @@ class GameCenterService: GKGameCenterViewController {
             // Se tiver algum erro
             if let _ = error {
                 completionHandler(nil, nil, .authenticationError)
-                return
             }
             
-            // Caso não esteja autenticado (Devolve a ViewController reponsável para fazer o login)
+            // Caso não esteja autenticado (vevolve a ViewController reponsável para fazer o login)
             if let vc = vc {
                 completionHandler(vc, nil, nil)
-                return
             }
             
-            // Pega o Score do GameCenter
+            // Pega o Score do Game Center
             self.getHighScore { result in
                 switch result {
                 case .success(let score):
@@ -60,7 +58,6 @@ class GameCenterService: GKGameCenterViewController {
                     // Verifica se tem algum erro
                     if let _ = error {
                         completionHandler(.failure(.badCommunication))
-                        return
                     }
                     
                     // Verifica se o player e o score existem
@@ -70,12 +67,11 @@ class GameCenterService: GKGameCenterViewController {
                     }
                     
                     // Atualiza o user defaults caso necessário
-                    if UserDefaults.standard.integer(forKey: GameCenterService.highscoreKey) < score {
-                        UserDefaults.standard.set(player?.score, forKey: GameCenterService.highscoreKey)
+                    if UserDefaults.getIntValue(with: .highScore) < score {
+                        UserDefaults.updateValue(in: .highScore, with: score)
                     }
                     
                     completionHandler(.success(score))
-                    return
                 }
             }
         }
@@ -86,8 +82,8 @@ class GameCenterService: GKGameCenterViewController {
     public func submitHighScore(score: Int, _ completionHandler: @escaping (_ error: ErrorHandler?) -> Void ) {
         if (GKLocalPlayer.local.isAuthenticated) {
             // Define no highscore
-            UserDefaults.standard.set(score, forKey: GameCenterService.highscoreKey)
-            
+            UserDefaults.updateValue(in: .highScore, with: score)
+        
             // Manda pro Game Center
             GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [GameCenterService.leaderboardID]) {error in
                 
@@ -116,27 +112,31 @@ class GameCenterService: GKGameCenterViewController {
         self.controller = vc
     }
     
-    public func showAchievements(achievementID: String) {
-        GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
-            var achievement: GKAchievement?
+    /// Mostra as conquistas ganha no jogo
+    public func showAchievements(for achievementID: Achievments) {
+        GKAchievement.loadAchievements { achievements, error in
+            if error != nil {
+                print(ErrorHandler.noAchievement.description)
+                return
+            }
             
-            achievement = achievements?.first(where: {$0.identifier == achievementID})
+            var achievement = achievements?.first(where: {$0.identifier == achievementID.description})
+            
             if achievement == nil {
-                achievement = GKAchievement(identifier: achievementID)
+                achievement = GKAchievement(identifier: achievementID.description)
                 achievement?.percentComplete = 100
                 achievement?.showsCompletionBanner = true
             }
             
-            let achievementsToReport: [GKAchievement] = [achievement!]
-            GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
-                if error != nil {
-                    print("erro To Report: ", error ?? "")
+            if let achievement = achievement {
+                let achievementsToReport: [GKAchievement] = [achievement]
+                
+                GKAchievement.report(achievementsToReport) { error in
+                    if error != nil {
+                        print(ErrorHandler.badCommunication.description)
+                    }
                 }
-            })
-            
-            if error != nil {
-                print("erro Load: ", error ?? "")
             }
-        })
+        }
     }
 }
