@@ -42,4 +42,6 @@ protocol GameLogicDelegate: AnyObject {
     func createCoin()
     
     func getPlusTwoLabel() -> SKLabelNode
+    
+    func removeNodesOutScreen()
 }

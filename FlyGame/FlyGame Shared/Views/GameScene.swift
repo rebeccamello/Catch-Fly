@@ -154,13 +154,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scenarioImage2.position = CGPoint(x: scenarioImage2.size.width/2 + scenarioImage.position.x*2, y: scenarioImage2.size.height/2)
     }
     
-    // MARK: - didMove
+    /* MARK: - Ciclo de Vida */
+    
+    
     override func didMove(to view: SKView) {
         self.setUpScene()
         
-    #if os(tvOS)
+        #if os(tvOS)
         addTapGestureRecognizer()
-    #endif
+        #endif
         
         gameLogic.audioVerification()
         
@@ -169,7 +171,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    // MARK: didChangeSize
+    
     override func didChangeSize(_ oldSize: CGSize) {
         setNodesSize()
         setNodesPosition()
@@ -177,23 +179,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPhysics(node: playerNode)
     }
     
-    // MARK: Update
+    
+    /// Ciclo de Vida
+    override func sceneDidLoad() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.didLeaveFromBackgound),
+            name: UIApplication.didBecomeActiveNotification, object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.didEnterOnBackground),
+            name: UIApplication.willResignActiveNotification, object: nil
+        )
+    }
+    
+    
     override func update(_ currentTime: TimeInterval) {
-        self.currentTime = currentTime
-        let outOfTheScreenNodes = children.filter { node in
-            gameLogic.passedObstacles(node: node)
-       }
-        
-        for node in outOfTheScreenNodes {
-            node.physicsBody = nil
-        }
-        
         moveObstacle()
         gameLogic.moveBackground()
-        removeChildren(in: outOfTheScreenNodes)
         gameLogic.update(currentTime: currentTime)
     }
     
+    
+    
+
     // MARK: Set Physics
     func setPhysics(node: SKSpriteNode) {
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
@@ -267,19 +276,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: - App em segundo plano
-    
-    /// Ciclo de Vida
-    public override func sceneDidLoad() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.didLeaveFromBackgound),
-            name: UIApplication.didBecomeActiveNotification, object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.didEnterOnBackground),
-            name: UIApplication.willResignActiveNotification, object: nil
-        )
-    }
+
 
     /// Quando entra no app (sai do segundo plano)
     @objc func didLeaveFromBackgound() {
@@ -323,18 +320,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func moveObstacle() {
-        let allObstacles = children.filter { node in node.name == "Enemy" || node.name == "Coin" }
-        for obstacle in allObstacles {
-            if isPaused == true {
-                obstacle.position.x -= 0
+        if !self.isPaused {
+            let duration = gameLogic.duration*100
+            self.children.forEach { node in
+                if node.name != nil && node.name != "Fly" {
+                    node.run(SKAction.moveTo(x: (-100000), duration: duration))
+                }
             }
-            else {
-#if os(iOS)
-                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.duration*100)
-#elseif os(tvOS)
-                let moveObstAction = SKAction.moveTo(x: (-100000), duration: gameLogic.durationTV*100)
-#endif
-                obstacle.run(moveObstAction)
+            return
+        }
+        self.children.forEach { node in
+            if node.name != nil && node.name != "Fly" {
+                node.position.x -= 0
             }
         }
     }
@@ -368,6 +365,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 }
 
 extension GameScene: GameLogicDelegate {
+    func removeNodesOutScreen() {
+        var nodeToRemove: [SKNode] = []
+        for node in self.children {
+            if gameLogic.passedObstacles(node: node) {
+                node.physicsBody = nil
+                nodeToRemove.append(node)
+            }
+        }
+        removeChildren(in: nodeToRemove)
+    }
+    
     func getPlusTwoLabel() -> SKLabelNode {
         return plusTwo
     }

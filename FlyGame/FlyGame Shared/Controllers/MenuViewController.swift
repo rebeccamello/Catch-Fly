@@ -17,6 +17,8 @@ class MenuViewController: UIViewController {
         let skView = SKView()
         skView.ignoresSiblingOrder = true
         skView.presentScene(scene)
+        skView.showsFPS = true
+        skView.showsNodeCount = true
         self.view = skView
     }
     override func viewDidLoad() {
